@@ -1,0 +1,46 @@
+div.audio-player {
+    display: flex;
+    justify-content: center;
+    height: 48px;
+    width: 100%;
+    position: fixed;
+    background-color: rgb(237, 237, 237);
+    border-top: 1px solid rgb(194, 204, 214);
+    bottom: 0;
+}
+
+div.audio-player div.inner {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    max-width: 1240px;
+}
+
+.audio-controls {
+    width: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-left: 20px;
+    align-items: baseline;
+}
+
+.track-controls {
+    width: 80px;
+    margin-top: auto;
+    margin-bottom: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.queue-controls {
+    width: 60px;
+    margin-top: auto;
+    margin-bottom: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-around;
+}

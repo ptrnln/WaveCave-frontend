@@ -1,0 +1,95 @@
+
+.track-view.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.track-view.container div {
+    background-color: lightgray;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.track-view.container button {
+    width: fit-content;
+}
+
+.track-view.body {
+    display: flex;
+}
+
+@media screen and (max-width: 500px) and (orientation: portrait){
+    .track-view.body {
+        flex-direction: column;
+    }
+}
+@media all and (min-width: 500px) {
+    .track-view.body {
+        flex-direction: row;
+    }
+}
+
+
+div.track-view.details {
+    width: 100%;
+}
+
+div.track-view img {
+    max-width: 180px;
+    max-height: 180px;
+}
+
+div.track-view a {
+    color: inherit;
+    text-decoration: none;
+}
+
+div.track-view a:hover {
+    color: #f50;
+    text-decoration: none;
+}
+
+div.track-view .fa-solid.fa-compact-disc {
+    font-size: 180px;
+    color: darkgrey;
+}
+
+i.fa-solid.fa-play-circle {
+    display: none;
+    position: absolute;
+    transform: translate(50%, 50%);
+    color: #f50;
+    font-size: 90px;
+    z-index: 10;
+}
+
+button:hover i.fa-solid.fa-play-circle {
+    display: inherit;
+}
+
+button.play-track.overlay {
+    transition: all 2ms ease-in-out;
+    appearance: none;
+    border: 0;
+    padding: 0;
+    background: inherit;
+}
+
+.track-view p {
+    display: inline;
+}
+
+button.play-track.button {
+    position: relative;
+    float: right;
+    height: min-content;
+    /* margin-top: 150px; */
+    
+    align-self: end;
+    border: 0;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f50;
+    color: white;
+    text-wrap: nowrap;
+}

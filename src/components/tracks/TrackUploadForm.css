@@ -1,0 +1,28 @@
+form[name='upload-form'] > h1 {
+    margin: 5px;
+}
+form[name='upload-form'] {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+form[name='upload-form'] input, textarea, select {
+    max-width: none;
+    width: 200px;
+    margin: 5px;
+}
+
+button {
+    font: inherit;
+}
+input {
+    font: inherit;
+    font-size: small;
+}
+
+form[name='upload-form'] select {
+    display: flex;
+}

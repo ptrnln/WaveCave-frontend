@@ -1,0 +1,52 @@
+.track-index h2 {
+    font-size: 2rem;
+}
+
+.track-index p {
+    font-style: thin;
+}
+@media screen and (max-width: 600px) {
+    .track-index h2 {
+        font-size: 1.5rem;
+    }
+    .track-index.item {
+        display: flex;
+        flex-direction: column;
+        background: none;
+        border: 1px solid lightgrey;
+        border-radius: 15px;
+        padding: 10px;
+        margin-bottom: 10px;
+        align-items: center;
+    }
+}
+.track-index.item {
+    display: flex;
+    background: none;
+    border: 1px solid lightgrey;
+    border-radius: 15px;
+    padding: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.track-index button {
+    appearance: none;
+    min-width: 100px;
+    min-height: 50px;
+    width: 0%;
+    height: 0%;
+    background-color: lightgrey;
+    border: 0;
+    margin-left: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+ul.track-index * {
+    padding: 5px;
+}
+
+.track-index.item i {
+    color: rgb(190, 190, 190);
+}

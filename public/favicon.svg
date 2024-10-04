@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <linearGradient id="gradient-1-0" gradientUnits="userSpaceOnUse" x1="32.028" y1="-0.119" x2="32.028" y2="64.152" xlink:href="#gradient-1"/>
+    <linearGradient id="gradient-1" bx:pinned="true">
+      <stop offset="0" style="stop-color: rgb(255, 92, 0);"/>
+      <stop offset="1" style="stop-color: rgb(212, 21, 0);"/>
+    </linearGradient>
+  </defs>
+  <rect x="-0.108" y="-0.119" width="64.271" height="64.271" style="fill: url('#gradient-1-0');"/>
+  <g transform="matrix(0.013994000852108002, 0, 0, -0.013994000852108002, 18.536945343017578, 46.504554748535156)" fill="#000000" stroke="none" style="">
+    <path d="M 1500 1874 C 1367 1865 1239 1848 1158 1829 C 1077 1810 1067 1805 1028 1761 C 1004 1735 955 1671 918 1619 C 839 1508 829 1498 727 1436 C 684 1410 643 1378 635 1367 C 628 1355 601 1288 576 1219 C 551 1150 510 1042 486 980 L 494.176 205.276 C 494.176 205.276 553 200 1511 200 L 2728 200 L 2784 304 C 2843 414 2850 445 2823 486 C 2814 500 2797 571 2785 643 C 2772 716 2751 814 2736 862 C 2706 960 2687 982 2572 1049 L 2503 1089 L 2436 1260 C 2398 1354 2356 1445 2342 1462 C 2327 1479 2286 1507 2250 1523 C 2214 1539 2138 1587 2079 1630 C 1936 1736 1844 1794 1755 1837 C 1676 1874 1621 1882 1500 1874 Z M 1813 1001 C 1878 969 1940 905 1982 823 C 2030 732 2047 670 2065 515 C 2085 339 2085 284 2063 274 C 2017 253 1344 263 1322 284 C 1319 288 1321 362 1328 449 C 1353 779 1430 950 1582 1012 C 1643 1037 1750 1032 1813 1001 Z" style="stroke: rgb(0, 0, 0);"/>
+  </g>
+  <rect style="stroke: rgb(0, 0, 0);" x="18.808" y="36.135" width="1.866" height="7.044" rx="1" ry="1"/>
+  <rect style="stroke: rgb(0, 0, 0);" x="5.747" y="36.149" width="1.866" height="7.044" rx="1" ry="1"/>
+  <rect style="stroke: rgb(0, 0, 0);" x="12.277" y="38.237" width="1.866" height="4.927" rx="1" ry="1"/>
+</svg>

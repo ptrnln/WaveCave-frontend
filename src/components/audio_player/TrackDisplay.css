@@ -1,0 +1,55 @@
+div.track-display canvas {
+    display: block;
+    position: relative;
+    max-height: 30px;
+    max-width: 30px;
+    top: 20%;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+div.track-display > img, div.track-display > i {
+    display: flex;
+    position: relative;
+    height: 30px;
+    width: 30px;
+    top: 20%;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 25px;
+    border: 1px solid #d3d3d3;
+    color: rgb(190, 190, 190);
+    justify-content: center;
+    vertical-align: auto;
+    align-items: center;
+}
+
+
+div.track-display {
+    display: flex;
+}
+
+div.track-details {
+    display: flex;
+    flex-direction: column;
+    text-wrap: nowrap;
+    width: 200px;
+}
+
+span.track-details {
+    position: relative;
+    top: 20%;
+    font-size: x-small;
+    cursor: pointer;
+}
+
+span.track-details.artist-name {
+    position: relative;
+    top: 20%;
+    font-size: x-small;
+}
+
+span.track-details.title {
+    font-style: normal;
+    color: dimgrey;
+}

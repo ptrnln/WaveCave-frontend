@@ -1,0 +1,31 @@
+
+.SignUpForm > h1 {
+    text-align: center;
+    margin: 10px;
+}
+
+.SignUpForm {
+    padding-top: 100px;
+    display: flex;
+    font: inherit;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+.SignUpForm input {
+    display: block;
+    padding: 5px;
+    margin: 5px;
+}
+
+.SignUpForm button {
+    width: fit-content;
+    font: inherit;
+    align-self: center;
+    margin: 5px;
+}
+/* 
+label[for='email'] {
+    border: 1px solid red;
+} */

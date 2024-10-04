@@ -1,0 +1,10 @@
+div.splash {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+canvas#splash-canvas {
+    display: flex;
+    width: clamp(300px, 100%, 1200px);
+}

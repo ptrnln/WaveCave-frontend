@@ -1,0 +1,129 @@
+/* 
+  .profile-dropdown * {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .profile-dropdown {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .profile-dropdown a {
+    padding: 15px;
+    background: none;
+    font: inherit;
+    text-decoration: none;
+    color: white;
+  }
+  
+
+  button:has(i.fa-solid.fa-user-circle) {
+    appearance: none;
+    border: none;
+    background: none;
+    color: lightgray;
+  }
+
+  button:has(i.fa-solid.fa-user-circle):hover {
+    color: white;
+  } */
+
+.profile-menu {
+  display: none;
+  background-color: inherit;
+}
+  
+.profile-dropdown * {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding: 0 15px;
+}
+
+.profile-dropdown a {
+  padding: 15px;
+  background: none;
+  font: inherit;
+  text-decoration: none;
+  color: lightgray;
+  font-size: x-small;
+}
+
+
+.profile-dropdown button {
+  appearance: none;
+  background: inherit;
+  border: none;
+  color: lightgray;
+  font-size: x-small;
+}
+
+.profile-dropdown li:hover, .profile-dropdown li *:hover {
+  color: white;
+}
+
+div.profile-dropdown-container {
+  height: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  
+}
+
+ul#profile-dropdown {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 37px;
+  left: 0;
+  width: fit-content;
+  min-height: 140px;
+  z-index: 0;
+  background-color: inherit;
+  border-top: 1px solid black;
+}
+
+ul#profile-dropdown>li {
+  border: 0;
+  text-wrap: nowrap;
+  border-bottom: 1px solid black;
+}
+
+div.profile-menu {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: flex-start;
+}
+
+div.profile-menu {
+  color: white;
+  display: flex;
+  flex-direction: row;
+}
+
+div.profile-menu button:has(i) {
+  margin: 5px;
+}
+
+div.profile-menu:has(ul) {
+  position: relative;
+  display: inline-block;
+}
+
+
+div.profile-menu button {
+  appearance: none;
+  background-color: inherit;
+  border: 0;
+  color: lightgray;
+}
+
+div.profile-menu button:hover {
+  appearance: none;
+  background-color: inherit;
+  border: 0;
+  color: white;
+}

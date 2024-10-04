@@ -1,0 +1,124 @@
+.progress-bar {
+    display: flex;
+    position: relative;
+    align-content: space-between;
+    flex-direction: row;
+    top: 0%;
+    width: 100%;
+    height: 100%;
+}
+
+.progress-bar input[type="range"] {
+    --range-progress: 0.0;
+    -webkit-appearance: none;
+    appearance: initial;
+    position: relative;
+    background:#ccc;
+    top: 45%;
+    width: 100%;
+    height: 1px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+span.time-display {
+    position: relative;
+    top: 38%;
+    padding-left: 10px;
+    padding-right: 10px;
+    user-select: none;
+}
+  
+  /* Input range - firefox */
+.progress-bar input[type="range"]::-moz-range-track {
+    position: relative;
+    background:#ccc;
+    width: 100%;
+    height: 2px;
+    border-radius: 2px;
+    cursor: pointer;
+    user-select: none;
+}
+  
+  /* played progress length - Chrome & safari*/
+.progress-bar input[type="range"]::before {
+    content: '';
+    height: 1px;
+    background: #f50;
+    width: var(--range-progress);
+    border-bottom-left-radius: 1px;
+    border-top-left-radius: 1px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+  
+  /* played progress length - firefox */
+.progress-bar input[type="range"]::-moz-range-progress {
+    background: #f50;
+    border-bottom-left-radius: 2px;
+    border-top-left-radius: 2px;
+    height: 2px;
+}
+  
+  /* slider thumb - chrome and safari */
+.progress-bar input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    border: none;
+    background-color: #f50;
+    cursor: pointer;
+    position: relative;
+    transition: .2s;
+}
+  
+  /* dragging thumb - chrome and safari */
+.progress-bar input[type="range"]:active::-webkit-slider-thumb {
+    transform: scale(1.2);
+}
+  
+  /* slider thumb - firefox */
+.progress-bar input[type="range"]::-moz-range-thumb {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    background: #f50;
+    cursor: pointer;
+    border: transparent;
+    position: relative;
+}
+  /* dragging thumb - firefox */
+.progress-bar input[type="range"]:active::-moz-range-thumb {
+    transform: scale(1.2);
+}
+
+.progress-bar input {
+    align-content: stretch;
+}
+
+.progress-bar input[type="range"]::-webkit-slider-thumb {
+    transition-duration: 100ms;
+    transition-property: opacity;
+    transition-timing-function: ease-in-out;
+    width: 8px;
+    height: 8px;
+    opacity: 0;
+    border-radius: 50%;
+}
+
+.progress-bar:hover input[type="range"]::-webkit-slider-thumb {
+    transition-duration: 100ms;
+    transition-property: opacity;
+    transition-timing-function: ease-in-out;
+    opacity: 1;
+    border-radius: 50%;
+}
+
+.time-display {
+    cursor: default;
+    color: #f50;
+    font-size: small;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}

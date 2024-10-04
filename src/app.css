@@ -1,0 +1,116 @@
+
+@import url(components/audio_player/AudioPlayer.css);
+@import url(components/audio_player/AudioControls.css);
+@import url(components/audio_player/QueueControl.css);
+@import url(components/audio_player/TrackDisplay.css);
+@import url(components/audio_player/ProgressBar.css);
+@import url(components/navigation/Navigation.css);
+@import url(components/navigation/ProfileButton.css);
+
+html, body {
+    height: 100%
+}
+
+#root {
+    font-size: 14px;
+    height: inherit;
+    width: 100%;
+}
+
+.stop-scrolling {
+    overflow: hidden;
+}
+
+#greyout {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: none;
+    background-color: rgba(255, 255, 255, 70%);
+    z-index: 99;
+    opacity: 0;
+    transition: opacity .3s linear;
+    pointer-events: none;
+}
+
+#greyout.inactive {
+    display: inherit;
+    opacity: 0;
+}
+
+#greyout.active {
+    display: inherit;
+    opacity: 1;
+}
+
+/* @media screen and (max-width: 600px) {
+    div#dev-links-container {
+        
+    }
+    
+} */
+div#dev-links-container {
+    position: fixed;
+    bottom: 46px;
+    /* z-index: 98; */
+    width: clamp(100px, 10vw, 200%);
+    margin-bottom: 6px;
+    margin-left: 2px;
+    font-size: .8rem;
+    color: rgba(0, 0, 0, 40%);
+    vertical-align: baseline;
+}
+
+div#dev-links-container * {
+    user-select: none;
+}
+
+.dev-link {
+    color: rgba(0, 0, 0, 30%);
+    font-size: 2rem;
+    margin: 5px;
+}
+
+.dev-link:hover {
+    color: black;
+}
+
+div.app {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: inherit;
+    width: 100%;
+    align-items: center;
+}
+
+
+div.content {
+    /* position: fixed; */
+    /* width: 1190px; */
+    width: clamp(320px, 100%, 1190px);
+    height: calc(100% - 96px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    /* top: 48px; */
+}
+
+div.content h1 {
+    font-size: 3rem;
+}
+
+label[for=errors] {
+    font-size: x-small;
+    color: #f50;
+}
+
+.errors {
+    font-size: x-small;
+    color: #f50;
+}
+
+.dev-links-container {
+    pointer-events: none;
+}
+
+
