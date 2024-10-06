@@ -214,5 +214,4 @@ const trackReducer = (state = initialState, action) => {
     }
 }
 
-
 export default trackReducer;
