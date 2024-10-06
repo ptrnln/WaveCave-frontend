@@ -19,7 +19,7 @@ export async function deleteTrack (trackId) {
 }
 
 export async function getTrackByUserNameAndTitle (username, title) {
-    const response = await csrfFetch(routeToAPI(`/api/users/${username}/tracks/${title}`));
+    const response = await csrfFetch(routeToAPI(`/api/users/@${username}/tracks/${title}`));
 
     if(response.ok) {
         const data = await response.json();
@@ -171,7 +171,7 @@ export async function updateTrack (trackData, audioFile, imageFile) {
     if(imageFile) formData.append('track[photo]', imageFile)
 
     const response = await csrfFetch(routeToAPI(`/api/tracks/${id}`), {
-        method: 'PUT',
+        method: 'PATCH',
         body: formData
     })
     
