@@ -58,7 +58,7 @@ export const clearErrors = () => {
 
 export const restoreSession = () => async dispatch => {
     try {
-        const response = await fetch(routeToAPI("/api/session"), { credentials: "include" });
+        const response = await fetch(routeToAPI("/api/session"), { credentials: window.env["environment"] === "production" ? "include" : "" });
         if(response.ok) {
             storeCSRFToken(response);
             const data = await response.json();
@@ -96,7 +96,7 @@ export const login = ({ credential, password }) => async dispatch => {
     const response = await csrfFetch(routeToAPI('/api/session'), {
         method: 'POST',
         body: JSON.stringify({ credential, password }),
-        credentials: "include"
+        credentials: window.env["environment"] ==="production" ? "include" : ""
     });
     
     const data = await response.json();
@@ -109,7 +109,7 @@ export const login = ({ credential, password }) => async dispatch => {
 export const logout = () => async dispatch => {
     const response = await csrfFetch(routeToAPI('/api/session'), {
         method: 'DELETE',
-        credentials: "include"
+        credentials: window.env["environment"] ==="production" ? "include" : ""
     })
 
     if(response.ok) {

@@ -4,7 +4,7 @@ async function csrfFetch(url, options = {}) {
     options.headers ||= {};
     options.method ||= 'GET'
 
-    options.credentials = "include"
+    if(window.env["environment"] === "production") options.credentials = "include"
 
     if(options.method.toUpperCase() !== 'GET' ) {
         if(!(options.body?.constructor?.name === 'FormData')) options.headers['Content-Type'] ||= 'application/json'

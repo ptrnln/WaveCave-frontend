@@ -16,7 +16,7 @@ export default defineConfig(( { mode }) =>  ({
   // uncomment the following lines:
   server: {
     proxy: {
-      '/api': mode === "production" ? 'https://api.ph4se.dev/wavecave' : 'http://localhost:5000'
+      '/api': 'http://127.0.0.1:5000'
     }
   },
   build: {

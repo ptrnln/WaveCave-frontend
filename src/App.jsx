@@ -67,7 +67,8 @@ const userLoader = async ({ params }) => {
 }
 
 const trackLoader = async ({ params }) => {
-  const response = await fetch(routeToAPI(`/api/users/${params.username}/tracks/${params.title}`)).catch((reasons) => {throw reasons})
+  
+  const response = await fetch(routeToAPI(`/api/users/@${params.username}/tracks/${params.title}`)).catch((reasons) => {throw reasons})
   
   
   if(response.ok) {
