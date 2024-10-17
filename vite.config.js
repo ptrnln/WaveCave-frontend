@@ -4,7 +4,7 @@ import eslint from 'vite-plugin-eslint';
 
 // https://vitejs.dev/config/
 export default defineConfig(( { mode }) =>  ({
-  base: mode === "production" ? "/wavecave/" : "",
+  base: mode === "production" ? "/wavecave" : "",
   plugins: [
     react(),
     eslint({
@@ -16,7 +16,7 @@ export default defineConfig(( { mode }) =>  ({
   // uncomment the following lines:
   server: {
     proxy: {
-      '/api': 'http://127.0.0.1:5000'
+      '/api': mode === "production" ? "https://api.ph4se.dev/wavecave" : 'http://127.0.0.1:5000'
     }
   },
   build: {

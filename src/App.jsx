@@ -16,7 +16,7 @@ import TrackIndex from './components/tracks/TrackIndex';
 import ErrorPage from './ErrorPage';
 import './app.css'
 import routeToAPI from './store/api';
-
+window.env ||= { "environment":import.meta.env.MODE }
 function Layout() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -55,7 +55,7 @@ function Layout() {
 
 
 const userLoader = async ({ params }) => {
-  window.env ||= { "environment":import.meta.env.MODE}
+
   const response = await fetch(routeToAPI(`/api/users/@${params.username}`));
   
   if(response.ok) {
@@ -67,7 +67,7 @@ const userLoader = async ({ params }) => {
 }
 
 const trackLoader = async ({ params }) => {
-  
+
   const response = await fetch(routeToAPI(`/api/users/@${params.username}/tracks/${params.title}`)).catch((reasons) => {throw reasons})
   
   

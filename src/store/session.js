@@ -96,7 +96,7 @@ export const login = ({ credential, password }) => async dispatch => {
     const response = await csrfFetch(routeToAPI('/api/session'), {
         method: 'POST',
         body: JSON.stringify({ credential, password }),
-        credentials: window.env["environment"] ==="production" ? "include" : ""
+        credentials: "include"
     });
     
     const data = await response.json();
@@ -109,7 +109,7 @@ export const login = ({ credential, password }) => async dispatch => {
 export const logout = () => async dispatch => {
     const response = await csrfFetch(routeToAPI('/api/session'), {
         method: 'DELETE',
-        credentials: window.env["environment"] ==="production" ? "include" : ""
+        credentials: "include"
     })
 
     if(response.ok) {
