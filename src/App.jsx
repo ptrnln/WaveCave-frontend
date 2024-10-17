@@ -16,7 +16,9 @@ import TrackIndex from './components/tracks/TrackIndex';
 import ErrorPage from './ErrorPage';
 import './app.css'
 import routeToAPI from './store/api';
-window.env ||= { "environment":import.meta.env.MODE }
+
+window.env ||= { "environment":import.meta.env.MODE };
+
 function Layout() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);

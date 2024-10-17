@@ -58,7 +58,7 @@ export const clearErrors = () => {
 
 export const restoreSession = () => async dispatch => {
     try {
-        const response = await fetch(routeToAPI("/api/session"), { credentials: window.env["environment"] === "production" ? "include" : "" });
+        const response = await fetch(routeToAPI("/api/session"), { credentials: "include" });
         if(response.ok) {
             storeCSRFToken(response);
             const data = await response.json();
