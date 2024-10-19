@@ -7,26 +7,6 @@ const REMOVE_TRACK = 'tracks/REMOVE_TRACK'
 const REMOVE_TRACKS = 'tracks/REMOVE_TRACKS'
 const RECEIVE_LOCAL_SOURCE = 'tracks/RECEIVE_LOCAL_SOURCE'
 
-export async function deleteTrack (trackId) {
-    const response = await csrfFetch(routeToAPI(`/api/tracks/${trackId}`), {
-        method: 'DELETE'
-    })
-    
-    if(response.ok) {
-        const data = await response.json();
-        return data
-    }
-}
-
-export async function getTrackByUserNameAndTitle (username, title) {
-    const response = await csrfFetch(routeToAPI(`/api/users/@${username}/tracks/${title}`));
-
-    if(response.ok) {
-        const data = await response.json();
-        return data
-    }
-}
-
 const initialState = {}
 
 export const receiveTrack = track => {
@@ -54,6 +34,44 @@ export const removeTracks = trackIds => {
     return {
         type: REMOVE_TRACKS,
         trackIds
+    }
+}
+
+export function getTracks (trackIds = []) { 
+    debugger
+    return async dispatch => {
+        debugger
+        if(trackIds.length === 0) {
+            const response = await fetch(routeToAPI('/api/tracks'))
+            if (response.ok) {
+                const data = await response.json();
+                if(data.tracks) return dispatch(receiveTracks(data.tracks));
+            }
+        }
+
+        for(let trackId of trackIds) {
+            dispatch(loadTrack(trackId));
+        }
+    }
+}
+
+export async function deleteTrack (trackId) {
+    const response = await csrfFetch(routeToAPI(`/api/tracks/${trackId}`), {
+        method: 'DELETE'
+    })
+    
+    if(response.ok) {
+        const data = await response.json();
+        return data
+    }
+}
+
+export async function getTrackByUserNameAndTitle (username, title) {
+    const response = await csrfFetch(routeToAPI(`/api/users/@${username}/tracks/${title}`));
+
+    if(response.ok) {
+        const data = await response.json();
+        return data
     }
 }
 
@@ -96,6 +114,7 @@ export const loadTrack = trackId => async (dispatch, getState) => {
         if(response.ok) {
             let data = await response.json();
             dispatch(receiveTrack(data.track));
+            dispatch(loadTrackLocally(data.track));
             return data.track;
         } else {
             return response.error

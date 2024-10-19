@@ -13,7 +13,6 @@ export default function TrackView() {
     const [isLoaded, setIsLoaded] = useState(false);
 
     const track = useSelector(state => {
-        // debugger
         let track;
         Object.keys(state.tracks).forEach(id => {
             state.tracks[id]
