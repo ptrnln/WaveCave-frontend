@@ -38,9 +38,9 @@ export const removeTracks = trackIds => {
 }
 
 export function getTracks (trackIds = []) { 
-    debugger
+    
     return async dispatch => {
-        debugger
+        
         if(trackIds.length === 0) {
             const response = await fetch(routeToAPI('/api/tracks'))
             if (response.ok) {

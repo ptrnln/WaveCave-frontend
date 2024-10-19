@@ -12,8 +12,6 @@ export default function TrackIndex() {
 
     useEffect(() => {
         (async () => { 
-            // const response = await fetch(routeToAPI('/api/tracks'))
-            // const tracksData = await response.json();
             dispatch(trackActions.getTracks());
             setLoaded(true);
         })()

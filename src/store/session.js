@@ -57,7 +57,7 @@ export const clearErrors = () => {
 }
 
 export const restoreSession = () => async dispatch => {
-    debugger
+    
     try {
         const response = await fetch(routeToAPI("/api/session"), { credentials: "include" });
         if(response.ok) {
