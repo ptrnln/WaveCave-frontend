@@ -48,7 +48,7 @@ const Navigation = () => {
         <div id='navigation-bar'>
             <ul>
                 <li key={'nav-link home'}>
-                    <NavLink to={ isLoggedIn ? '/feed' : '/' } className='home-nav link'><img href=""  className="logo" src={logo}></img></NavLink>
+                    <NavLink to={ isLoggedIn ? '/feed' : '/' } className='nav-link home'><img href=""  className="logo" src={logo}></img></NavLink>
                 </li>
                 <li key={'site-name'}>
                     <span id="site-name" style={{'fontSize': 'xx-large', 'color': 'white'}}>WaveCave</span>
@@ -64,10 +64,10 @@ const Navigation = () => {
                     </li>
                 </> :
                 <>
-                    <li key={'nav-link login'}>
-                        <button className='nav-link signup' onClick={navToSignUp}>Sign Up</button>
-                    </li>
                     <li key={'nav-link signup'}>
+                        <NavLink to={"/signup"} className={"nav-link signup"}>Sign Up</NavLink>
+                    </li>
+                    <li key={'nav-link login'}>
                         <button className='nav-link login' onClick={showLoginModal}>Log In</button>
                     </li>
                 </>

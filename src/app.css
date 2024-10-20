@@ -114,3 +114,6 @@ label[for=errors] {
 }
 
 
+div.content button:hover {
+    filter: brightness(130%);
+}

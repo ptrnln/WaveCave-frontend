@@ -16,8 +16,8 @@ export default function TrackIndex() {
             setLoaded(true);
         })()
     }, [dispatch])
+ 
 
-    
     return (
         <div className="track-index container">
             <h1>Tracks</h1>

@@ -1,10 +1,12 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import * as sessionActions from "../../store/session";
-import { Navigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import './SignUpForm.css'
 
 const SignUpForm = () => {
+    const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -17,7 +19,9 @@ const SignUpForm = () => {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
 
-    if (sessionUser) return <Navigate to='/' replace={true} />
+    useEffect(() => {
+        if (sessionUser) navigate(searchParams.get("redirect_url") || '/feed')
+    },[navigate, sessionUser])
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -58,22 +62,22 @@ const SignUpForm = () => {
             <form className='SignUpForm' onSubmit={handleSubmit}>
                 <h1>Sign Up</h1>
                 <label htmlFor="email">Email:
-                    <input type="text" value={email} onChange={e => setEmail(e.target.value)} />
+                    <input type="text" value={email} onChange={e => setEmail(e.target.value)} required />
                 </label>
                 <ul className="email errors">
                     {errors.email.map((error, i) => <li key={`email error-${i}`}>* {error}</li>)}
                 </ul>
                 <label htmlFor="username">Username:
-                    <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
+                    <input type="text" value={username} onChange={e => setUsername(e.target.value)} required />
                 </label>
                 <ul className="username errors">
                     {errors.username.map((error, i) => <li key={`username error-${i}`}>* {error}</li>)}
                 </ul>
                 <label htmlFor="password">Password:
-                    <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
+                    <input type="password" value={password} onChange={e => setPassword(e.target.value)} required />
                 </label>
                 <label htmlFor="confirmPassword">Confirm Password:
-                    <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
+                    <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} required />
                 </label>
                 <ul className="password errors">
                     {errors.password.map((error, i) => <li key={`password error-${i}`}>* {error}</li>)}

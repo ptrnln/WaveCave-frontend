@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import './TrackUploadForm.css';
 import * as trackActions from '../../store/track';
 import { Navigate, useNavigate } from "react-router-dom";
@@ -97,8 +97,12 @@ export default function TrackUploadForm() {
         }
         
     }
+    
 
-    if(!currentUser) return <Navigate to='/' />
+    useEffect(() => {
+        if(!currentUser) navigate("/")
+    }, [currentUser, navigate])
+    
 
     return(
         <form name="upload-form" onSubmit={handleSubmit}>

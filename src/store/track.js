@@ -38,7 +38,6 @@ export const removeTracks = trackIds => {
 }
 
 export function getTracks (trackIds = []) { 
-    
     return async dispatch => {
         
         if(trackIds.length === 0) {
@@ -85,14 +84,15 @@ export const receiveLocalSource = (trackId, localSource) => {
 
 export const loadTrackLocally = (trackId, lazy = true) => async (dispatch, getState) => {
     const state = getState();
-    if(lazy && state.tracks[trackId].localSource !== undefined) {
+    if(lazy && state.tracks[trackId]?.localSource !== undefined) {
         return
     }
-    const response = await fetch(state.tracks[trackId].sourceUrl);
+    const response = await fetch(state.tracks[trackId]?.sourceUrl);
 
     const data = await response.blob();
 
     const localSource = URL.createObjectURL(data);
+    
     dispatch(receiveLocalSource(trackId, localSource));
 }
 

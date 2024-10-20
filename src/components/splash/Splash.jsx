@@ -1,7 +1,8 @@
 import './Splash.css'
+import { useNavigate } from 'react-router-dom';
 
 export default function Splash() {
-  
+    const navigate = useNavigate();
     const splashImage = new Image();
 
     splashImage.src = "/images/pexels-martin-lopez-2240771.jpg"
@@ -29,7 +30,7 @@ export default function Splash() {
 
 
     return (
-        <div className="splash wrapper">
+        <div className="splash container">
             <a title="Image courtesy of Martin Lopez - https://pexels.com/@mediocrememories">
             <canvas
             id="splash-canvas"
@@ -40,6 +41,14 @@ export default function Splash() {
                 
             </canvas>
             </a>
+            <div id='splash-buttons' className='splash container'>
+                <button id='get-started-button' onClick={e => {
+                    e.preventDefault();
+                    navigate('/signup?redirect_url=/upload')
+                }}>
+                    Get Started
+                </button>
+            </div>
         </div>
     )
 }

@@ -112,8 +112,9 @@ div#navigation-bar ul {
     background-color: inherit;
 }
 
-.home-nav.link {
+.nav-link.home {
     position: relative;
+    padding: 0 0;
 }
 
 .nav-link {
@@ -124,7 +125,8 @@ div#navigation-bar ul {
     color: lightgray;
     background-color: inherit;
     border: 0;
-    padding: 1rem 2rem;
+    padding: 0 2rem;
+    align-content: center;
 }
 
 div#navigation-bar li img {
@@ -135,6 +137,9 @@ div#navigation-bar li img {
 div#navigation-bar li:has(> a.active) {
     text-decoration: none;
     background-color: black;
+}
+
+div#navigation-bar li:has(> a) {
     display: flex;
 }
 

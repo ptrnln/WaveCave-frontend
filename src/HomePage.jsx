@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import Splash from "./Splash";
+import Splash from "./components/splash/Splash";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import './HomePage.css'
