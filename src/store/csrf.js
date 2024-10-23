@@ -10,7 +10,7 @@ async function csrfFetch(url, options = {}) {
         if(!(options.body?.constructor?.name === 'FormData')) options.headers['Content-Type'] ||= 'application/json'
         if(window.env["environment"] !== "production") options.headers['X-CSRF-Token'] = sessionStorage.getItem('X-CSRF-Token')
     }
-  
+    debugger
     const res = await fetch(routeToAPI(url), options);
 
     return res;

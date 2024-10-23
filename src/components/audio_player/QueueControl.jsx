@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux"
 import QueueItem from "./QueueItem";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import './QueueControl.css'
 import * as playlistActions from '../../store/playlist.js'
 
@@ -12,16 +12,15 @@ const handlePlaylistSave = (e) => {
 export default function QueueControl () {
     const [display, setDisplay] = useState(false)
     // const currentIndex = useSelector(state => state.audio.currentIndex);
-    const tracks = useSelector(state => {
+    const tracks =  useSelector(state => {
         const queue = state.audio.isShuffled ?
             state.audio.queue.shuffled
-            :
-            state.audio.queue.original
+            : state.audio.queue.original
         return (queue
-                    .slice(state.audio.currentIndex + 1)
-                    .concat(queue.slice(0, state.audio.currentIndex)))
-                    .map(idx => state.tracks[idx])
-    })
+            .slice(state.audio.currentIndex + 1)
+            .concat(queue.slice(0, state.audio.currentIndex)))
+            .map(idx => state.tracks[idx])
+    });
 
     const toggleDisplay = (e) => {
         e.preventDefault();

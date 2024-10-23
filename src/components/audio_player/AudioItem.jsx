@@ -44,14 +44,14 @@ export default function AudioItem({ audioRef, handleNext }) {
     
     
 
-    const currentTrackSourceUrl = useSelector(state => {
-        const { queue, isShuffled, currentIndex } = state.audio
+    // const currentTrackSourceUrl = useSelector(state => {
+    //     const { queue, isShuffled, currentIndex } = state.audio
 
-        if(isShuffled) {
-            return state.tracks[queue.shuffled[currentIndex]]?.sourceUrl
-        }
-        return state.tracks[queue.original[currentIndex]]?.sourceUrl
-    });
+    //     if(isShuffled) {
+    //         return state.tracks[queue.shuffled[currentIndex]]?.sourceUrl
+    //     }
+    //     return state.tracks[queue.original[currentIndex]]?.sourceUrl
+    // });
 
     const isPlaying = useSelector(state => state.audio.isPlaying);
     // const volume = useSelector(state => state.audio.volume);

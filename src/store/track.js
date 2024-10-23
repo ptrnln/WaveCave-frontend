@@ -55,13 +55,15 @@ export function getTracks (trackIds = []) {
 }
 
 export async function deleteTrack (trackId) {
-    const response = await csrfFetch(routeToAPI(`/api/tracks/${trackId}`), {
-        method: 'DELETE'
-    })
-    
-    if(response.ok) {
-        const data = await response.json();
-        return data
+    return async () => {
+        const response = await csrfFetch(routeToAPI(`/api/tracks/${trackId}`), {
+            method: 'DELETE'
+        })
+        
+        if(response.ok) {
+            const data = await response.json();
+            return data
+        }
     }
 }
 
@@ -70,7 +72,7 @@ export async function getTrackByUserNameAndTitle (username, title) {
 
     if(response.ok) {
         const data = await response.json();
-        return data
+        return data.track
     }
 }
 
@@ -83,7 +85,10 @@ export const receiveLocalSource = (trackId, localSource) => {
 }
 
 export const loadTrackLocally = (trackId, lazy = true) => async (dispatch, getState) => {
+    debugger
+    
     const state = getState();
+
     if(lazy && state.tracks[trackId]?.localSource !== undefined) {
         return
     }
@@ -97,6 +102,7 @@ export const loadTrackLocally = (trackId, lazy = true) => async (dispatch, getSt
 }
 
 export const loadTracksLocally = (trackIds, lazy = true) => async (dispatch, getState) => {
+    
     const state = getState()
     for(const trackId of trackIds) {
         if(lazy && state.tracks[trackId].localSource !== undefined) {
@@ -107,6 +113,7 @@ export const loadTracksLocally = (trackIds, lazy = true) => async (dispatch, get
 }
 
 export const loadTrack = trackId => async (dispatch, getState) => {
+    
     const track = getState().tracks[trackId];
     if(track === undefined) {
         const response = await fetch(routeToAPI(`/api/tracks/${trackId}`));
@@ -114,7 +121,7 @@ export const loadTrack = trackId => async (dispatch, getState) => {
         if(response.ok) {
             let data = await response.json();
             dispatch(receiveTrack(data.track));
-            dispatch(loadTrackLocally(data.track));
+            dispatch(loadTrackLocally(Object.keys(data.track)[0]));
             return data.track;
         } else {
             return response.error
@@ -199,7 +206,7 @@ export async function updateTrack (trackData, audioFile, imageFile) {
 
 const trackReducer = (state = initialState, action) => {
     Object.freeze(state)
-
+    
     let newState = { ...state }
 
     switch(action.type) {
@@ -226,6 +233,7 @@ const trackReducer = (state = initialState, action) => {
             }
             return newState
         case RECEIVE_LOCAL_SOURCE:
+            
             newState[action.trackId].localSource = action.localSource
             return newState;
         default:

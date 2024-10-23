@@ -16,10 +16,14 @@ import TrackIndex from './components/tracks/TrackIndex';
 import ErrorPage from './ErrorPage';
 import './app.css'
 import routeToAPI from './store/api';
+import { spawn, Thread, Worker } from "threads";
 
 window.env ||= { "environment":import.meta.env.MODE };
 
+window.blobber ||= new Worker("./workers/blobber.worker");
+
 function Layout() {
+  debugger
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
 

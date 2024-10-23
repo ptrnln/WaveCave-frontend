@@ -111,20 +111,16 @@ export const playPrev = () => {
     }
 }
 
-export const enqueueTrack = trackId => {
+export const enqueueTrack = (trackId, replace = false) => {
     return {
         type: ENQUEUE_TRACK,
-        trackId
+        trackId,
+        replace
     }
 }
 
-export const loadTracks = trackIds => async dispatch => {
-    dispatch(trackActions.loadTracksLocally(trackIds));
-    
-    dispatch({
-        type: ENQUEUE_TRACKS,
-        trackIds
-    })
+export const enqueueTracks = (trackIds, replace = false) => {
+
 }
 
 export const dequeueTrack = trackId => {
@@ -164,6 +160,21 @@ export const setRepeatFalse = () => {
     }
 }
 
+export const loadTrack = (trackId, replace = false) => async (dispatch, getState) => {
+    
+}
+
+export const loadTracks = (trackIds, replace = false) => async dispatch => {
+    
+    dispatch(trackActions.loadTracksLocally(trackIds));
+    
+    dispatch({
+        type: ENQUEUE_TRACKS,
+        trackIds,
+        replace
+    })
+}
+
 const shuffle = (queue, currentTrackId = queue[0]) => {
     if(queue.length <= 2) return queue;
     const indexOfId = queue.indexOf(currentTrackId);
@@ -192,7 +203,7 @@ export const audioPlayerReducer = (state = initialState, action) => {
     Object.freeze(state);
     let newState = { ...state };
 
-    let queue, shuffledQueue, newIndex, repeated;
+    let queue, shuffledQueue, newIndex, repeated, newQueue;
 
     switch(action.type) {
         case PLAY_TRACK:
@@ -232,20 +243,32 @@ export const audioPlayerReducer = (state = initialState, action) => {
                 isPlaying: true
             };
         case ENQUEUE_TRACK:
+            queue = state.isShuffled ? state.queue.shuffled : state.queue.original
+            if (action.replace) {
+                newQueue = [action.trackId]
+            } else {
+                newQueue = state.queue.original.indexOf(action.trackId) === -1 ? 
+                    state.queue.original
+                    : state.queue.original.concat([action.trackId])
+            }
             return {...state,
                 currentIndex: 0,
                 // isPlaying: true,
                 queue: {
-                    original: [action.trackId],
-                    shuffled: [action.trackId]
+                    original: newQueue,
+                    shuffled: shuffle(newQueue, queue[state.currentIndex])
                 }
             }
         case ENQUEUE_TRACKS:
+            
             queue = state.isShuffled ? state.queue.shuffled : state.queue.original
-            shuffledQueue = shuffle([...action.trackIds], queue[state.currentIndex])
+            newQueue = action.replace ?
+                action.trackIds
+                : queue.concat(action.trackIds.filter(a => queue.indexOf(a) === -1))
+            shuffledQueue = shuffle([...newQueue], queue[state.currentIndex])
             return { ...state,
                 queue: {
-                    original: action.trackIds,
+                    original: newQueue,
                     shuffled: shuffledQueue
                 },
                 hasRepeated: false

@@ -7,10 +7,10 @@ export default defineConfig(( { mode }) =>  ({
   base: mode === "production" ? "/wavecave" : "",
   plugins: [
     react(),
-    eslint({
-      lintOnStart: true,
-      failOnError: false // mode === 'production'
-    })
+    // eslint({
+    //   lintOnStart: true,
+    //   failOnError: mode === 'production'
+    // })
   ],
   // To automatically open the app in the browser whenever the server starts,
   // uncomment the following lines:

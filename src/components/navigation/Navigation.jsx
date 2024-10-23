@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import './Navigation.css'
 import ProfileButton from "./ProfileButton";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import logo from '/images/WaveCave logo HomeNavLink.svg';
 import * as audioPlayerActions from '../../store/audioPlayer';
 import * as trackActions from '../../store/track';
@@ -14,13 +14,8 @@ import routeToAPI from "../../store/api";
 const Navigation = () => {
     const isLoggedIn = useSelector(state => !!state.session.user)
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const sessionUser = useSelector(state => state.session.user);
-
-    const navToSignUp = (e) => {
-        e.preventDefault();
-        navigate('/signup');
-    }
 
     const showLoginModal = (e) => {
         e.preventDefault();
