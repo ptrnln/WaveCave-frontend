@@ -1,6 +1,12 @@
-import { expose } from "threads/worker"
+import { expose } from "threads/worker";
 
-export default blobber = expose(async function blob(response) {
-    const blob = await response.blob();
-    return URL.createObjectURL(blob);
-}) 
+debugger
+
+const blobber = {
+    async blob(response) {
+        const blob = await response.blob();
+        return URL.createObjectURL(blob);
+    }
+}
+
+expose(blobber);

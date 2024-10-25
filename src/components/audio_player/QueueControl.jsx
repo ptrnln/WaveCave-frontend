@@ -1,13 +1,10 @@
 import { useSelector } from "react-redux"
 import QueueItem from "./QueueItem";
-import { useState, useMemo } from "react";
+import { useState, useCallback} from "react";
 import './QueueControl.css'
-import * as playlistActions from '../../store/playlist.js'
+// import * as playlistActions from '../../store/playlist.js'
 
-const handlePlaylistSave = (e) => {
-    e.preventDefault();
-    
-}
+
 
 export default function QueueControl () {
     const [display, setDisplay] = useState(false)
@@ -22,10 +19,16 @@ export default function QueueControl () {
             .map(idx => state.tracks[idx])
     });
 
-    const toggleDisplay = (e) => {
+    const toggleDisplay = useCallback((e) => {
         e.preventDefault();
         setDisplay(!display);
+    }, [display])
+
+    const handlePlaylistSave = (e) => {
+        e.preventDefault();
+        
     }
+    
 
     return (
         <>

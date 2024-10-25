@@ -1,6 +1,8 @@
 import csrfFetch from "./csrf"
 import routeToAPI from "./api"
 
+import { spawn, Thread, Worker } from "threads"
+
 const RECEIVE_TRACK = 'tracks/RECEIVE_TRACK'
 const RECEIVE_TRACKS = 'tracks/RECEIVE_TRACKS'
 const REMOVE_TRACK = 'tracks/REMOVE_TRACK'
@@ -85,13 +87,17 @@ export const receiveLocalSource = (trackId, localSource) => {
 }
 
 export const loadTrackLocally = (trackId, lazy = true) => async (dispatch, getState) => {
-    debugger
+    // debugger
     
     const state = getState();
-
+    
     if(lazy && state.tracks[trackId]?.localSource !== undefined) {
         return
     }
+    // const blobber = await spawn(new Worker("/workers/blobber.worker.js", { type: 'module' }));
+
+    // debugger
+    
     const response = await fetch(state.tracks[trackId]?.sourceUrl);
 
     const data = await response.blob();
@@ -99,6 +105,8 @@ export const loadTrackLocally = (trackId, lazy = true) => async (dispatch, getSt
     const localSource = URL.createObjectURL(data);
     
     dispatch(receiveLocalSource(trackId, localSource));
+    
+    // await Thread.terminate(blobber);
 }
 
 export const loadTracksLocally = (trackIds, lazy = true) => async (dispatch, getState) => {

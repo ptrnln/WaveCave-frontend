@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build --base=/wavecave/",
-    "lint": "eslint src,public --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint src,public --ext mjs,js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {

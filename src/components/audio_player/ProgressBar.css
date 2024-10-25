@@ -10,6 +10,7 @@
 
 .progress-bar input[type="range"] {
     --range-progress: 0.0;
+    --update-time: '00:00';
     -webkit-appearance: none;
     appearance: initial;
     position: relative;
@@ -28,6 +29,25 @@ span.time-display {
     padding-right: 10px;
     user-select: none;
 }
+
+span.time-display.hover-time {
+  transition-duration: 100ms;
+  transition-property: opacity;
+  transition-timing-function: ease-in-out;
+  opacity: 0;
+  --update-position: 0.0;
+  position: absolute;
+  display: inline-flex;
+  top: -20px;
+  transform: translateX(calc(35px)); 
+  background-color: rgb(237, 237, 237);
+  padding: 0.5rem;
+  border: 1px solid rgb(194, 204, 214);
+}
+
+.progress-bar input[type="range"]#progress-bar:hover + span.time-display.hover-time {
+  opacity: 1;
+}
   
   /* Input range - firefox */
 .progress-bar input[type="range"]::-moz-range-track {
@@ -38,6 +58,7 @@ span.time-display {
     border-radius: 2px;
     cursor: pointer;
     user-select: none;
+  
 }
   
   /* played progress length - Chrome & safari*/
@@ -52,6 +73,24 @@ span.time-display {
     top: 0;
     left: 0;
 }
+
+/* .progress-bar input[type="range"]::after {
+    transition-duration: 100ms;
+    transition-property: opacity;
+    transition-timing-function: ease-in-out;
+    position: absolute;
+    content: var(--update-time);
+    top: -50px;
+    border-radius: 10px;
+    display: inline-flex;
+    opacity: 1;
+    background-color: aqua;
+    transform: translateX(calc(var(--range-progress) * 10));
+} */
+/* 
+.progress-bar:hover input[type="range"]::after {
+    opacity: 1;
+} */
   
   /* played progress length - firefox */
 .progress-bar input[type="range"]::-moz-range-progress {
@@ -63,6 +102,9 @@ span.time-display {
   
   /* slider thumb - chrome and safari */
 .progress-bar input[type="range"]::-webkit-slider-thumb {
+    transition-duration: 100ms;
+    transition-property: opacity;
+    transition-timing-function: ease-in-out;
     -webkit-appearance: none;
     height: 8px;
     width: 8px;
@@ -71,6 +113,7 @@ span.time-display {
     background-color: #f50;
     cursor: pointer;
     position: relative;
+    opacity: 0;
     transition: .2s;
 }
   
@@ -98,22 +141,8 @@ span.time-display {
     align-content: stretch;
 }
 
-.progress-bar input[type="range"]::-webkit-slider-thumb {
-    transition-duration: 100ms;
-    transition-property: opacity;
-    transition-timing-function: ease-in-out;
-    width: 8px;
-    height: 8px;
-    opacity: 0;
-    border-radius: 50%;
-}
-
-.progress-bar:hover input[type="range"]::-webkit-slider-thumb {
-    transition-duration: 100ms;
-    transition-property: opacity;
-    transition-timing-function: ease-in-out;
+.progress-bar input[type="range"]#progress-bar:hover::-webkit-slider-thumb {
     opacity: 1;
-    border-radius: 50%;
 }
 
 .time-display {

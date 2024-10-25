@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
+import Layout from './Layout';
 import LoginForm from './components/session/LoginForm';
 import SignUpForm from './components/session/SignUpForm';
 import Navigation from './components/navigation/Navigation';
@@ -18,47 +19,10 @@ import './app.css'
 import routeToAPI from './store/api';
 import { spawn, Thread, Worker } from "threads";
 
+
 window.env ||= { "environment":import.meta.env.MODE };
 
-window.blobber ||= new Worker("./workers/blobber.worker");
-
-function Layout() {
-  debugger
-  const dispatch = useDispatch();
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    dispatch(sessionActions.restoreSession()).then(() => {
-      setIsLoaded(true)
-    });
-    dispatch(trackActions.reloadTracksLocally());
-  }, [dispatch]);
-
-  
-
-  // const isMobile = /iPhone|iPad|iPod|Android|webOS|BlackBerry/i.test(navigator.userAgent) || window.matchQuery('(max-width: 720px)');
-
-  return (
-    <>
-      <div className='app'>
-        <Navigation />
-        <div className='content'>
-          {isLoaded && <Outlet />}
-        </div>
-        <LoginForm />
-        <AudioPlayer />
-      </div>
-      <div id='dev-links-container'>
-        <a id='git-link' className='dev-link' href='https://github.com/ptrnln'><i className='fa-brands fa-github' /></a>
-        <a className='dev-link' href='https://www.linkedin.com/in/peter-nolan-45828b2ab'><i className='fa-brands fa-linkedin' /></a>
-        <a href="https://ph4se.dev" className="dev-link"><i className="fa-solid fa-address-card"></i></a>
-        <br />
-        <span className='dev-cred'>Developed by Peter Nolan 2024</span>
-      </div>
-    </>
-  );
-}
-
+// window.blobber ||= new Worker("./blobber.worker.js");
 
 const userLoader = async ({ params }) => {
 
@@ -89,6 +53,7 @@ const trackLoader = async ({ params }) => {
 const router = createBrowserRouter([
   {
     element: <Layout />,
+    errorElement: <Layout><ErrorPage /></Layout>,
     children: [
       {
         path: '',
@@ -129,7 +94,6 @@ const router = createBrowserRouter([
         ]
       },
     ],
-    errorElement: <ErrorPage />,
   },
 ], {
   basename: import.meta.env.MODE === "production" ? "/wavecave" : "/"
