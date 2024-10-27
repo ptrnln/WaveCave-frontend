@@ -6,11 +6,11 @@
     top: 0%;
     width: 100%;
     height: 100%;
+    cursor: pointer;
 }
 
-.progress-bar input[type="range"] {
+.progress-bar input[type="range"]#progress-bar {
     --range-progress: 0.0;
-    --update-time: '00:00';
     -webkit-appearance: none;
     appearance: initial;
     position: relative;
@@ -30,12 +30,15 @@ span.time-display {
     user-select: none;
 }
 
-span.time-display.hover-time {
-  transition-duration: 100ms;
+span.time-display.tooltip-time {
+  --tooltip-pos: 0;
+  --tooltip-time: 0;
+  left: calc(var(--tooltip-pos) * 1px);
+  /* right: 0; */
+  transition-duration: 200ms;
   transition-property: opacity;
   transition-timing-function: ease-in-out;
   opacity: 0;
-  --update-position: 0.0;
   position: absolute;
   display: inline-flex;
   top: -20px;
@@ -43,9 +46,10 @@ span.time-display.hover-time {
   background-color: rgb(237, 237, 237);
   padding: 0.5rem;
   border: 1px solid rgb(194, 204, 214);
+
 }
 
-.progress-bar input[type="range"]#progress-bar:hover + span.time-display.hover-time {
+.progress-bar input[type="range"]#progress-bar:hover + span.time-display.tooltip-time {
   opacity: 1;
 }
   
@@ -72,6 +76,7 @@ span.time-display.hover-time {
     position: absolute;
     top: 0;
     left: 0;
+    cursor: pointer;
 }
 
 /* .progress-bar input[type="range"]::after {
@@ -140,6 +145,7 @@ span.time-display.hover-time {
 .progress-bar input {
     align-content: stretch;
 }
+
 
 .progress-bar input[type="range"]#progress-bar:hover::-webkit-slider-thumb {
     opacity: 1;

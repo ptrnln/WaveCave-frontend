@@ -32,7 +32,7 @@ export default function QueueControl () {
 
     return (
         <>
-            <button className="queue-btn" onClick={toggleDisplay}>
+            <button className="queue-btn" onClick={toggleDisplay} title="Playlist menu">
                 <i className="fa-solid fa-music"/>
             </button>
             { display &&

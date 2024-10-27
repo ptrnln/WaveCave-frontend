@@ -1,6 +1,6 @@
 import { expose } from "threads/worker";
 
-debugger
+
 
 const blobber = {
     async blob(response) {

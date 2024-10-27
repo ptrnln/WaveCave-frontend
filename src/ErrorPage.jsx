@@ -7,10 +7,10 @@ import "./ErrorPage.css";
 
 export default function ErrorPage() {
     const error = useRouteError();
-    debugger
+    
 
     function renderSwitch(status) {
-        debugger
+        
         switch(status) {
             case 404:
                return <img src="/images/404_img.svg" alt="404" />

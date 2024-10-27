@@ -54,10 +54,10 @@ export default function AudioControls({ handleNext, handlePrev }) {
     return (
         <div className="audio-controls container">
             <div className="track-controls container">
-                <button className="previous button" onClick={handlePrev}>
+                <button className="previous button" onClick={handlePrev} alt="Previous" title='Previous track/Replay'>
                     <i className="fa fa-step-backward"/>     
                 </button>
-                <button className="play-pause button" onClick={togglePlay}>
+                <button className="play-pause button" onClick={togglePlay} alt="Play" title='Play track'>
                 {isPlaying ? 
                     <i className='fa fa-pause' />
                     :
@@ -65,11 +65,11 @@ export default function AudioControls({ handleNext, handlePrev }) {
                 }
                 </button>
                 { nextButtonDisabled ?
-                    <button className="next button" style={{color: "Grey", pointer: "default"}}>
+                    <button className="next button" style={{color: "Grey", pointer: "default"}} title="Next track">
                         <i className="fa fa-step-forward"></i>
                     </button>
                     :
-                    <button className="next button" onClick={handleNext}>
+                    <button className="next button" onClick={handleNext} title="Next track">
                         <i className="fa fa-step-forward"></i>
                     </button>
                 }
@@ -79,7 +79,8 @@ export default function AudioControls({ handleNext, handlePrev }) {
                     <button 
                         id="shuffle-button" 
                         className="shuffle button"
-                        onClick={toggleShuffle}>
+                        onClick={toggleShuffle}
+                        title='Shuffle playlist'>
                             <i className="fa fa-random"></i>
                     </button>
                 </span>
@@ -89,7 +90,7 @@ export default function AudioControls({ handleNext, handlePrev }) {
                                     "#f50"
                                     :   
                                     "Black"}}>
-                    <button className="repeat button">
+                    <button className="repeat button" title='Repeat playlist'>
                         <i 
                             className={
                                 isRepeating === 'once' ? "wc-icon-cycle-1" : "wc-icon-cycle"
