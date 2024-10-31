@@ -73,7 +73,7 @@ export default function TrackUploadForm() {
             }
             const fileType = getFileType(audioFile.name);
             
-            if(!SUPPORTED_MIME_TYPES.includes(fileType)) {
+            if(!SUPPORTED_MIME_TYPES.includes(fileType === "mpeg" ? "mp3" : fileType)) {
                 setErrors(["Audio file type not supported"])
                 return
             }

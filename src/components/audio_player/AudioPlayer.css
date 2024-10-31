@@ -1,5 +1,6 @@
-div.audio-player {
+div.audio-player.container {
     display: flex;
+    flex-direction: row;
     justify-content: center;
     height: 48px;
     width: 100%;
@@ -9,7 +10,13 @@ div.audio-player {
     bottom: 0;
 }
 
-div.audio-player div.inner {
+div.audio-player button {
+    appearance: none;
+    border: 0;
+    background-color: inherit;
+}
+
+div.audio-player div.audio-player.inner {
     display: flex;
     flex-direction: row;
     height: 100%;

@@ -1,20 +1,41 @@
-div.queue-control-inner {
-    font-size: .8rem;
+div.queue-control.inner {
     position: absolute;
-
-    height: clamp(0, min-content, 500px);
-    bottom: 48px;
-    right: 0;
-    text-wrap: nowrap;
-    background-color: #ececec;
-    padding: 5px 5px;
+    font-size: .8rem;
+    opacity: 1;
+    display: inline-flex;
+    flex-direction: column;
+    /* height: min-content; */
+    width: fit-content;
+    bottom: 54px;
+    /* text-wrap: nowrap; */
+    background-color: white;
+    /* padding: 5px 5px; */
     border-radius: 2%;
     border: 1px solid #d3d3d3;
+    transition: bottom .8s cubic-bezier(0.37, .64, 0, 1.19), opacity .3s;
 }
 
-/* div.queue-control.container {
-    
-} */
+div.queue-control.inner.hidden {
+    opacity: 0;
+    bottom: -10px;
+    pointer-events: none;
+}
+
+div.queue-control.container {
+    display: inline-flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+}
+
+div.queue-control-header {
+    /* width: 100%; */
+    text-wrap: nowrap;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 2px solid #d3d3d3;
+    padding: 1rem;
+}
 
 div.queue-item {
     display: flex;
@@ -22,16 +43,17 @@ div.queue-item {
     align-items: center;
     padding: 5px 0;
     border-bottom: 1px solid #d3d3d3;
-    min-width: 250px;    
+    min-width: 250px;   
+    padding: 0.5rem; 
 }
 
-div.queue-control-header {
-    text-wrap: nowrap;
-    border-bottom: #d3d3d3;
+ul.queue li:last-child div {
+    border-bottom: none;
 }
 
-div#queue-control {
-    display: flex;
-    flex-direction: column-reverse;
+
+button.queue-control.button {
+    margin: auto;
 }
+
 

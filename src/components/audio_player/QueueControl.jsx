@@ -31,22 +31,20 @@ export default function QueueControl () {
     
 
     return (
-        <>
-            <button className="queue-btn" onClick={toggleDisplay} title="Playlist menu">
+        <div className="queue-control container">
+            <button className="queue-control button" onClick={toggleDisplay} title="Playlist menu">
                 <i className="fa-solid fa-music"/>
             </button>
-            { display &&
-            (<div className="queue-control-inner">
+            <div className={display ? "queue-control inner hidden" : "queue-control inner"}>
                 <div className="queue-control-header">
                     <span>Next Up</span>
                     <button onClick={handlePlaylistSave}>Save Playlist</button>
                 </div>
                 <ul className="queue">
-                    { tracks.map(track => <li key={`${track.title}`}><QueueItem track={track}/></li>)}
+                    { tracks.map((track, i) => <li key={i}><QueueItem track={track}/></li>)}
                 </ul>
-            </div>)
-            }
-        </>
+            </div>
+        </div>
     )
     
 }

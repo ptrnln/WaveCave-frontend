@@ -41,8 +41,8 @@ export default function AudioPlayer() {
     // }, [hasRepeated, tracks.length, isRepeating]);
 
     return (
-        <div className="audio-player">
-            <div className="inner">
+        <div className="audio-player container">
+            <div className="audio-player inner">
                 <AudioControls {...{
                     handleNext,
                     handlePrev,
