@@ -15,14 +15,20 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
     const mousePositionRef = useRef([0,0]);
 
     useEffect(() => {
-        const handleMouseMove = (e) => {
-            mousePositionRef.current = [e.pageX, e.pageY];
+        const handlePointerMove = (e) => {
+            const clientX = e.touches ? e.touches[0].clientX : e.pageX;
+            const clientY = e.touches ? e.touches[0].clientY : e.pageY;
+            
+            mousePositionRef.current = [clientX, clientY];
         };
-        window.addEventListener('mousemove', handleMouseMove);
+    
+        window.addEventListener('mousemove', handlePointerMove);
+        window.addEventListener('touchmove', handlePointerMove);
     
         return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-        }
+            window.removeEventListener('mousemove', handlePointerMove);
+            window.removeEventListener('touchmove', handlePointerMove);
+        };
     }, []);
 
     const formatTime = time => {
@@ -99,7 +105,7 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
     const updateTooltip = useCallback(() => {
         const progressBarBoundingBox = progressBarRef.current.getBoundingClientRect();
         const [mouseX] = mousePositionRef.current;
-        const offsetX = mouseX - progressBarBoundingBox.left;
+        const offsetX = Math.max(0, Math.min(mouseX - progressBarBoundingBox.left, progressBarBoundingBox.right - progressBarBoundingBox.left));
         // if(offsetX < 0) return
         const rangeLength = progressBarBoundingBox.right - progressBarBoundingBox.left;
         const tooltipT = (offsetX / rangeLength) * (audioRef.current.duration || 0)
@@ -108,7 +114,7 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
             '--tooltip-pos',
             `${offsetX}`
         );
-        debugger
+        // debugger
 
         setTooltipTime(tooltipT < 0 ? 0 : tooltipT);
 
@@ -152,6 +158,26 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
         }
     }, [isPlaying, updateProgressAndTime, updateTime, playAnimationRef, isSeeking]);
 
+    useEffect(() => {
+        progressBarRef.current.addEventListener('mousedown', handleProgressDrag);
+        progressBarRef.current.addEventListener('touchstart', handleProgressDrag);
+    
+        return () => {
+            progressBarRef.current.removeEventListener('mousedown', handleProgressDrag);
+            progressBarRef.current.removeEventListener('touchstart', handleProgressDrag);
+        };
+    }, [handleProgressDrag]);
+
+    // useEffect(() => {
+    //     window.addEventListener('mouseup', handleDragEnd);
+    //     window.addEventListener('touchend', handleDragEnd);
+    
+    //     return () => {
+    //         window.removeEventListener('mouseup', handleDragEnd);
+    //         window.removeEventListener('touchend', handleDragEnd);
+    //     };
+    // }, [handleDragEnd]);
+
     const currentTime = useMemo(() => {
         return formatTime(time)
     }, [time]);
@@ -177,8 +203,11 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
                 defaultValue={0}
                 onInput={handleProgressDrag}
                 onMouseUp={handleDragEnd}
+                onTouchStart={handleProgressDrag}
+                onTouchEnd={handleDragEnd}
+                style={{"min-width":"50px"}}
             />
-            <span className='time-display tooltip-time' ref={tooltipRef}>
+            <span className='time-display tooltip-time' ref={tooltipRef} style={{"z-index":"2"}}>
                 {formatTime(tooltipTime)}
             </span>
             <span className="time-display track-duration">
