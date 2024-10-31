@@ -12,8 +12,16 @@ div.queue-control.inner {
     /* padding: 5px 5px; */
     border-radius: 2%;
     border: 1px solid #d3d3d3;
-    transition: bottom .8s cubic-bezier(0.37, .64, 0, 1.19), opacity .3s;
+    transition: bottom .4s cubic-bezier(.37,.64,.56,1.31), opacity .3s;
 }
+/* 
+div.queue-control.inner::after {
+    display: inline-flex;
+    content: '';
+    width: 100%;
+    height: 100%;
+    box-shadow: 1px black;
+} */
 
 div.queue-control.inner.hidden {
     opacity: 0;
@@ -33,8 +41,9 @@ div.queue-control-header {
     display: inline-flex;
     flex-direction: row;
     justify-content: space-between;
-    border-bottom: 2px solid #d3d3d3;
+    border-bottom: 1px solid #d3d3d3;
     padding: 1rem;
+    font-size: 1rem;
 }
 
 div.queue-item {
