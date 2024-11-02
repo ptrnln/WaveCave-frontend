@@ -42,16 +42,7 @@ export default function AudioItem({ audioRef, handleNext }) {
         return state.tracks[queue.original[currentIndex]]?.localSource
     });
     
-    
-
-    // const currentTrackSourceUrl = useSelector(state => {
-    //     const { queue, isShuffled, currentIndex } = state.audio
-
-    //     if(isShuffled) {
-    //         return state.tracks[queue.shuffled[currentIndex]]?.sourceUrl
-    //     }
-    //     return state.tracks[queue.original[currentIndex]]?.sourceUrl
-    // });
+    // debugger
 
     const isPlaying = useSelector(state => state.audio.isPlaying);
     // const volume = useSelector(state => state.audio.volume);
@@ -65,7 +56,7 @@ export default function AudioItem({ audioRef, handleNext }) {
                 }
                 catch(e) {
                     try {
-                        // await audioRef.current.load();
+                        // audioRef.current.load();
 
                         audioRef.current.oncanplaythrough = async (e) => {
                             e.preventDefault();
@@ -84,12 +75,12 @@ export default function AudioItem({ audioRef, handleNext }) {
                 if (!audioRef.current.paused) audioRef.current.pause();
             }
         })();
-    }, [isPlaying, audioRef, currentTrackId])
+    }, [isPlaying, audioRef, currentTrackId, currentTrackLocalSource])
 
     useEffect(() => {
         (async () => { 
             if(currentTrackId) {
-                await audioRef.current.load()
+                await audioRef.current.load();
         }})();
     }, [audioRef, currentTrackId, currentTrackLocalSource])
 

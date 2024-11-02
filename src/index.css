@@ -67,28 +67,28 @@ button {
 
 
   
-  [class^="wc-icon-"], [class*=" wc-icon-"] {
-    /* use !important to prevent issues with browser extensions that change fonts */
-    font-family: 'WaveCave-Repeat-Icons-2' !important;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-  
-    /* Better Font Rendering =========== */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  
-  .wc-icon-cycle-1:before {
-    content: "\e901";
-  }
-  .wc-icon-cycle:before {
-    content: "\e900";
-  }
+[class^="wc-icon-"], [class*=" wc-icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'WaveCave-Repeat-Icons-2' !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
 
-  .button {
-    user-select: none;
-  }
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.wc-icon-cycle-1:before {
+  content: "\e901";
+}
+.wc-icon-cycle:before {
+  content: "\e900";
+}
+
+.button {
+  user-select: none;
+}
 

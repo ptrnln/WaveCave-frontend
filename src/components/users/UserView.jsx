@@ -20,9 +20,6 @@ export default function UserView() {
         if (user.tracks) dispatch(trackActions.loadTracks(Object.keys(user.tracks)))
     }, [user, dispatch])
 
-    // useEffect(() => {
-    //     dispatch(userActions.viewUser({ username: user.username }));
-    // }, [dispatch, user.username])
     
     return (
         <>

@@ -47,7 +47,6 @@ export default function TrackUpdateForm() {
 
     const { title, username } = useParams();
 
-
     async function getDuration(audioFile) {
         const url = URL.createObjectURL(audioFile);
        
@@ -71,14 +70,14 @@ export default function TrackUpdateForm() {
 
     useEffect(() => {
         async function getTrackData() {
-            const response = await csrfFetch(routeToAPI(`/api/users/${username}/tracks/${title}`));
-
+            const response = await csrfFetch(routeToAPI(`/api/users/@${username}/tracks/${title}`));
+            
             if(response.ok) {
                 const data = await response.json();
                 const trackData = Object.values(data.track)[0]
 
-                const image = new Image();
-                image.src = trackData.photoUrl
+                // const image = new Image();
+                // image.src = trackData.photoUrl
                 // setArtist(trackData.artist);
                 setTrackId(Object.keys(data.track)[0]);
                 setNewTitle(title);
@@ -96,7 +95,7 @@ export default function TrackUpdateForm() {
             }
         }
         getTrackData();
-    }, [title, username])
+    }, [title, username]);
 
     
     
@@ -250,7 +249,7 @@ export default function TrackUpdateForm() {
             <button type="submit">Submit</button>
         </form>
         :
-        <Navigate to={`/${encodeURIComponent(currentUser.username)}/${encodeURIComponent(newTitle)}`} />
+        <Navigate to={`/@/${encodeURIComponent(currentUser.username)}/${encodeURIComponent(newTitle)}`} />
         }
     </>
     )

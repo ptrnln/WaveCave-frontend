@@ -39,6 +39,7 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
 
     const handleDragEnd = (e) => {
         e.stopPropagation();
+        if(!isSeeking) return
         setIsSeeking(false);
 
         const newValue = progressBarRef.current?.value || 0
@@ -114,7 +115,7 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
             '--tooltip-pos',
             `${offsetX}`
         );
-        // debugger
+        // // debugger
 
         setTooltipTime(tooltipT < 0 ? 0 : tooltipT);
 
@@ -163,10 +164,15 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
         progressBarRef.current.addEventListener('touchstart', handleProgressDrag);
     
         return () => {
-            progressBarRef.current.removeEventListener('mousedown', handleProgressDrag);
-            progressBarRef.current.removeEventListener('touchstart', handleProgressDrag);
+            try {
+                progressBarRef.current.removeEventListener('mousedown', handleProgressDrag);
+                progressBarRef.current.removeEventListener('touchstart', handleProgressDrag);
+            }
+            catch(e) {
+                console.error(e);
+            }
         };
-    }, [handleProgressDrag]);
+    }, [progressBarRef, handleProgressDrag]);
 
     // useEffect(() => {
     //     window.addEventListener('mouseup', handleDragEnd);
@@ -205,9 +211,9 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
                 onMouseUp={handleDragEnd}
                 onTouchStart={handleProgressDrag}
                 onTouchEnd={handleDragEnd}
-                style={{"min-width":"50px"}}
+                style={{"minWidth":"50px"}}
             />
-            <span className='time-display tooltip-time' ref={tooltipRef} style={{"z-index":"2"}}>
+            <span className='time-display tooltip-time' ref={tooltipRef} style={{"zIndex":"2"}}>
                 {formatTime(tooltipTime)}
             </span>
             <span className="time-display track-duration">

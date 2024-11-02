@@ -32,7 +32,7 @@ export default function TrackView() {
     async function handleClick (e) {
         e.preventDefault();
         // const trackData = await 
-        dispatch(audioActions.loadTracks([track.id]));
+        dispatch(audioActions.loadTracks([ParseInt(track.id)]));
         dispatch(audioActions.playTrack());
     }
 

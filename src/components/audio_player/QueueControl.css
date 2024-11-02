@@ -1,17 +1,18 @@
 div.queue-control.inner {
-    position: absolute;
+    position: fixed;
     font-size: .8rem;
     opacity: 1;
     display: inline-flex;
     flex-direction: column;
-    /* height: min-content; */
-    width: fit-content;
+    height: min-content;
+    width: 400px;
     bottom: 54px;
     /* text-wrap: nowrap; */
     background-color: white;
     /* padding: 5px 5px; */
     border-radius: 2%;
     border: 1px solid #d3d3d3;
+    max-height: 40%;
     transition: bottom .4s cubic-bezier(.37,.64,.56,1.31), opacity .3s;
 }
 /* 
@@ -33,6 +34,7 @@ div.queue-control.container {
     display: inline-flex;
     flex-direction: column-reverse;
     align-items: flex-end;
+    position: relative;
 }
 
 div.queue-control-header {
@@ -56,7 +58,11 @@ div.queue-item {
     padding: 0.5rem; 
 }
 
-ul.queue li:last-child div {
+div.queue-control div.queue-item::marker {
+    display: none;
+}
+
+div.queue-control li:last-child div {
     border-bottom: none;
 }
 

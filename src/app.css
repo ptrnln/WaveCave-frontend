@@ -12,7 +12,7 @@ html, body {
 }
 
 #root {
-    font-size: 14px;
+    font-size: .9rem;
     height: inherit;
     width: 100%;
 }
@@ -43,12 +43,7 @@ html, body {
     opacity: 1;
 }
 
-/* @media screen and (max-width: 600px) {
-    div#dev-links-container {
-        
-    }
-    
-} */
+
 div#dev-links-container {
     position: fixed;
     bottom: 46px;
