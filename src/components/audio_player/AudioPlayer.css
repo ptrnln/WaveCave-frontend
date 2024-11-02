@@ -19,7 +19,6 @@ div.audio-player button {
 div.audio-player div.audio-player.inner {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     height: 100%;
     width: 100%;
     max-width: 1240px;
@@ -40,7 +39,7 @@ div.audio-player div.audio-player.inner {
     margin-bottom: auto;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 
 .queue-controls {

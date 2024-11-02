@@ -85,7 +85,7 @@ export default function QueueControl () {
     return (
         <div className="queue-control container">
             <button className="queue-control button" onClick={toggleDisplay} title="Playlist menu">
-                <i className="fa-solid fa-list"/>
+                <i className="fa-solid fa-music"/>
             </button>
             <div className={display ? "queue-control inner hidden" : "queue-control inner"}>
                 <div className="queue-control-header">

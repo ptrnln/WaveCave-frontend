@@ -1,7 +1,6 @@
 
 @import url(reset.css);
 @import url(app.css);
-@import url(../node_modules/dragula/dist/dragula.css);
 
 @font-face {
   font-family: 'Montserrat';
