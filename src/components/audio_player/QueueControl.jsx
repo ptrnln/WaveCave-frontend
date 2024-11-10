@@ -5,6 +5,7 @@ import React, { useState, useCallback, useMemo, useEffect} from "react";
 import { closestCenter, DndContext, DragOverlay, KeyboardSensor, PointerSensor, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
 import SortableQueueItem from "./SortableQueueItem";
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import { useNavigate } from "react-router-dom";
 
 // import * as playlistActions from '../../store/playlist.js'
 
@@ -29,6 +30,7 @@ const collisionAlgorithm = (args) => {
   };
 
 export default function QueueControl () {
+    const navigate = useNavigate();
     const [display, setDisplay] = useState(false);
     const [activeId, setActiveID] = useState(null);
     const queue = useSelector(state => {
@@ -43,18 +45,23 @@ export default function QueueControl () {
             useSensor(KeyboardSensor, {
                 coordinateGetter: sortableKeyboardCoordinates,
             }),
-            useSensor(MouseSensor)
+            // useSensor(MouseSensor)
         )
 
     const currentIndex = useSelector(state => state.audio.currentIndex);
 
     const stateTracks = useSelector(state => state.tracks);
 
-    const tracks = useMemo(() => (queue
+    // const tracks = useMemo(() => (queue
+    //     .slice(currentIndex + 1)
+    //     .concat(queue.slice(0, currentIndex)))
+    //     .map(idx => ({ ...stateTracks[idx], id: stateTracks[idx].id.toString()})),
+    // [queue, currentIndex, stateTracks])
+
+    const tracks = (queue
         .slice(currentIndex + 1)
         .concat(queue.slice(0, currentIndex)))
-        .map(idx => stateTracks[idx]),
-    [queue, currentIndex, stateTracks])
+        .map(idx => ({ ...stateTracks[idx], id: stateTracks[idx].id.toString()}))
 
     const toggleDisplay = useCallback((e) => {
         e.preventDefault();
@@ -63,24 +70,24 @@ export default function QueueControl () {
 
     const handlePlaylistSave = (e) => {
         e.preventDefault();
-        
+        if(!queue.length) return
+        navigate(`/create-playlist?list=[${queue.join(',')}]`)
     }
 
-    const handleDragStart = (e) => {
+    function handleDragStart(e) {
         const {active} = e;
         setActiveID(active.id);
         debugger
     }
 
-    const handleDragEnd = (e) => {
+    function handleDragEnd (e) {
         const {active, over} = e;
-        // debugger
         if(active.id !== over.id) {
-            /* logic to swap items */
+            /* logic to swap/redorder items */
         }
         setActiveID(null);
     }
-    // debugger
+    debugger
     
     return (
         <div className="queue-control container">
@@ -99,17 +106,16 @@ export default function QueueControl () {
                         onDragStart={handleDragStart}
                         onDragEnd={handleDragEnd}
                     >
-                        <SortableContext items={tracks} strategy={verticalListSortingStrategy}>
-                            { tracks.length ?  
-                                tracks.map((track, idx) => ( 
-                                    <SortableQueueItem key={track.id} track={track} id={track.id}/>
-                                ))
-                                : null 
-                            }
-                        </SortableContext>
+                        {tracks.length > 0 && (
+                            <SortableContext items={tracks} strategy={verticalListSortingStrategy}>
+                                {tracks.map((track, idx) => (
+                                <SortableQueueItem key={track.id} track={track} id={track.id} />
+                                ))}
+                            </SortableContext>
+                            )}
                         <DragOverlay>
                             { activeId ? 
-                                <QueueItem track={tracks[activeId]} id={'overlay'}/>
+                                <QueueItem  track={tracks.find(t => t.id === activeId)} id="overlay"/>
                                 : null
                             }
                         </DragOverlay>

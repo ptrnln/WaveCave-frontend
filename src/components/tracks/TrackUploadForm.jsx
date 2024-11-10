@@ -32,7 +32,6 @@ export default function TrackUploadForm() {
     const [imageFile, setImageFile] = useState(null);
     const [audioFile, setAudioFile] = useState(null);
     const [errors, setErrors] = useState([]);
-    // const router = useR
     const navigate = useNavigate()
 
     const currentUser = useSelector(state => state.session.user)

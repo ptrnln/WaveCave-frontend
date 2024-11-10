@@ -19,6 +19,7 @@ export default function SortableQueueItem(props) {
 
     return (
         <QueueItem 
+            id={props.id}
             ref={setNodeRef} 
             {...props} 
             {...attributes} 
