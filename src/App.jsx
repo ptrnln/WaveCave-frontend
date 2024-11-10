@@ -103,6 +103,7 @@ const router = createBrowserRouter([
 ], {
   basename: import.meta.env.MODE === "production" ? "/wavecave" : "/"
 });
+ 
 
 function App() {
   return <RouterProvider router={router} />;
