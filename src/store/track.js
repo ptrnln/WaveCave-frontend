@@ -46,7 +46,7 @@ export function getTracks (trackIds = []) {
             const response = await fetch(routeToAPI('/api/tracks'))
             if (response.ok) {
                 const data = await response.json();
-                if(data.tracks) return dispatch(receiveTracks(data.tracks));
+                if(data.tracks) dispatch(receiveTracks(data.tracks));
             }
         }
 

@@ -18,6 +18,7 @@ import ErrorPage from './ErrorPage';
 import './app.css'
 import routeToAPI from './store/api';
 import { spawn, Thread, Worker } from "threads";
+import PlaylistCreationForm from './components/playlists/PlaylistCreationForm';
 
 
 window.env ||= { "environment":import.meta.env.MODE };
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
       {
         path: '/upload',
         element: <TrackUploadForm />
+      },
+      {
+        path: '/create-playlist',
+        element: <PlaylistCreationForm />
       },
       {
         path: '/@/:username',

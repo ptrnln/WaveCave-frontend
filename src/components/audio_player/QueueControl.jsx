@@ -5,6 +5,7 @@ import React, { useState, useCallback, useMemo, useEffect} from "react";
 import { closestCenter, DndContext, DragOverlay, KeyboardSensor, PointerSensor, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
 import SortableQueueItem from "./SortableQueueItem";
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import { useNavigate } from "react-router-dom";
 
 // import * as playlistActions from '../../store/playlist.js'
 
@@ -29,6 +30,7 @@ const collisionAlgorithm = (args) => {
   };
 
 export default function QueueControl () {
+    const navigate = useNavigate();
     const [display, setDisplay] = useState(false);
     const [activeId, setActiveID] = useState(null);
     const queue = useSelector(state => {
@@ -68,7 +70,8 @@ export default function QueueControl () {
 
     const handlePlaylistSave = (e) => {
         e.preventDefault();
-        
+        if(!queue.length) return
+        navigate(`/create-playlist?list=[${queue.join(',')}]`)
     }
 
     function handleDragStart(e) {
@@ -103,15 +106,16 @@ export default function QueueControl () {
                         onDragStart={handleDragStart}
                         onDragEnd={handleDragEnd}
                     >
-                        <SortableContext items={tracks} strategy={verticalListSortingStrategy}>
-                            {  tracks.map((track, idx) => ( 
-                                    <SortableQueueItem key={idx} track={track} id={track.id}/>
-                                ))
-                            }
-                        </SortableContext>
+                        {tracks.length > 0 && (
+                            <SortableContext items={tracks} strategy={verticalListSortingStrategy}>
+                                {tracks.map((track, idx) => (
+                                <SortableQueueItem key={track.id} track={track} id={track.id} />
+                                ))}
+                            </SortableContext>
+                            )}
                         <DragOverlay>
                             { activeId ? 
-                                <QueueItem track={tracks[activeId]} id={'overlay'}/>
+                                <QueueItem  track={tracks.find(t => t.id === activeId)} id="overlay"/>
                                 : null
                             }
                         </DragOverlay>

@@ -39,7 +39,7 @@ div.queue-control-header {
     padding: 1rem;
 }
 
-div.queue-item {
+.queue-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
