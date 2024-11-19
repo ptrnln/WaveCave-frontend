@@ -7,7 +7,7 @@ import LoginForm from "./components/session/LoginForm";
 import AudioPlayer from "./components/audio_player/AudioPlayer";
 import { Outlet } from "react-router-dom";
 
-export default function Layout() {
+export default function Layout({children}) {
     
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false);
@@ -23,7 +23,7 @@ export default function Layout() {
             <div className='app'>
             <Navigation />
             <div className='content'>
-                { isLoaded && <Outlet /> }
+                { isLoaded && (children || <Outlet />) }
             </div>
             <LoginForm />
             <AudioPlayer />

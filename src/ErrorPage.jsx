@@ -17,12 +17,11 @@ export default function ErrorPage() {
         }
 
     }
-
+    console.log(error)
 
     return (
             <>
-            <h1>{ error.status }</h1>
-            <p>{ error.data?.message }</p>
+            <h1>{ error.status } - { error.statusText }</h1>
             { renderSwitch(error.status) }
             </>
     )
