@@ -13,11 +13,11 @@ export default function ErrorPage() {
         
         switch(status) {
             case 404:
-               return <img src="/images/404_img.svg" alt="404" />
+               return <img src="/images/404_img.svg" alt="404" title={`"Missing link"`} />
         }
 
     }
-    console.log(error)
+
 
     return (
             <>
