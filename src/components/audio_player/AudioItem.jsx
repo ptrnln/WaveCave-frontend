@@ -41,8 +41,6 @@ export default function AudioItem({ audioRef, handleNext }) {
         }
         return state.tracks[queue.original[currentIndex]]?.localSource
     });
-    
-    // debugger
 
     const isPlaying = useSelector(state => state.audio.isPlaying);
     // const volume = useSelector(state => state.audio.volume);

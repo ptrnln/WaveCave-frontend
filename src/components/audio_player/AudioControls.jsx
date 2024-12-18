@@ -47,7 +47,6 @@ export default function AudioControls({ handleNext, handlePrev }) {
                 break;
         }
     }
-    // // debugger
 
     const nextButtonDisabled = currentIndex === queueLength - 1 && 
             (isRepeating === 'once' && hasRepeated || isRepeating === 'false');

@@ -115,7 +115,6 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
             '--tooltip-pos',
             `${offsetX}`
         );
-        // // debugger
 
         setTooltipTime(tooltipT < 0 ? 0 : tooltipT);
 

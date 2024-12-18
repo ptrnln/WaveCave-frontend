@@ -77,17 +77,16 @@ export default function QueueControl () {
     function handleDragStart(e) {
         const {active} = e;
         setActiveID(active.id);
-        debugger
     }
 
     function handleDragEnd (e) {
         const {active, over} = e;
         if(active.id !== over.id) {
             /* logic to swap/redorder items */
+
         }
         setActiveID(null);
     }
-    debugger
     
     return (
         <div className="queue-control container">

@@ -18,7 +18,7 @@ export default function PlaylistCreationForm() {
 
     // const playlistTracks = Object.entries(useSelector(state => state.tracks));
         
-    console.log(playlistTracks)
+    
     return (
         <div>
             <form htmlFor={'create-playlist'}>
