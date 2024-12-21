@@ -23,7 +23,7 @@ import PlaylistCreationForm from './components/playlists/PlaylistCreationForm';
 
 window.env ||= { "environment":import.meta.env.MODE };
 
-// window.blobber ||= new Worker("./blobber.worker.js");
+
 
 const userLoader = async ({ params }) => {
 

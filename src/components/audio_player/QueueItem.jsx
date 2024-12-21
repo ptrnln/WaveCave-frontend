@@ -1,8 +1,7 @@
 import { forwardRef } from "react";
 
 const QueueItem = forwardRef(({track, listeners, ...props}, ref) => {
-    debugger
-    console.log(listeners)
+    
 
     return (
         <li className="queue-item" id={props.id} ref={ref} {...props}>

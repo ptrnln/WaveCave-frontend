@@ -47,7 +47,6 @@ html, body {
 div#dev-links-container {
     position: fixed;
     bottom: 46px;
-    /* z-index: 98; */
     width: clamp(100px, 10vw, 200%);
     margin-bottom: 6px;
     margin-left: 2px;
@@ -81,13 +80,10 @@ div.app {
 
 
 div.content {
-    /* position: fixed; */
-    /* width: 1190px; */
     width: clamp(320px, 100%, 1190px);
     height: calc(100% - 96px);
     overflow-y: scroll;
     overflow-x: hidden;
-    /* top: 48px; */
 }
 
 div.content h1 {
@@ -111,4 +107,4 @@ label[for=errors] {
 
 div.content button:hover {
     filter: brightness(130%);
-}
+} 

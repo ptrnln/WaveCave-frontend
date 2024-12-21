@@ -25,6 +25,17 @@ if (import.meta.env.MODE === 'production') {
   enhancer = composeEnhancers(applyMiddleware(thunk, logger));
 }
 
+// composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+// const [enhancer, logger] = (import.meta.env.MODE === 'production') ? [
+//   applyMiddleware(thunk),
+//   undefined
+// ] : [
+//   composeEnhancers(applyMiddleware(thunk, logger)),
+//   (await import("redux-logger")).default
+// ]
+
+
 const configureStore = (preloadedState = {}) => {
     return createStore(rootReducer, preloadedState, enhancer);
 };

@@ -10,7 +10,6 @@ export default function SortableQueueItem(props) {
         transform,
         transition 
     } = useSortable({id: props.id});
-    debugger
     
     const style = {
         transform: CSS.Transform.toString(transform),
