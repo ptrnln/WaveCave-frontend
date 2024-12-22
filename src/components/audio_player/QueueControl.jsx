@@ -9,35 +9,20 @@ import { useNavigate } from "react-router-dom";
 
 // import * as playlistActions from '../../store/playlist.js'
 
-const collisionAlgorithm = (args) => {
-    const {
-      active,
-      collisionRect,
-      droppableContainers,
-      droppableRects,
-      pointerCoordinates
-    } = args;
-  
-    droppableRects.delete('container-id');
-  
-    return closestCenter({
-      active,
-      collisionRect,
-      droppableContainers,
-      droppableRects,
-      pointerCoordinates
-    });
-  };
 
 export default function QueueControl () {
     const navigate = useNavigate();
     const [display, setDisplay] = useState(false);
     const [activeId, setActiveID] = useState(null);
+
     const queue = useSelector(state => {
         return state.audio.isShuffled ?
             state.audio.queue.shuffled
             : state.audio.queue.original
     });
+
+    const currentIndex = useSelector(state => state.audio.currentIndex)    
+    const stateTracks = useSelector(state => state.tracks);
 
     
     const sensors = useSensors(
@@ -47,21 +32,9 @@ export default function QueueControl () {
             }),
             // useSensor(MouseSensor)
         )
+        
 
-    const currentIndex = useSelector(state => state.audio.currentIndex);
-
-    const stateTracks = useSelector(state => state.tracks);
-
-    // const tracks = useMemo(() => (queue
-    //     .slice(currentIndex + 1)
-    //     .concat(queue.slice(0, currentIndex)))
-    //     .map(idx => ({ ...stateTracks[idx], id: stateTracks[idx].id.toString()})),
-    // [queue, currentIndex, stateTracks])
-
-    const tracks = (queue
-        .slice(currentIndex + 1)
-        .concat(queue.slice(0, currentIndex)))
-        .map(idx => ({ ...stateTracks[idx], id: stateTracks[idx].id.toString()}))
+    const tracks = queue.map(idx => ({ ...stateTracks[idx], id: stateTracks[idx].id.toString()}))
 
     const toggleDisplay = useCallback((e) => {
         e.preventDefault();
@@ -105,7 +78,7 @@ export default function QueueControl () {
                         onDragStart={handleDragStart}
                         onDragEnd={handleDragEnd}
                     >
-                        {tracks.length > 0 && (
+                        { tracks.length > 0 && (
                             <SortableContext items={tracks} strategy={verticalListSortingStrategy}>
                                 {tracks.map((track, idx) => (
                                 <SortableQueueItem key={track.id} track={track} id={track.id} />
