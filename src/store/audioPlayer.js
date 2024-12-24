@@ -53,6 +53,7 @@
 
 // import * as playListActions from './playlist';
 import * as trackActions from './track';
+import { arrayMove } from '@dnd-kit/sortable';
 
 
 const PLAY_TRACK = 'audioPlayer/PLAY_TRACK';
@@ -70,6 +71,7 @@ const ENQUEUE_TRACK = 'audioPlayer/ENQUEUE_TRACK';
 // const CLEAR_QUEUE = 'audioPlayer/CLEAR_QUEUE';
 const DEQUEUE_TRACK = 'audioPlayer/DEQUEUE_TRACK';
 // const DEQUEUE_TRACKS = 'audioPlayer/DEQUEUE_TRACKS';
+const REORDER_QUEUE = 'audioPlayer/REORDER_QUEUE';
 
 const initialState = { 
     queue: {
@@ -174,6 +176,14 @@ export const loadTracks = (trackIds, replace = false) => async (dispatch, getSta
         trackIds: trackIds.map(id => parseInt(id)),
         replace
     })
+}
+
+export const reorderQueue = (trackIds) => {
+    if(trackIds.length !== 2) return;
+    return {
+        type: REORDER_QUEUE,
+        trackIds
+    }
 }
 
 const shuffle = (queue, currentTrackId = queue[0]) => {
@@ -305,6 +315,24 @@ export const audioPlayerReducer = (state = initialState, action) => {
             delete newState.queue.original[action.trackId]
             delete newState.queue.shuffled[action.trackId]
             return newState;
+        case REORDER_QUEUE:
+            const draggedTrackIdx = state.isShuffled ? 
+                state.queue.shuffled.indexOf(action.trackIds[0]) 
+                : state.queue.original.indexOf(action.trackIds[0])
+            const targetTrackIdx = state.isShuffled ? 
+                state.queue.shuffled.indexOf(action.trackIds[1]) 
+                : state.queue.original.indexOf(action.trackIds[1])
+            if(draggedTrackIdx < state.currentIndex && targetTrackIdx >= state.currentIndex) {
+                newState.currentIndex--
+            } else if (draggedTrackIdx > state.currentIndex && targetTrackIdx <= state.currentIndex) {
+                newState.currentIndex++
+            }
+            return { ...newState,
+                queue: {
+                    original: state.isShuffled ? state.queue.original : arrayMove(state.queue.original, draggedTrackIdx, targetTrackIdx),
+                    shuffled: !state.isShuffled ? state.queue.shuffled : arrayMove(state.queue.shuffled, draggedTrackIdx, targetTrackIdx)
+                }
+            }
         default:
             return state;
     }
