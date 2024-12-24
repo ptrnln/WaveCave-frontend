@@ -66,6 +66,8 @@ export const createPlaylist = playlist => async (dispatch) => {
 
     const { trackIds } = playlist
 
+    if (trackIds.length === 0) return
+
     const response = await csrfFetch(routeToAPI('/api/playlists'), {
         method: 'POST',
         body: JSON.stringify({ playlist: Object.fromEntries(Object.entries(playlist).filter(([key]) => key !== 'trackIds')) })
@@ -73,14 +75,14 @@ export const createPlaylist = playlist => async (dispatch) => {
 
     if(response.ok) {
         const data = await response.json();
-        debugger
+
         trackIds.forEach(async trackId => {
             await csrfFetch(routeToAPI(`/api/playlist_tracks/`), {
                 method: 'POST',
                 body: JSON.stringify({ playlistTrack: { trackId, playlistId: Object.entries(data)[0][1].id } })
             })
         })
-        // dispatch(receivePlaylist(data.playlist))
+
         return data;
     }
 }
