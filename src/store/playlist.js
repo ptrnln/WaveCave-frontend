@@ -64,22 +64,23 @@ export const newPlaylist = (trackIds = []) => {
 
 export const createPlaylist = playlist => async (dispatch) => {
 
-    const trackIds = playlist.trackIds || [];
+    const { trackIds } = playlist
 
     const response = await csrfFetch(routeToAPI('/api/playlists'), {
         method: 'POST',
-        body: JSON.stringify(playlist.filter(key => key !== 'trackIds'))
+        body: JSON.stringify({ playlist: Object.fromEntries(Object.entries(playlist).filter(([key]) => key !== 'trackIds')) })
     })
 
     if(response.ok) {
+        const data = await response.json();
+        debugger
         trackIds.forEach(async trackId => {
             await csrfFetch(routeToAPI(`/api/playlist_tracks/`), {
                 method: 'POST',
-                body: JSON.stringify({ trackId })
+                body: JSON.stringify({ playlistTrack: { trackId, playlistId: Object.entries(data)[0][1].id } })
             })
         })
-        const data = await response.json();
-        dispatch(receivePlaylist(data.playlist))
+        // dispatch(receivePlaylist(data.playlist))
         return data;
     }
 }
