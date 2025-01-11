@@ -14,6 +14,7 @@ div.queue-control.inner {
     border: 1px solid #a0a0a0;
     max-height: 40%;
     transition: bottom .4s cubic-bezier(.37,.64,.56,1.31), opacity .3s;
+    z-index: 1001;
 }
 
 div.queue-control.inner.hidden {
@@ -27,6 +28,13 @@ div.queue-control.container {
     flex-direction: column-reverse;
     align-items: flex-end;
     position: relative;
+    overflow-y: scroll;
+    min-width: 60px;
+    z-index: 1000;
+}
+
+div.queue-control.container ul {
+    overflow-y: scroll;
 }
 
 div.queue-control-header {
@@ -76,6 +84,9 @@ div.queue-control li:last-of-type, div.queue-control li:last-of-type * {
 
 button.queue-control.button {
     margin: auto;
+    position: relative;
+    z-index: 1000;
+    width: 100%;
 }
 
 .queue-item-image {

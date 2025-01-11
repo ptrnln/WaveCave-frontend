@@ -89,7 +89,7 @@ export default function TrackUploadForm() {
             if(response.errors) {
                 setErrors(response.errors)
             } else {
-                navigate(`/@/${encodeURIComponent(currentUser.username)}/${encodeURIComponent(title)}`)
+                navigate(`/@${encodeURIComponent(currentUser.username)}/${encodeURIComponent(title)}`)
             }
         } catch (err) {
             setErrors([err])

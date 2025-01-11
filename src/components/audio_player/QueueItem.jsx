@@ -15,7 +15,7 @@ const QueueItem = forwardRef(({track, listeners, ...props}, ref) => {
             <div className="queue-item-image-container">
                 <button 
                     className="queue-item-image-button" 
-                    onClick={() => { navigate(`/@/${track.artist.username}/${track.title}`)}}
+                    onClick={() => { navigate(`/@${track.artist.username}/${track.title}`)}}
                 >
                     { track.photoUrl ? 
                         <img src={track.photoUrl} alt={track.title} className="queue-item-image" /> 

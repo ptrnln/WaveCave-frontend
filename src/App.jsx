@@ -27,7 +27,8 @@ window.env ||= { "environment":import.meta.env.MODE };
 
 const userLoader = async ({ params }) => {
 
-  const response = await fetch(routeToAPI(`/api/users/@${params.username}`));
+
+  const response = await fetch(routeToAPI(`/api/users/@${params.username.replaceAll("@", "")}`));
   
   if(response.ok) {
     const data = await response.json();
@@ -39,7 +40,7 @@ const userLoader = async ({ params }) => {
 
 const trackLoader = async ({ params }) => {
 
-  const response = await fetch(routeToAPI(`/api/users/@${params.username}/tracks/${params.title}`)).catch((reasons) => {throw reasons})
+  const response = await fetch(routeToAPI(`/api/users/@${params.username.replaceAll("@", "")}/tracks/${params.title}`)).catch((reasons) => {throw reasons})
   
   
   if(response.ok) {
@@ -81,7 +82,8 @@ const router = createBrowserRouter([
         element: <PlaylistCreationForm />
       },
       {
-        path: '/@/:username',
+        path: '/:username',
+        
         loader: userLoader,
         element: <UserView />,
         children: [

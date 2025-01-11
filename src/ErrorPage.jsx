@@ -13,7 +13,7 @@ export default function ErrorPage() {
         
         switch(status) {
             case 404:
-               return <img src="/images/404_img.svg" alt="404" title={`"Missing link"`} />
+               return <img src="/images/404_img.svg" alt="404" title={`Get it? It's a "missing link"`} />
         }
 
     }

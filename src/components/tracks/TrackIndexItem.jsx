@@ -37,7 +37,7 @@ export default function TrackIndexItem({ track }) {
     }
 
     const navToUpdate = () => {
-        navigate(`/@/${encodeURIComponent(track.artist.username)}/${encodeURIComponent(track.title)}/update`)
+        navigate(`/@${encodeURIComponent(track.artist.username)}/${encodeURIComponent(track.title)}/update`)
     }
 
     return (
@@ -46,7 +46,7 @@ export default function TrackIndexItem({ track }) {
             <div id={`track-${track.id}-details`} className="track-index details">
                 <h2>{track.title || ''}</h2>
                 <p>{track?.artist?.username || ''}</p>
-            { track && <NavLink to={`/@/${encodeURIComponent(track?.artist?.username)}/${encodeURIComponent(track.title)}`}>See track</NavLink>}
+            { track && <NavLink to={`/@${encodeURIComponent(track?.artist?.username)}/${encodeURIComponent(track.title)}`}>See track</NavLink>}
             </div>
             
             { track?.artist?.id === currentUser?.id &&

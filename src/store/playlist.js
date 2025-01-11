@@ -83,8 +83,8 @@ export const createPlaylist = playlist => async (dispatch) => {
             })
         })
 
-        return data;
-    }
+        return await csrfFetch(routeToAPI(`/api/playlists/${Object.entries(data)[0][1].id}`));
+    } 
 }
 
 export const loadPlaylist = playlistId => async (dispatch, getState) => {

@@ -15,6 +15,7 @@ export default function PlaylistCreationForm() {
     const [activeId, setActiveID] = useState(null);
     const [playlistTitle, setPlaylistTitle] = useState('');
     const [playlistDescription, setPlaylistDescription] = useState('');
+    const [tracks, setTracks] = useState([]);
 
     const user = useSelector(state => state.session.user);
 
@@ -26,20 +27,18 @@ export default function PlaylistCreationForm() {
         })
     )
 
-    const list = searchParams.get("list");
-    
-    const playlist = list.match(/\[([\d,]+)\]/)[1].split(",").map(num => parseInt(num));
+    const listString = searchParams.get("list");
+    const playlistIds = listString.match(/\[([\d,]+)\]/)[1].split(",").map(num => parseInt(num));
 
-    const [tracks, setTracks] = useState([]);
-    
+
     useEffect(() => {
-        dispatch(trackActions.getTracks(playlist));
+        dispatch(trackActions.getTracks(playlistIds));
     }, [])
 
     useEffect(() => {
-        if(playlist.some(id => !stateTracks[id])) return;
+        if(playlistIds.some(id => !stateTracks[id])) return;
         if(Object.keys(stateTracks).length > 0) {
-            setTracks(playlist.map(id => stateTracks[id]));
+            setTracks(playlistIds.map(id => stateTracks[id]));
         }
     }, [stateTracks])
 
@@ -51,20 +50,26 @@ export default function PlaylistCreationForm() {
     function handleDragEnd(e) {
         const {active, over} = e;
 
+        setActiveID(null);
+        
         if(active.id !== over.id) {
             const oldIndex = tracks.findIndex(track => track.id === active.id);
             const newIndex = tracks.findIndex(track => track.id === over.id);
             setTracks(arrayMove(tracks, oldIndex, newIndex));
+            navigate(`/create-playlist?list=[${tracks.map(track => track.id).join(",")}]`);
         }
 
-        setActiveID(null);
     }
 
     async function handleSubmit(e) {
         e.preventDefault();
-        const playlistTracks = tracks.map(track => track.id);
+        const playlistTrackIds = tracks.map(track => track.id);
         
-        dispatch(playlistActions.createPlaylist({ publisherId: user.id, title: playlistTitle, description: playlistDescription, trackIds: playlistTracks}));
+        const { error } = await dispatch(playlistActions.createPlaylist({ publisherId: user.id, title: playlistTitle, description: playlistDescription, trackIds: playlistTrackIds}));
+
+        debugger 
+        if(error) return;
+        navigate(`/`);
     }
         
     if(!user) navigate('/');

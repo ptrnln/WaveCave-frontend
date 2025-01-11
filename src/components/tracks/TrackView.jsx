@@ -12,11 +12,12 @@ export default function TrackView() {
     const { username, title } = useParams();
     const [isLoaded, setIsLoaded] = useState(false);
 
+
     const track = useSelector(state => {
         let track;
         Object.keys(state.tracks).forEach(id => {
             state.tracks[id]
-            if(state.tracks[id]?.artist?.username == username && state.tracks[id]?.title == title){
+            if(state.tracks[id]?.artist?.username == username.replaceAll("@", "") && state.tracks[id]?.title == title){
                 track = state.tracks[id]
             }
         })
@@ -65,14 +66,14 @@ export default function TrackView() {
         if(track) {
             setIsLoaded(true);
         } else {
-            const trackData = await trackActions.getTrackByUserNameAndTitle(username, title);
+            const trackData = await trackActions.getTrackByUserNameAndTitle(username.replaceAll("@", ""), title);
             dispatch(trackActions.receiveTrack(trackData));
         }})();
     }, [track, dispatch, username, title])
 
     return (
             isLoaded ?
-                window.location.href.match(new RegExp('[^/]+(?=/$|$)'))[0] === 'update' ?
+                window.location.href.match(new RegExp('[^@/]+(?=/$|$)'))[0] === 'update' ?
             <Outlet />
             :
             <div className="track-view container">
@@ -93,7 +94,7 @@ export default function TrackView() {
                     <div className="track-view details">
                         <div className="track-view artist-info">
                             { track.artist &&
-                            <NavLink to={ `/@/${ track.artist.username || '' }`}>
+                            <NavLink to={ `/@${ track.artist.username || '' }`}>
                                 <i className="fa-solid fa-user" /> { track.artist.username || '' }
                             </NavLink> }
                         </div>

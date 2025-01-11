@@ -1,9 +1,7 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux"; 
-// import * as audioPlayerActions from '../../store/audioPlayer';
 
 export default function AudioItem({ audioRef, handleNext }) {
-    // const dispatch = useDispatch();
 
     const currentTrackTitle = useSelector(state => {
         const { queue, isShuffled, currentIndex } = state.audio
@@ -47,19 +45,18 @@ export default function AudioItem({ audioRef, handleNext }) {
     
     useEffect(() => {
         (async () => {
-            
             if(isPlaying && currentTrackId) {
-                try {  
+                try {
+                    audioRef.current.load();
                     await audioRef.current.play();
                 }
                 catch(e) {
                     try {
-                        // audioRef.current.load();
-
                         audioRef.current.oncanplaythrough = async (e) => {
                             e.preventDefault();
-                            
-                            await audioRef.current.play();
+                            if (isPlaying) {
+                                await audioRef.current.play();
+                            }
                         }
                     }
                     catch(err) {
@@ -68,26 +65,17 @@ export default function AudioItem({ audioRef, handleNext }) {
                 }
             }
             if(!isPlaying) {
-                audioRef.current.oncanplaythrough = undefined;
-
+                audioRef.current.oncanplaythrough = null;
                 if (!audioRef.current.paused) audioRef.current.pause();
             }
         })();
     }, [isPlaying, audioRef, currentTrackId, currentTrackLocalSource])
 
-    useEffect(() => {
-        (async () => { 
-            if(currentTrackId) {
-                await audioRef.current.load();
-        }})();
-    }, [audioRef, currentTrackId, currentTrackLocalSource])
-
     const audio = <audio 
             className={`audio-track ${currentTrackTitle || ''}`}
             ref={audioRef}
+            preload="auto"
             onEnded={handleNext}>
-                {/* {currentTrackSourceUrl &&
-                <source src={currentTrackSourceUrl} type={`audio/${currentTrackFileType}`}/>} */}
                 {currentTrackLocalSource &&
                 <source src={currentTrackLocalSource} type={`audio/${currentTrackFileType}`}/>}
         </audio>

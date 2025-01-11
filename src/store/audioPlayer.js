@@ -217,10 +217,6 @@ export const audioPlayerReducer = (state = initialState, action) => {
     let queue, shuffledQueue, newIndex, repeated, newQueue;
 
     switch(action.type) {
-        case PLAY_TRACK:
-            return { ...state, 
-                isPlaying: true,
-            }
         case PAUSE_TRACK:
             return { ...state, isPlaying: false }
         case PLAY_NEXT:
@@ -243,11 +239,11 @@ export const audioPlayerReducer = (state = initialState, action) => {
                         newIndex = state.currentIndex
                 }
             } else newIndex = state.currentIndex + 1
-            return { ...state, 
-                currentIndex: newIndex,
-                isPlaying: true,
-                hasRepeated: repeated
-            };
+            newState.currentIndex = newIndex
+            newState.hasRepeated = repeated
+            return newState;
+        case PLAY_TRACK:
+            return { ...newState, isPlaying: true }
         case PLAY_PREV:
             return { ...state,
                 currentIndex: (state.currentIndex === 0 ? state.queue.original.length - 1 : state.currentIndex - 1),

@@ -65,12 +65,14 @@ export default function QueueControl () {
     return (
         <div className="queue-control container">
             <button className="queue-control button" onClick={toggleDisplay} title="Playlist menu">
-                <i className="fa-solid fa-music"/>
+                <i className="wc-icon-music-list"/>
             </button>
             <div className={display ? "queue-control inner hidden" : "queue-control inner"}>
                 <div className="queue-control-header">
-                    <span>Next Up</span>
-                    <button onClick={handlePlaylistSave}>Save Playlist</button>
+                    <h4>Next Up</h4>
+                    <button onClick={handlePlaylistSave}>
+                        <i className="fa-solid fa-floppy-disk"  title="Save Playlist" style={{ fontSize: '1rem' }}/>
+                    </button>
                 </div>
                 <ul id="queue-list">
                     <DndContext 

@@ -20,11 +20,10 @@ export default function UserView() {
         if (user.tracks) dispatch(trackActions.loadTracks(Object.keys(user.tracks)))
     }, [user, dispatch])
 
-    
     return (
         <>
             {
-                user && window.location.href.match(new RegExp('[^/]+(?=/$|$)'))[0] === encodeURIComponent(user.username) ?
+                user && window.location.href.match(new RegExp('[^@/]+(?=/$|$)'))[0] === encodeURIComponent(user.username) ?
                 
                 <div id="user-view page">
                     <h1>{ user.username }</h1>

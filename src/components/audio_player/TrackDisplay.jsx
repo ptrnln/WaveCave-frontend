@@ -26,7 +26,7 @@ export default function TrackDisplay() {
 
     const navToTrack = (e) => {
         e.preventDefault();
-        navigate(`/@/${encodeURIComponent(currentTrack.artist.username)}/${encodeURIComponent(currentTrack.title)}`);
+        navigate(`/@${encodeURIComponent(currentTrack.artist.username)}/${encodeURIComponent(currentTrack.title)}`);
     }
 
     return currentTrack ?

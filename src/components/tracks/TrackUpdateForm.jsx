@@ -70,7 +70,7 @@ export default function TrackUpdateForm() {
 
     useEffect(() => {
         async function getTrackData() {
-            const response = await csrfFetch(routeToAPI(`/api/users/@${username}/tracks/${title}`));
+            const response = await csrfFetch(routeToAPI(`/api/users/@/${username}/tracks/${title}`));
             
             if(response.ok) {
                 const data = await response.json();
@@ -249,7 +249,7 @@ export default function TrackUpdateForm() {
             <button type="submit">Submit</button>
         </form>
         :
-        <Navigate to={`/@/${encodeURIComponent(currentUser.username)}/${encodeURIComponent(newTitle)}`} />
+        <Navigate to={`/@${encodeURIComponent(currentUser.username)}/${encodeURIComponent(newTitle)}`} />
         }
     </>
     )

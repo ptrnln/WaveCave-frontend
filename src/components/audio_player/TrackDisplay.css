@@ -39,14 +39,14 @@ div.track-details {
 span.track-details {
     position: relative;
     top: 20%;
-    font-size: x-small;
+    font-size: small;
     cursor: pointer;
 }
 
 span.track-details.artist-name {
     position: relative;
     top: 20%;
-    font-size: x-small;
+    font-size: small;
 }
 
 span.track-details.title {

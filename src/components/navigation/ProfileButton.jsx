@@ -44,7 +44,7 @@ function ProfileButton({ user }) {
         {showMenu && (
           <ul id="profile-dropdown" className="profile-dropdown" ref={dropdownRef}>
             <li>
-              <NavLink to={`/@/${user.username}`} onClick={toggleMenu}>{user.username}</NavLink>
+              <NavLink to={`/@${user.username}`} onClick={toggleMenu}>{user.username}</NavLink>
             </li>
             <li>
               <NavLink className="nav-button" to='/upload' onClick={toggleMenu}>Upload Tracks</NavLink>
