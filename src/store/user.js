@@ -6,7 +6,7 @@ const RECEIVE_USERS = 'users/RECEVE_USERS'
 const initialState = { shownUser: null }
 
 export const useFetchUser = ({ username }) => async dispatch => {
-    const response = await fetch(routeToAPI(`/api/users/@${username}`));
+    const response = await fetch(routeToAPI(`/api/users/@/${username}`));
 
     if(response.ok) {
         const data = await response.json();
@@ -29,7 +29,7 @@ export const receiveUser = user => {
 }
 
 export const viewUser = ({ username }) => async dispatch => {
-    const response = await fetch(routeToAPI(`/api/users/@${username}`));
+    const response = await fetch(routeToAPI(`/api/users/@/${username}`));
 
     if(response.ok) {
         const data = await response.json();

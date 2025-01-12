@@ -11,9 +11,10 @@ div.queue-control.inner {
     background-color: white;
     /* padding: 5px 5px; */
     border-radius: 2%;
-    border: 1px solid #d3d3d3;
+    border: 1px solid #a0a0a0;
     max-height: 40%;
     transition: bottom .4s cubic-bezier(.37,.64,.56,1.31), opacity .3s;
+    z-index: 1001;
 }
 
 div.queue-control.inner.hidden {
@@ -27,6 +28,13 @@ div.queue-control.container {
     flex-direction: column-reverse;
     align-items: flex-end;
     position: relative;
+    overflow-y: scroll;
+    min-width: 60px;
+    z-index: 1000;
+}
+
+div.queue-control.container ul {
+    overflow-y: scroll;
 }
 
 div.queue-control-header {
@@ -35,37 +43,50 @@ div.queue-control-header {
     display: inline-flex;
     flex-direction: row;
     justify-content: space-between;
-    border-bottom: 2px solid #d3d3d3;
+    border-bottom: 1px solid #a0a0a0;
     padding: 1rem;
 }
 
 .queue-item {
-    display: flex;
-    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: 20px 2rem 1fr 100px;
     align-items: center;
-    padding: 0.5rem;
-    border-bottom: 1px solid #d3d3d3;
-    min-width: 250px;
+    padding: 0.25rem 0.5rem;
+    border-bottom: 1px solid #a0a0a0;
     gap: 0.5rem;
+    min-height: 2.5rem;
+}
+
+/* Empty grid cell when no handle */
+.queue-item:not(:has(.handle))::before {
+    content: '';
+    grid-column: 1;
+    width: 20px;
 }
 
 .queue-item .handle {
+    grid-column: 1;
     width: 20px;
+    height: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 div.queue-control div.queue-item::marker {
     display: none;
 }
 
-div.queue-control li:last-child div {
+div.queue-control li:last-of-type, div.queue-control li:last-of-type * {
     border-bottom: none;
 }
 
 
 button.queue-control.button {
     margin: auto;
+    position: relative;
+    z-index: 1000;
+    width: 100%;
 }
 
 .queue-item-image {
@@ -75,6 +96,7 @@ button.queue-control.button {
 }
 
 .queue-item-image-container {
+    grid-column: 2;
     width: 2rem;
     height: 2rem;
     flex-shrink: 0;
@@ -96,15 +118,20 @@ button.queue-control.button {
     padding: 0;
 }
 
+.queue-item-image-button:hover {
+    /* background-color: #d3d3d3; */
+    filter: brightness(1.1);
+}
+
 .queue-item .title {
-    flex: 1;
+    grid-column: 3;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    margin-right: 0.5rem;
 }
 
 .queue-item .artist {
+    grid-column: 4;
     width: 100px;
     text-align: right;
     overflow: hidden;
@@ -114,4 +141,10 @@ button.queue-control.button {
 
 .queue-item > * {
     margin: 0;
+}
+
+.queue-item[data-played="played"] {
+    color: #a0a0a0;
+    background-color: #d3d3d3;
+    border-color: #a0a0a0;
 }

@@ -154,6 +154,5 @@ span.time-display.tooltip-time {
 .time-display {
     cursor: default;
     color: #f50;
-    font-size: small;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }

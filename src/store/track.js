@@ -70,7 +70,7 @@ export async function deleteTrack (trackId) {
 }
 
 export async function getTrackByUserNameAndTitle (username, title) {
-    const response = await csrfFetch(routeToAPI(`/api/users/@${username}/tracks/${title}`));
+    const response = await csrfFetch(routeToAPI(`/api/users/@/${username}/tracks/${title}`));
 
     if(response.ok) {
         const data = await response.json();

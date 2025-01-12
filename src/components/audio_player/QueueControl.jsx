@@ -4,17 +4,17 @@ import React, { useState, useCallback, useMemo, useEffect} from "react";
 // import './QueueControl.css'
 import { closestCenter, DndContext, DragOverlay, KeyboardSensor, PointerSensor, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
 import SortableQueueItem from "./SortableQueueItem";
-import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import { SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { useNavigate } from "react-router-dom";
-
-// import * as playlistActions from '../../store/playlist.js'
+import { useDispatch } from "react-redux";
+import * as audioPlayerActions from '../../store/audioPlayer.js'
 
 
 export default function QueueControl () {
     const navigate = useNavigate();
     const [display, setDisplay] = useState(false);
     const [activeId, setActiveID] = useState(null);
-
+    const dispatch = useDispatch();
     const queue = useSelector(state => {
         return state.audio.isShuffled ?
             state.audio.queue.shuffled
@@ -56,6 +56,7 @@ export default function QueueControl () {
         const {active, over} = e;
         if(active.id !== over.id) {
             /* logic to swap/redorder items */
+            dispatch(audioPlayerActions.reorderQueue([parseInt(active.id), parseInt(over.id)]))
 
         }
         setActiveID(null);
@@ -64,12 +65,14 @@ export default function QueueControl () {
     return (
         <div className="queue-control container">
             <button className="queue-control button" onClick={toggleDisplay} title="Playlist menu">
-                <i className="fa-solid fa-music"/>
+                <i className="wc-icon-music-list"/>
             </button>
             <div className={display ? "queue-control inner hidden" : "queue-control inner"}>
                 <div className="queue-control-header">
-                    <span>Next Up</span>
-                    <button onClick={handlePlaylistSave}>Save Playlist</button>
+                    <h4>Next Up</h4>
+                    <button onClick={handlePlaylistSave}>
+                        <i className="fa-solid fa-floppy-disk"  title="Save Playlist" style={{ fontSize: '1rem' }}/>
+                    </button>
                 </div>
                 <ul id="queue-list">
                     <DndContext 
@@ -81,7 +84,13 @@ export default function QueueControl () {
                         { tracks.length > 0 && (
                             <SortableContext items={tracks} strategy={verticalListSortingStrategy}>
                                 {tracks.map((track, idx) => (
-                                <SortableQueueItem key={track.id} track={track} id={track.id} />
+                                    <SortableQueueItem 
+                                        key={track.id} 
+                                        track={track} 
+                                        id={track.id} 
+                                        data-played={idx < currentIndex ? "played" : null} 
+                                        aria-disabled={parseInt(idx) == parseInt(currentIndex) ? "disabled" : null}
+                                    />
                                 ))}
                             </SortableContext>
                             )}

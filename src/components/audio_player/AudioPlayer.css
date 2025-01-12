@@ -21,7 +21,7 @@ div.audio-player div.audio-player.inner {
     flex-direction: row;
     height: 100%;
     width: 100%;
-    max-width: 1240px;
+    max-width: 1280px;
 }
 
 .audio-controls {

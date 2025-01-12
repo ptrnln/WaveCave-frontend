@@ -6,13 +6,16 @@ const QueueItem = forwardRef(({track, listeners, ...props}, ref) => {
     
     return (
         <li className="queue-item" id={props.id} ref={ref} {...props}>
-            <div className="handle" {...(listeners || {})}>
-                <i className="fa-solid fa-grip-vertical handle" style={{cursor: 'grab', color: 'grey'}}></i>
-            </div>
+            { listeners && props["aria-disabled"] !== "disabled" ? 
+                <div className="handle" {...listeners}>
+                    <i className="fa-solid fa-grip-vertical handle" style={{cursor: 'grab', color: 'grey'}}></i>
+                </div> 
+                : null 
+            }
             <div className="queue-item-image-container">
                 <button 
                     className="queue-item-image-button" 
-                    onClick={() => { navigate(`/@/${track.artist.username}/${track.title}`)}}
+                    onClick={() => { navigate(`/@${track.artist.username}/${track.title}`)}}
                 >
                     { track.photoUrl ? 
                         <img src={track.photoUrl} alt={track.title} className="queue-item-image" /> 

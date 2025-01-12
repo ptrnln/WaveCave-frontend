@@ -53,6 +53,7 @@
 
 // import * as playListActions from './playlist';
 import * as trackActions from './track';
+import { arrayMove } from '@dnd-kit/sortable';
 
 
 const PLAY_TRACK = 'audioPlayer/PLAY_TRACK';
@@ -70,6 +71,7 @@ const ENQUEUE_TRACK = 'audioPlayer/ENQUEUE_TRACK';
 // const CLEAR_QUEUE = 'audioPlayer/CLEAR_QUEUE';
 const DEQUEUE_TRACK = 'audioPlayer/DEQUEUE_TRACK';
 // const DEQUEUE_TRACKS = 'audioPlayer/DEQUEUE_TRACKS';
+const REORDER_QUEUE = 'audioPlayer/REORDER_QUEUE';
 
 const initialState = { 
     queue: {
@@ -176,6 +178,14 @@ export const loadTracks = (trackIds, replace = false) => async (dispatch, getSta
     })
 }
 
+export const reorderQueue = (trackIds) => {
+    if(trackIds.length !== 2) return;
+    return {
+        type: REORDER_QUEUE,
+        trackIds
+    }
+}
+
 const shuffle = (queue, currentTrackId = queue[0]) => {
     if(queue.length <= 2) return queue;
     const indexOfId = queue.indexOf(currentTrackId);
@@ -207,10 +217,6 @@ export const audioPlayerReducer = (state = initialState, action) => {
     let queue, shuffledQueue, newIndex, repeated, newQueue;
 
     switch(action.type) {
-        case PLAY_TRACK:
-            return { ...state, 
-                isPlaying: true,
-            }
         case PAUSE_TRACK:
             return { ...state, isPlaying: false }
         case PLAY_NEXT:
@@ -233,11 +239,11 @@ export const audioPlayerReducer = (state = initialState, action) => {
                         newIndex = state.currentIndex
                 }
             } else newIndex = state.currentIndex + 1
-            return { ...state, 
-                currentIndex: newIndex,
-                isPlaying: true,
-                hasRepeated: repeated
-            };
+            newState.currentIndex = newIndex
+            newState.hasRepeated = repeated
+            return newState;
+        case PLAY_TRACK:
+            return { ...newState, isPlaying: true }
         case PLAY_PREV:
             return { ...state,
                 currentIndex: (state.currentIndex === 0 ? state.queue.original.length - 1 : state.currentIndex - 1),
@@ -305,6 +311,24 @@ export const audioPlayerReducer = (state = initialState, action) => {
             delete newState.queue.original[action.trackId]
             delete newState.queue.shuffled[action.trackId]
             return newState;
+        case REORDER_QUEUE:
+            const draggedTrackIdx = state.isShuffled ? 
+                state.queue.shuffled.indexOf(action.trackIds[0]) 
+                : state.queue.original.indexOf(action.trackIds[0])
+            const targetTrackIdx = state.isShuffled ? 
+                state.queue.shuffled.indexOf(action.trackIds[1]) 
+                : state.queue.original.indexOf(action.trackIds[1])
+            if(draggedTrackIdx < state.currentIndex && targetTrackIdx >= state.currentIndex) {
+                newState.currentIndex--
+            } else if (draggedTrackIdx > state.currentIndex && targetTrackIdx <= state.currentIndex) {
+                newState.currentIndex++
+            }
+            return { ...newState,
+                queue: {
+                    original: state.isShuffled ? state.queue.original : arrayMove(state.queue.original, draggedTrackIdx, targetTrackIdx),
+                    shuffled: !state.isShuffled ? state.queue.shuffled : arrayMove(state.queue.shuffled, draggedTrackIdx, targetTrackIdx)
+                }
+            }
         default:
             return state;
     }

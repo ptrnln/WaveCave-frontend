@@ -69,7 +69,7 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
 
         playAnimationRef.current = requestAnimationFrame(updateTime);
 
-    }, [audioRef, playAnimationRef, setTime]);
+    }, [audioRef.current?.currentTime, playAnimationRef, setTime]);
 
     const updateProgress = useCallback(() => {
 
@@ -184,8 +184,8 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
     // }, [handleDragEnd]);
 
     const currentTime = useMemo(() => {
-        return formatTime(time)
-    }, [time]);
+        return formatTime(audioRef.current?.currentTime || 0)
+    }, [audioRef.current?.currentTime]);
 
     const duration = useMemo(() => {
         return formatTime(audioRef.current?.duration || 0)

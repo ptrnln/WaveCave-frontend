@@ -81,10 +81,13 @@ button {
 }
 
 .wc-icon-cycle-1:before {
-  content: "\e901";
+  content: "\e900";
 }
 .wc-icon-cycle:before {
-  content: "\e900";
+  content: "\e901";
+}
+.wc-icon-music-list:before {
+  content: "\e902";
 }
 
 .button {
