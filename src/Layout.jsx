@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import * as sessionActions from "./store/session"
 import * as trackActions from "./store/track"
 import Navigation from "./components/navigation/Navigation";
@@ -11,6 +11,7 @@ export default function Layout({children}) {
     
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false);
+    const audioPlayerRef = useRef(null);
   
     useEffect(() => {
       dispatch(sessionActions.restoreSession()).then(() => {
@@ -18,6 +19,9 @@ export default function Layout({children}) {
       });
       dispatch(trackActions.reloadTracksLocally());
     }, [dispatch]);
+
+    const audioPlayer = audioPlayerRef.current || (audioPlayerRef.current = <AudioPlayer />);
+
     return (
         <>
             <div className='app'>
@@ -26,7 +30,7 @@ export default function Layout({children}) {
                 { isLoaded && (children || <Outlet />) }
             </div>
             <LoginForm />
-            <AudioPlayer />
+            {audioPlayer}
             </div>
             <div id='dev-links-container'>
             <a id='git-link' className='dev-link' href='https://github.com/ptrnln'><i className='fa-brands fa-github' /></a>

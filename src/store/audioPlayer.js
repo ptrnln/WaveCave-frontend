@@ -239,9 +239,18 @@ export const audioPlayerReducer = (state = initialState, action) => {
                         newIndex = state.currentIndex
                 }
             } else newIndex = state.currentIndex + 1
-            newState.currentIndex = newIndex
-            newState.hasRepeated = repeated
-            return newState;
+            
+            return {
+                ...state,
+                currentIndex: newIndex,
+                hasRepeated: repeated,
+                isPlaying: true,
+                queue: {
+                    ...state.queue,
+                    original: [...state.queue.original],
+                    shuffled: [...state.queue.shuffled]
+                }
+            };
         case PLAY_TRACK:
             return { ...newState, isPlaying: true }
         case PLAY_PREV:

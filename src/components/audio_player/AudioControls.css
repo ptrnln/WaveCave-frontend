@@ -1,5 +1,5 @@
 i {
-    cursor: pointer;
+    /* cursor: pointer; */
     color: inherit;
 }
 
@@ -7,14 +7,37 @@ i {
     user-select: none;
 }
 
-.audio-player .track-controls button {
-    appearance: none;
-    border: 0;
-    padding: 5px;
-    /* margin: auto auto auto auto; */
+.track-controls button.active, .queue-controls button.active,
+.track-controls button.once, .queue-controls button.once,
+.track-controls button.always, .queue-controls button.always {
+    i::before {
+        color: #f50 ;
+    }
 }
 
-.audio-player .button {
-    color: inherit;
-    cursor: pointer;
+button.once:hover i .path1:before {
+    color: rgba(
+            calc(var(--active-color-r) + 50), 
+            calc(var(--active-color-g) + 50), 
+            calc(var(--active-color-b) + 50), 
+            var(--active-color-a));
 }
+
+button.once:hover i .path2:before {
+    color: rgba(
+            calc(var(--active-color-r) + 20), 
+            calc(var(--active-color-g) + 20), 
+            calc(var(--active-color-b) + 20), 
+            0.5);
+}
+
+.play-pause.button i::before {
+    display: inline-block;
+    width: 20px; /* Set a fixed width */
+    height: 20px; /* Set a fixed height */
+    text-align: center;
+    line-height: 20px; /* Align icon vertically */
+}
+
+
+

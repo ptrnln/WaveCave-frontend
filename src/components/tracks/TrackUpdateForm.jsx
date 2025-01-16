@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import csrfFetch from "../../store/csrf";
 import './TrackUpdateForm.css';
 import * as trackActions from '../../store/track';
 import { useDispatch, useSelector } from "react-redux";
 import routeToAPI from "../../store/api";
-
+import useParams from "../../hooks/useParams";
 
 
 const GENRES = [
@@ -13,7 +13,16 @@ const GENRES = [
     "Rock",
     "Country", 
     "Hip-Hop", 
-    "EDM"
+    "EDM",
+    "R&B",
+    "Jazz",
+    "Classical",
+    "Electronic",
+    "Folk",
+    "Metal",
+    "Punk",
+    "Rap",
+    "Soul"
 ]
 
 const SUPPORTED_FILE_TYPES = [
@@ -28,6 +37,7 @@ const generateFileTypeRegEx = (fileTypeList) => {
 
 export default function TrackUpdateForm() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [isUpdated, setIsUpdated] = useState(false);
 
     const [newTitle, setNewTitle] = useState('');
@@ -35,7 +45,7 @@ export default function TrackUpdateForm() {
     const [genre, setGenre] = useState(GENRES[0]);
     const [isNewGenre, setIsNewGenre] = useState(false);
     // const [isAlbum, setIsAlbum] = useState(false);
-    // const [artist, setArtist] = useState('');
+    const [artist, setArtist] = useState({});
     const [duration, setDuration] = useState(0);
     const [imageFile, setImageFile] = useState(null);
     const [audioFile, setAudioFile] = useState(null);
@@ -64,13 +74,16 @@ export default function TrackUpdateForm() {
     }
 
     useEffect(() => {
+        document.title = `Switchin up the flow with ${title} - WaveCave`
+    }, [title])
+    useEffect(() => {
         if(!currentUser) return <Navigate to='/' />
     }, [currentUser])
 
 
     useEffect(() => {
         async function getTrackData() {
-            const response = await csrfFetch(routeToAPI(`/api/users/@/${username}/tracks/${title}`));
+            const response = await csrfFetch(routeToAPI(`/api/users/@${username.replaceAll('@', '')}/tracks/${title}`));
             
             if(response.ok) {
                 const data = await response.json();
@@ -86,7 +99,7 @@ export default function TrackUpdateForm() {
                 setIsNewGenre(!GENRES.includes(trackData.genre));
                 setDuration(trackData.duration);
                 setFileType(trackData.fileType);
-                
+                setArtist(trackData.artist);
                 return data
             } else {
                 const data = await response.json();
@@ -121,25 +134,29 @@ export default function TrackUpdateForm() {
         
         if(response.ok) {
             dispatch(trackActions.receiveTrack(data.track));
-            // navigate(`/${encodeURIComponent(currentUser.username)}/${encodeURIComponent(newTitle)}`,
-            //     {replace: true})
             setIsUpdated(true);
+            navigate(`/@${encodeURIComponent(currentUser.username)}/${encodeURIComponent(newTitle)}`)
         } else {
             setErrors(data.errors)
         }
     }
 
-    // if(currentUser === null || currentUser.id !== artist.id) {
-    //     navigate(`/${encodeURIComponent(artist.username)}/${encodeURIComponent(title)}`)
-    // }
+    useEffect(() => {
+        if (!artist.id) return;
+        if(currentUser === null || currentUser.id !== artist.id) {
+            navigate(`/@${encodeURIComponent(artist.username)}/${encodeURIComponent(title)}`)
+        }
+    }, [currentUser, artist, title])
 
     return(
         <>
-        { !isUpdated ?        
+        { !isUpdated ? 
+        <>
         <form 
             className="track-update" 
             htmlFor="track-update"
             onSubmit={handleSubmit}>
+            <h1>Update Track</h1>
             <label htmlFor="title">Title:
                 <br />
                 <input 
@@ -248,6 +265,7 @@ export default function TrackUpdateForm() {
             <label htmlFor="errors">{errors.length ? errors.join(", ") : false}</label>
             <button type="submit">Submit</button>
         </form>
+        </>
         :
         <Navigate to={`/@${encodeURIComponent(currentUser.username)}/${encodeURIComponent(newTitle)}`} />
         }

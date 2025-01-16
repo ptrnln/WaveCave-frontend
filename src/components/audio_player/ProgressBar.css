@@ -6,7 +6,6 @@
     top: 0%;
     width: 100%;
     height: 100%;
-    cursor: pointer;
 }
 
 .progress-bar input[type="range"]#progress-bar {
@@ -22,12 +21,17 @@
     cursor: pointer;
 }
 
+.progress-bar input[type="range"]#progress-bar:disabled{
+  cursor: not-allowed;
+}
+
 span.time-display {
     position: relative;
     top: 38%;
     padding-left: 10px;
     padding-right: 10px;
     user-select: none;
+    font-size: 0.9rem;
 }
 
 span.time-display.tooltip-time {
@@ -60,7 +64,6 @@ span.time-display.tooltip-time {
     width: 100%;
     height: 2px;
     border-radius: 2px;
-    cursor: pointer;
     user-select: none;
   
 }
@@ -116,7 +119,6 @@ span.time-display.tooltip-time {
     border-radius: 50%;
     border: none;
     background-color: #f50;
-    cursor: pointer;
     position: relative;
     opacity: 0;
     transition: .2s;

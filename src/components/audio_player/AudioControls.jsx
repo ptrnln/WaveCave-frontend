@@ -48,57 +48,46 @@ export default function AudioControls({ handleNext, handlePrev }) {
         }
     }
 
-    const nextButtonDisabled = currentIndex === queueLength - 1 && 
-            (isRepeating === 'once' && hasRepeated || isRepeating === 'false');
-
+    
     return (
         <div className="audio-controls container">
             <div className="track-controls container">
-                <button className="previous button" onClick={handlePrev} alt="Previous" title='Previous track/Replay'>
+                <button className="previous button" onClick={handlePrev} alt="Previous" title='Previous track/Replay' disabled={queueLength === 0}>
                     <i className="fa fa-step-backward"/>     
                 </button>
-                <button className="play-pause button" onClick={togglePlay} alt="Play" title='Play track'>
+                <button className="play-pause button" onClick={togglePlay} alt="Play" title='Play track' disabled={queueLength === 0}>
                 {isPlaying ? 
-                    <i className='fa fa-pause' />
+                    <i className='fa fa-pause icon-fixed-size' />
                     :
-                    <i className='fa fa-play'/>
+                    <i className='fa fa-play icon-fixed-size'/>
                 }
                 </button>
-                { nextButtonDisabled ?
-                    <button className="next button" style={{color: "Grey", pointer: "default"}} title="Next track">
-                        <i className="fa fa-step-forward"></i>
-                    </button>
-                    :
-                    <button className="next button" onClick={handleNext} title="Next track">
-                        <i className="fa fa-step-forward"></i>
-                    </button>
-                }
+                <button className="next button" onClick={handleNext} title="Next track" 
+                    disabled={
+                        queueLength === 0 || (currentIndex === queueLength - 1 && (isRepeating === 'false' || (isRepeating === 'once' && hasRepeated))) }>
+                    <i className="fa fa-step-forward"></i>
+                </button>
             </div>
             <div className="queue-controls container">
-                <span style={{color: isShuffled ? "#f50" : "Black"}}>
-                    <button 
-                        id="shuffle-button" 
-                        className="shuffle button"
-                        onClick={toggleShuffle}
-                        title='Shuffle playlist'>
+                <button 
+                    id="shuffle-button" 
+                    className={"shuffle button" + (isShuffled ? " active" : "")}
+                    onClick={toggleShuffle}
+                    disabled={queueLength === 0}
+                    title='Shuffle playlist'>
                             <i className="fa fa-random"></i>
-                    </button>
-                </span>
-                <span style={{
-                    color: ["once","always"]
-                                .some(v => v === isRepeating) ? 
-                                    "#f50"
-                                    :   
-                                    "Black"}}>
-                    <button className="repeat button" title='Repeat playlist'>
-                        <i 
-                            className={
-                                isRepeating === 'once' ? "wc-icon-cycle-1" : "wc-icon-cycle"
-                            }
-                            onClick={toggleRepeat}
-                        ></i>
-                    </button>
-                </span>
+                </button>
+
+                <button className={"repeat button" + (isRepeating !== 'false' ? ` ${isRepeating}` : "")} 
+                        title='Repeat playlist'
+                        disabled={queueLength === 0}
+                        onClick={toggleRepeat}>
+                    {isRepeating === 'once' ? (
+                        <i className="wc wc-cycle-1-duotone"><span className="path1"></span><span className="path2"></span></i>
+                    ) : (
+                        <i className="wc wc-cycle"></i>
+                    )}
+                </button>
             </div>
         </div>
     )

@@ -37,6 +37,7 @@ div.track-view.details {
 div.track-view img {
     max-width: 180px;
     max-height: 180px;
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 div.track-view a {
@@ -57,7 +58,9 @@ div.track-view .fa-solid.fa-compact-disc {
 i.fa-solid.fa-play-circle {
     display: none;
     position: absolute;
-    transform: translate(50%, 50%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     color: #f50;
     font-size: 90px;
     z-index: 10;
