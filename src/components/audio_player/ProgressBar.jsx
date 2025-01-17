@@ -14,6 +14,10 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
 
     const mousePositionRef = useRef([0,0]);
 
+    const isDisabled = useMemo(() => {
+        return audioRef.current?.readyState === 0
+    }, [audioRef.current?.readyState])
+
     useEffect(() => {
         const handlePointerMove = (e) => {
             const clientX = e.touches ? e.touches[0].clientX : e.pageX;
@@ -173,16 +177,6 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
         };
     }, [progressBarRef, handleProgressDrag]);
 
-    // useEffect(() => {
-    //     window.addEventListener('mouseup', handleDragEnd);
-    //     window.addEventListener('touchend', handleDragEnd);
-    
-    //     return () => {
-    //         window.removeEventListener('mouseup', handleDragEnd);
-    //         window.removeEventListener('touchend', handleDragEnd);
-    //     };
-    // }, [handleDragEnd]);
-
     const currentTime = useMemo(() => {
         return formatTime(audioRef.current?.currentTime || 0)
     }, [audioRef.current?.currentTime]);
@@ -211,6 +205,7 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
                 onTouchStart={handleProgressDrag}
                 onTouchEnd={handleDragEnd}
                 style={{"minWidth":"50px"}}
+                disabled={isDisabled}
             />
             <span className='time-display tooltip-time' ref={tooltipRef} style={{"zIndex":"2"}}>
                 {formatTime(tooltipTime)}

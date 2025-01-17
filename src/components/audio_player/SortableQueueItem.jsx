@@ -14,8 +14,6 @@ export default function SortableQueueItem(props) {
         id: props.id, 
         disabled: props["aria-disabled"] === "disabled"
     });
-
-    // console.log(props.id, props["aria-disabled"], active);
     
     const style = {
         transform: CSS.Transform.toString(transform),

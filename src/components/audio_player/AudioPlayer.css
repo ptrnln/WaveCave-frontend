@@ -16,38 +16,53 @@ div.audio-player button {
     background-color: inherit;
 }
 
-div.audio-player div.audio-player.inner {
+div.audio-player.inner {
     display: flex;
     flex-direction: row;
+    flex-grow: 2;
     height: 100%;
     width: 100%;
     max-width: 1280px;
+    & i {
+        font-size: 1rem;
+    }
 }
 
 .audio-controls {
-    width: 200px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    padding-left: 20px;
-    align-items: baseline;
+    /* width: 200px; */
+    &.container {
+        flex-grow: 2;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: baseline;
+        gap: 5px;
+    }
+
 }
 
 .track-controls {
-    width: 80px;
+    /* width: 80px; */
+    flex-grow: 2;
     margin-top: auto;
+    gap: 5px;
     margin-bottom: auto;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    & button {
+        padding: 0 calc(20px - fit-content(20px));
+    }
 }
 
 .queue-controls {
-    width: 60px;
     margin-top: auto;
     margin-bottom: auto;
+    gap: 5px;
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-around;
+    justify-content: space-between;
+    & button {
+        padding: 0 calc(20px - 1rem);
+    }
 }

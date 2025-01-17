@@ -45,9 +45,15 @@ export default function AudioItem({ audioRef, handleNext }) {
     
     useEffect(() => {
         (async () => {
-            if(isPlaying && currentTrackId) {
+            // First update the source if needed
+            if (currentTrackLocalSource && !audioRef.current.src.includes(currentTrackLocalSource)) {
+                audioRef.current.src = currentTrackLocalSource;
+                await audioRef.current.load();
+            }
+
+            // Then handle play/pause state
+            if(isPlaying && currentTrackLocalSource) {
                 try {
-                    audioRef.current.load();
                     await audioRef.current.play();
                 }
                 catch(e) {
@@ -60,7 +66,7 @@ export default function AudioItem({ audioRef, handleNext }) {
                         }
                     }
                     catch(err) {
-                        console.error(err, e);
+                        console.error(err);
                     }
                 }
             }
@@ -69,7 +75,7 @@ export default function AudioItem({ audioRef, handleNext }) {
                 if (!audioRef.current.paused) audioRef.current.pause();
             }
         })();
-    }, [isPlaying, audioRef, currentTrackId, currentTrackLocalSource])
+    }, [isPlaying, audioRef, currentTrackLocalSource])
 
     const audio = <audio 
             className={`audio-track ${currentTrackTitle || ''}`}

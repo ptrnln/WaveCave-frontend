@@ -10,7 +10,11 @@ export default function HomePage() {
 
     useEffect(() => {
         if(isLoggedIn) navigate('/feed');
-    })
+    }, [isLoggedIn])
+
+    useEffect(() => {
+        document.title = 'Welcome to WaveCave!'
+    }, [])
 
     return (
         <div className="home">

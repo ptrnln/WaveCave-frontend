@@ -26,7 +26,7 @@ export default function AudioPlayer() {
     
     const handlePrev = (e) => {
         e.preventDefault();
-        if(audioRef.current.currentTime <= 3 || currentIndex === 0) {
+        if(audioRef.current?.currentTime <= 3 || currentIndex === 0) {
             dispatch(audioPlayerActions.playPrev())
         } else {
             audioRef.current.currentTime = 0;

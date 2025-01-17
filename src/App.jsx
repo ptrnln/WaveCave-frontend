@@ -103,7 +103,11 @@ const router = createBrowserRouter([
     ],
   },
 ], {
-  basename: import.meta.env.MODE === "production" ? "/wavecave" : "/"
+  basename: import.meta.env.MODE === "production" ? "/wavecave" : "/",
+  future: {
+    // This helps maintain state during error transitions
+    v7_partialHydration: true,
+  }
 });
  
 

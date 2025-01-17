@@ -32,7 +32,11 @@ export default function TrackUploadForm() {
     const [imageFile, setImageFile] = useState(null);
     const [audioFile, setAudioFile] = useState(null);
     const [errors, setErrors] = useState([]);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        document.title = "Give it a title and we'll make it tidal. - WaveCave"
+    }, [])
 
     const currentUser = useSelector(state => state.session.user)
 

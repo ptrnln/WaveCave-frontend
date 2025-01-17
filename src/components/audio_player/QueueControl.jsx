@@ -1,8 +1,7 @@
 import { useSelector } from "react-redux"
 import QueueItem from "./QueueItem";
-import React, { useState, useCallback, useMemo, useEffect} from "react";
-// import './QueueControl.css'
-import { closestCenter, DndContext, DragOverlay, KeyboardSensor, PointerSensor, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
+import React, { useState, useCallback, useEffect, useReducer} from "react";
+import { closestCenter, DndContext, DragOverlay, KeyboardSensor, PointerSensor, TouchSensor, useSensor, useSensors } from "@dnd-kit/core";
 import SortableQueueItem from "./SortableQueueItem";
 import { SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { useNavigate } from "react-router-dom";
@@ -14,6 +13,7 @@ export default function QueueControl () {
     const navigate = useNavigate();
     const [display, setDisplay] = useState(false);
     const [activeId, setActiveID] = useState(null);
+    const [, forceUpdate] = useReducer(x => x + 1, 0);
     const dispatch = useDispatch();
     const queue = useSelector(state => {
         return state.audio.isShuffled ?
@@ -24,15 +24,24 @@ export default function QueueControl () {
     const currentIndex = useSelector(state => state.audio.currentIndex)    
     const stateTracks = useSelector(state => state.tracks);
 
-    
+    function isTouchDevice() {
+        return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    }
+
     const sensors = useSensors(
-            useSensor(PointerSensor),
-            useSensor(KeyboardSensor, {
-                coordinateGetter: sortableKeyboardCoordinates,
-            }),
-            // useSensor(MouseSensor)
-        )
+        isTouchDevice() ? useSensor(TouchSensor) : useSensor(PointerSensor),
+        useSensor(KeyboardSensor, {
+            coordinateGetter: sortableKeyboardCoordinates,
+        }),
+    )
+
+    useEffect(() => {
+        window.addEventListener('resize', forceUpdate)
         
+        return () => {
+            window.removeEventListener('resize', forceUpdate)
+        }
+    }, [])
 
     const tracks = queue.map(idx => ({ ...stateTracks[idx], id: stateTracks[idx].id.toString()}))
 
@@ -55,22 +64,20 @@ export default function QueueControl () {
     function handleDragEnd (e) {
         const {active, over} = e;
         if(active.id !== over.id) {
-            /* logic to swap/redorder items */
             dispatch(audioPlayerActions.reorderQueue([parseInt(active.id), parseInt(over.id)]))
-
         }
         setActiveID(null);
     }
     
     return (
         <div className="queue-control container">
-            <button className="queue-control button" onClick={toggleDisplay} title="Playlist menu">
-                <i className="wc-icon-music-list"/>
+            <button className="queue-control button" onClick={toggleDisplay} title="Playlist menu" >
+                <i className="wc wc-music-list"/>
             </button>
             <div className={display ? "queue-control inner hidden" : "queue-control inner"}>
                 <div className="queue-control-header">
                     <h4>Next Up</h4>
-                    <button onClick={handlePlaylistSave}>
+                    <button onClick={handlePlaylistSave} disabled={tracks.length === 0}>
                         <i className="fa-solid fa-floppy-disk"  title="Save Playlist" style={{ fontSize: '1rem' }}/>
                     </button>
                 </div>
@@ -81,9 +88,9 @@ export default function QueueControl () {
                         onDragStart={handleDragStart}
                         onDragEnd={handleDragEnd}
                     >
-                        { tracks.length > 0 && (
-                            <SortableContext items={tracks} strategy={verticalListSortingStrategy}>
-                                {tracks.map((track, idx) => (
+                        <SortableContext items={tracks} strategy={verticalListSortingStrategy}>
+                            { tracks.length > 0 && (
+                                tracks.map((track, idx) => (
                                     <SortableQueueItem 
                                         key={track.id} 
                                         track={track} 
@@ -91,9 +98,9 @@ export default function QueueControl () {
                                         data-played={idx < currentIndex ? "played" : null} 
                                         aria-disabled={parseInt(idx) == parseInt(currentIndex) ? "disabled" : null}
                                     />
-                                ))}
-                            </SortableContext>
+                                ))
                             )}
+                        </SortableContext>
                         <DragOverlay>
                             { activeId ? 
                                 <QueueItem  track={tracks.find(t => t.id === activeId)} id="overlay"/>

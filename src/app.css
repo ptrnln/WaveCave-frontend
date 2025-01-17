@@ -1,4 +1,3 @@
-
 @import url(components/audio_player/AudioPlayer.css);
 @import url(components/audio_player/AudioControls.css);
 @import url(components/audio_player/QueueControl.css);
@@ -12,10 +11,16 @@ html, body {
 }
 
 #root {
-    font-size: 1rem;
+    font-size: 0.9rem;
     height: inherit;
     width: 100%;
+    & * { 
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
 }
+
+
 
 .stop-scrolling {
     overflow: hidden;
@@ -84,6 +89,7 @@ div.content {
     height: calc(100% - 96px);
     overflow-y: scroll;
     overflow-x: hidden;
+    font-size: .8rem;
 }
 
 div.content h1 {
@@ -106,14 +112,12 @@ label[for=errors] {
 
 
 div.content button:hover {
-    filter: brightness(130%);
+    filter: brightness(110%);
 } 
 
-i:hover::before {
-    cursor: pointer;
-    filter: brightness(130%);
-    /* color: #222; */
-}
+/* button:hover i::before {
+    filter: brightness(110%);
+} */
 
 h1 {
     font-size: 2rem;
@@ -130,3 +134,81 @@ h3 {
 h4 {
     font-size: 1.2rem;
 }
+
+button:disabled {
+    cursor: not-allowed;
+}
+
+button:active {
+    :is(i.wc, i.fa, i.fa-solid) {
+        transform: scale(0.9) !important;
+    }
+}
+
+button {
+    text-align: center;
+    vertical-align: middle;
+}
+
+button:hover:not(:disabled), button:hover:not(:disabled) * {
+    cursor: pointer;
+}
+
+.path1:before, .path2:before {
+    --active-color-r: 255;
+    --active-color-g: 85;
+    --active-color-b: 0;
+    --active-color-a: 1;
+}
+
+
+button i::before {
+    --default-color-r: 0;
+    --default-color-g: 0;
+    --default-color-b: 0;
+    --default-color-a: 1;
+    --active-color-r: 255;
+    --active-color-g: 85;
+    --active-color-b: 0;
+    --active-color-a: 1;
+    --active-color: rgba(var(--active-color-r), var(--active-color-g), var(--active-color-b), var(--active-color-a));
+    --default-color: rgba(var(--default-color-r), var(--default-color-g), var(--default-color-b), var(--default-color-a));
+    color: var(--default-color);
+    text-align: center;
+    vertical-align: middle;
+    transform-origin: center center;
+    -webkit-transform-origin: 50% 50%;
+    -moz-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+}
+
+body div#root button.active:hover i::before {
+    color: rgba(
+            calc(var(--active-color-r) + 50), 
+            calc(var(--active-color-g) + 50), 
+            calc(var(--active-color-b) + 50), 
+            var(--active-color-a));
+}
+
+div#root button:hover:not(:disabled, .once, .always, .active) i::before {
+    color: rgba(
+        calc(var(--default-color-r) + 80), 
+        calc(var(--default-color-g) + 80), 
+        calc(var(--default-color-b) + 80), 
+        var(--default-color-a));
+}
+
+:not(button) i::before {
+    color: inherit;
+}
+
+i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 0;
+    height: fit-content;
+}
+
+

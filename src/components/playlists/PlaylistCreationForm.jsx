@@ -8,7 +8,7 @@ import SortablePlaylistFormItem from "./SortablePlaylistFormItem";
 import * as playlistActions from "../../store/playlist";
 
 export default function PlaylistCreationForm() {
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const stateTracks = useSelector(state => state.tracks);
@@ -55,8 +55,11 @@ export default function PlaylistCreationForm() {
         if(active.id !== over.id) {
             const oldIndex = tracks.findIndex(track => track.id === active.id);
             const newIndex = tracks.findIndex(track => track.id === over.id);
-            setTracks(arrayMove(tracks, oldIndex, newIndex));
-            navigate(`/create-playlist?list=[${tracks.map(track => track.id).join(",")}]`);
+            const newTracks = arrayMove(tracks, oldIndex, newIndex);
+            setTracks(newTracks);
+            navigate(`/create-playlist?list=[${newTracks.map(track => track.id).join(",")}]`, {
+                replace: true
+            });
         }
 
     }
@@ -67,7 +70,6 @@ export default function PlaylistCreationForm() {
         
         const { error } = await dispatch(playlistActions.createPlaylist({ publisherId: user.id, title: playlistTitle, description: playlistDescription, trackIds: playlistTrackIds}));
 
-        debugger 
         if(error) return;
         navigate(`/`);
     }
