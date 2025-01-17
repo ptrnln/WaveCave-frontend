@@ -77,11 +77,13 @@ export default function AudioControls({ handleNext, handlePrev }) {
                     title='Shuffle playlist'>
                             <i className="fa fa-random"></i>
                 </button>
-
-                <button className={"repeat button" + (isRepeating !== 'false' ? ` ${isRepeating}` : "")} 
-                        title='Repeat playlist'
-                        disabled={queueLength === 0}
-                        onClick={toggleRepeat}>
+                <button 
+                    aria-label="Repeat playlist"
+                    id="repeat-button"
+                    className={"repeat button" + (isRepeating !== 'false' ? ` ${isRepeating}` : "")} 
+                    disabled={queueLength === 0}
+                    onClick={toggleRepeat}
+                    title='Repeat playlist'>
                     {isRepeating === 'once' ? (
                         <i className="wc wc-cycle-1-duotone"><span className="path1"></span><span className="path2"></span></i>
                     ) : (

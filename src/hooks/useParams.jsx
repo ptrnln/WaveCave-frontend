@@ -1,8 +1,8 @@
-import { useParams as useParamsReact } from "react-router-dom";
+import { useParams as useParams___React } from "react-router-dom";
 
-export { useParamsReact }
+export { useParams___React }
 
 export default function useParams() {
-    const params = useParamsReact();
+    const params = useParams___React();
     return { ...params, username: params.username.replaceAll("@", "") }
 }

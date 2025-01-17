@@ -1,34 +1,6 @@
-i {
-    /* cursor: pointer; */
-    color: inherit;
-}
 
 .audio-player * {
     user-select: none;
-}
-
-.track-controls button.active, .queue-controls button.active,
-.track-controls button.once, .queue-controls button.once,
-.track-controls button.always, .queue-controls button.always {
-    i::before {
-        color: #f50 ;
-    }
-}
-
-button.once:hover i .path1:before {
-    color: rgba(
-            calc(var(--active-color-r) + 50), 
-            calc(var(--active-color-g) + 50), 
-            calc(var(--active-color-b) + 50), 
-            var(--active-color-a));
-}
-
-button.once:hover i .path2:before {
-    color: rgba(
-            calc(var(--active-color-r) + 20), 
-            calc(var(--active-color-g) + 20), 
-            calc(var(--active-color-b) + 20), 
-            0.5);
 }
 
 .play-pause.button i::before {
