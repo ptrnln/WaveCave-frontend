@@ -11,15 +11,16 @@ div.queue-control.inner {
     background-color: white;
     /* padding: 5px 5px; */
     border-radius: 5px;
-    border: 1px solid #a0a0a0;
+    border: 1px solid #e6e6e6;
     max-height: 40%;
     transition: bottom .4s cubic-bezier(.37,.64,.56,1.31), opacity .3s;
     z-index: 1001;
+    overflow: clip;
 }
 
 div.queue-control.inner.hidden {
     opacity: 0;
-    bottom: -10px;
+    bottom: -50px;
     pointer-events: none;
 }
 
@@ -59,6 +60,7 @@ div.queue-control-header.empty {
     border-bottom: 1px solid #a0a0a0;
     gap: 0.5rem;
     min-height: 2.5rem;
+    background-color: white;
 }
 
 /* Empty grid cell when no handle */
@@ -151,9 +153,10 @@ button.queue-control.button {
 }
 
 .queue-item[data-played="played"] {
-    color: #a0a0a0;
+    /* color: #a0a0a0;
     background-color: #d3d3d3;
-    border-color: #a0a0a0;
+    border-color: #a0a0a0; */
+    opacity: 0.5;
 }
 
 /* When ul#queue-list is empty (has no li elements), remove border from header */

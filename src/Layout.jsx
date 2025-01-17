@@ -24,22 +24,25 @@ export default function Layout({children}) {
 
     return (
         <>
-            <div className='app'>
-            <Navigation />
-            <div className='content'>
-                { isLoaded && (children || <Outlet />) }
-            </div>
-            <LoginForm />
-            {audioPlayer}
-            </div>
-            <div id='dev-links-container'>
-            <a id='git-link' className='dev-link' href='https://github.com/ptrnln'><i className='fa-brands fa-github' /></a>
-            <a className='dev-link' href='https://www.linkedin.com/in/peter-nolan-45828b2ab'><i className='fa-brands fa-linkedin' /></a>
-            <a href="https://ph4se.dev/portfolio" className="dev-link"><i className="fa-solid fa-address-card"></i></a>
-            <br />
-            <span className='dev-cred'>Developed by Peter Nolan 2024</span>
-            </div>
-        </>
+        <div className='app'>
+          <Navigation />
+          <div className='content'>
+            <main className="hero">
+              { isLoaded && (children || <Outlet />) }
+            </main>
+          </div>
+          <LoginForm />
+          {audioPlayer}
+        </div>
+        <div id='dev-links-container'>
+          <a id='git-link' className='dev-link' href='https://github.com/ptrnln'><i className='fa-brands fa-github' /></a>
+          <a className='dev-link' href='https://www.linkedin.com/in/peter-nolan-45828b2ab'><i className='fa-brands fa-linkedin' /></a>
+          <a href="https://ph4se.dev/portfolio" className="dev-link"><i className="fa-solid fa-address-card"></i></a>
+          <br />
+          <span className='dev-cred'>Developed by Peter Nolan 2024</span>
+        </div>
+      </>
     );
 }
+
 

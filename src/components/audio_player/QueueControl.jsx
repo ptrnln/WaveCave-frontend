@@ -62,16 +62,16 @@ export default function QueueControl () {
     }
 
     function handleDragEnd (e) {
+        setActiveID(null);
         const {active, over} = e;
-        if(active.id !== over.id) {
+        if(active?.id !== over?.id) {
             dispatch(audioPlayerActions.reorderQueue([parseInt(active.id), parseInt(over.id)]))
         }
-        setActiveID(null);
     }
     
     return (
         <div className="queue-control container">
-            <button className="queue-control button" onClick={toggleDisplay} title="Playlist menu" >
+            <button id="playlist-menu-button" className="queue-control button" onClick={toggleDisplay} title="Open/close playlist menu" >
                 <i className="wc wc-music-list"/>
             </button>
             <div className={display ? "queue-control inner hidden" : "queue-control inner"}>
@@ -81,7 +81,7 @@ export default function QueueControl () {
                         <i className="fa-solid fa-floppy-disk"  title="Save Playlist" style={{ fontSize: '1rem' }}/>
                     </button>
                 </div>
-                <ul id="queue-list">
+                <ul id="queue-list" style={{ backgroundColor: '#d8d8d8' }}>
                     <DndContext 
                         sensors={sensors}
                         collisionDetection={closestCenter}
@@ -101,7 +101,7 @@ export default function QueueControl () {
                                 ))
                             )}
                         </SortableContext>
-                        <DragOverlay>
+                        <DragOverlay style={{ opacity: 0.5 }}>
                             { activeId ? 
                                 <QueueItem  track={tracks.find(t => t.id === activeId)} id="overlay"/>
                                 : null

@@ -137,15 +137,20 @@ h4 {
 
 button:disabled {
     cursor: not-allowed;
+    color: #adadad;
 }
 
 button:active {
     :is(i.wc, i.fa, i.fa-solid) {
         transform: scale(0.9) !important;
+        transform-origin: center center;
     }
 }
 
 button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     vertical-align: middle;
 }
@@ -162,7 +167,7 @@ button:hover:not(:disabled), button:hover:not(:disabled) * {
 }
 
 
-button i::before {
+button {
     --default-color-r: 0;
     --default-color-g: 0;
     --default-color-b: 0;
@@ -180,25 +185,31 @@ button i::before {
     -webkit-transform-origin: 50% 50%;
     -moz-transform-origin: 50% 50%;
     -ms-transform-origin: 50% 50%;
+    &>* {
+        color: inherit;
+    }
 }
 
-body div#root button.active:hover i::before {
-    color: rgba(
+button.active:hover , button.once:hover , button.always:hover {
+    color: rgb(
             calc(var(--active-color-r) + 50), 
             calc(var(--active-color-g) + 50), 
-            calc(var(--active-color-b) + 50), 
-            var(--active-color-a));
+            calc(var(--active-color-b) + 50));
 }
 
-div#root button:hover:not(:disabled, .once, .always, .active) i::before {
-    color: rgba(
+button.active, button.once, button.always {
+    color: var(--active-color);
+}
+
+button:hover:not(:disabled, .once, .always, .active, main button) {
+    color: rgb(
         calc(var(--default-color-r) + 80), 
         calc(var(--default-color-g) + 80), 
-        calc(var(--default-color-b) + 80), 
-        var(--default-color-a));
+        calc(var(--default-color-b) + 80));
+    
 }
 
-:not(button) i::before {
+i:before {
     color: inherit;
 }
 
@@ -209,6 +220,16 @@ i {
     text-align: center;
     line-height: 0;
     height: fit-content;
+    transform-origin: center center;
+    width: fit-content;
+    color: inherit;
+    & * {
+        color: inherit;
+    }
 }
+
+
+
+
 
 

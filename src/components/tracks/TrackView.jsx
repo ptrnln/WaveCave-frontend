@@ -130,7 +130,7 @@ export default function TrackView() {
                         </div>
                     </div>
                 <button className="play-track button" onClick={ handleClick } >
-                    <i className="fa-solid fa-play" /> Play this track!
+                    <i className="fa-solid fa-play" style={{ letterSpacing: '5px' }}/>Play this track!
                 </button>
                 </div>
             </div>
