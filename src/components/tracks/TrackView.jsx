@@ -82,13 +82,13 @@ export default function TrackView() {
 
     useEffect(() => {
         (async () => {
-        if(track) {
-            setIsLoaded(true);
-        } else {
-            const trackData = await trackActions.getTrackByUserNameAndTitle(username.replaceAll("@", ""), title);
-            dispatch(trackActions.receiveTrack(trackData));
-        }})();
-    }, [track, dispatch, username, title])
+            if (!track && !isLoaded) {
+                const trackData = await trackActions.getTrackByUserNameAndTitle(username.replaceAll("@", ""), title);
+                dispatch(trackActions.receiveTrack(trackData));
+                setIsLoaded(true);
+            }
+        })();
+    }, [track, dispatch, username, title, isLoaded]);
 
     return (
             isLoaded ?

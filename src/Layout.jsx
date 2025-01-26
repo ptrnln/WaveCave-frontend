@@ -8,7 +8,6 @@ import AudioPlayer from "./components/audio_player/AudioPlayer";
 import { Outlet } from "react-router-dom";
 
 export default function Layout({children}) {
-    
     const dispatch = useDispatch();
     const [isLoaded, setIsLoaded] = useState(false);
     const audioPlayerRef = useRef(null);

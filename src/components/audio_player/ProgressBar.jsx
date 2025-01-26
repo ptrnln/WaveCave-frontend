@@ -19,6 +19,9 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
     }, [audioRef.current?.readyState])
 
     useEffect(() => {
+        const controller = new AbortController();
+        const signal = controller.signal;
+
         const handlePointerMove = (e) => {
             const clientX = e.touches ? e.touches[0].clientX : e.pageX;
             const clientY = e.touches ? e.touches[0].clientY : e.pageY;
@@ -26,12 +29,11 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
             mousePositionRef.current = [clientX, clientY];
         };
     
-        window.addEventListener('mousemove', handlePointerMove);
-        window.addEventListener('touchmove', handlePointerMove);
+        window.addEventListener('mousemove', handlePointerMove, {signal});
+        window.addEventListener('touchmove', handlePointerMove, {signal});
     
         return () => {
-            window.removeEventListener('mousemove', handlePointerMove);
-            window.removeEventListener('touchmove', handlePointerMove);
+            controller.abort();
         };
     }, []);
 
@@ -122,7 +124,6 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
 
         setTooltipTime(tooltipT < 0 ? 0 : tooltipT);
 
-        // Continuously call updateTooltip
         tooltipAnimationRef.current = requestAnimationFrame(updateTooltip);
     }, [mousePositionRef, audioRef]);
 

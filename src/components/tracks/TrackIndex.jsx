@@ -11,12 +11,13 @@ export default function TrackIndex() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        (async () => { 
-            dispatch(trackActions.getTracks());
-            setLoaded(true);
-        })()
-    }, [dispatch])
- 
+        if (!loaded) {
+            (async () => { 
+                await dispatch(trackActions.getTracks());
+                setLoaded(true);
+            })()
+        }
+    }, [dispatch, loaded])
 
     return (
         <div className="track-index container">
