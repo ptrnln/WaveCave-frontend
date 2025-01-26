@@ -55,9 +55,9 @@ export default function AudioControls({ handleNext, handlePrev }) {
                 <button className="previous button" onClick={handlePrev} alt="Previous" title='Previous track/Replay' disabled={queueLength === 0}>
                     <i className="fa fa-step-backward"/>     
                 </button>
-                <button className="play-pause button" onClick={togglePlay} alt="Play" title='Play track' disabled={queueLength === 0}>
+                <button className="play-pause button" onClick={togglePlay} alt="Play" title='Play/pause track' disabled={queueLength === 0}>
                 {isPlaying ? 
-                    <i className='fa fa-pause icon-fixed-size' />
+                    <i className='fa fa-pause icon-fixed-size'/>
                     :
                     <i className='fa fa-play icon-fixed-size'/>
                 }

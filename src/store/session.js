@@ -7,8 +7,8 @@ const SHOW_MODAL = 'session/SHOW_MODAL'
 const HIDE_MODAL = 'session/HIDE_MODAL'
 const SET_ERRORS = 'session/SET_ERRORS'
 const CLEAR_ERRORS = 'session/CLEAR_ERRORS'
-
-const initialState = { 
+const ADD_ERROR = 'session/ADD_ERROR'
+const INITIAL_STATE = {
     user: null,
     showModal: false,
     errors: {
@@ -47,6 +47,14 @@ export const setErrors = errors => {
     return {
         type: SET_ERRORS,
         errors
+    }
+}
+
+export const addError = (field, errorMessage) => {
+    return {
+        type: ADD_ERROR,
+        field,
+        errorMessage
     }
 }
 
@@ -102,8 +110,11 @@ export const login = ({ credential, password }) => async dispatch => {
     
     const data = await response.json();
     if(data.user)  {
-        dispatch(setUser(data.user))
-    } else if(data.errors) dispatch(setErrors(data.errors))
+        dispatch(setUser(data.user));
+    } else if(data.errors) {
+        dispatch(clearErrors());
+        dispatch(setErrors(data.errors));
+    }
     return data;
 }
 
@@ -123,23 +134,34 @@ export const storeUserData = user => {
     sessionStorage.setItem('user', JSON.stringify(user))
 }
 
-const sessionReducer = (state = initialState, action) => {
-    Object.freeze(state)
+const sessionReducer = (state = { ...INITIAL_STATE }, action) => {
+    const newState = { ...Object.freeze(state)}
     
-
     switch(action.type) {
-        case SET_USER:
-            return { ...state, user: action.payload }
         case REMOVE_USER:
-            return { ...state, user: null }
+            newState.user = null;
+            return newState;
         case SHOW_MODAL:
-            return { ...state, showModal: true }
+            newState.showModal = true;
+            return newState;
         case HIDE_MODAL:
-            return { ...state, errors: initialState.errors, showModal: false }
+            newState.showModal = false;
+            return newState;
         case SET_ERRORS:
-            return { ...state, errors: action.errors }
+            newState.errors = action.errors;
+            return newState;
+        case ADD_ERROR:
+            newState.errors[action.field] = [...newState.errors[action.field].filter(error => error !== action.errorMessage), action.errorMessage];
+            return newState;
+        case SET_USER:
+            newState.user = action.payload;
         case CLEAR_ERRORS:
-            return { ...state, errors: initialState.errors }
+            newState.errors = {
+                credential: [],
+                password: [],
+                overall: []
+            };
+            return newState;
         default:
             return state;
     }

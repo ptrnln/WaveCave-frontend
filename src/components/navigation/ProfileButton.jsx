@@ -4,8 +4,6 @@ import * as sessionActions from '../../store/session';
 import { NavLink } from 'react-router-dom';
 import './ProfileButton.css'
 
-
-
 function ProfileButton({ user }) {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);

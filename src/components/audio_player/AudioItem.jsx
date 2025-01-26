@@ -45,37 +45,24 @@ export default function AudioItem({ audioRef, handleNext }) {
     
     useEffect(() => {
         (async () => {
-            // First update the source if needed
-            if (currentTrackLocalSource && !audioRef.current.src.includes(currentTrackLocalSource)) {
+            // Only update source if it actually changed
+            if (currentTrackLocalSource && audioRef.current.src !== currentTrackLocalSource) {
                 audioRef.current.src = currentTrackLocalSource;
                 await audioRef.current.load();
             }
 
-            // Then handle play/pause state
-            if(isPlaying && currentTrackLocalSource) {
+            // Handle play/pause separately
+            if (isPlaying && currentTrackLocalSource && audioRef.current.paused) {
                 try {
                     await audioRef.current.play();
+                } catch(e) {
+                    // Error handling...
                 }
-                catch(e) {
-                    try {
-                        audioRef.current.oncanplaythrough = async (e) => {
-                            e.preventDefault();
-                            if (isPlaying) {
-                                await audioRef.current.play();
-                            }
-                        }
-                    }
-                    catch(err) {
-                        console.error(err);
-                    }
-                }
-            }
-            if(!isPlaying) {
-                audioRef.current.oncanplaythrough = null;
-                if (!audioRef.current.paused) audioRef.current.pause();
+            } else if (!isPlaying && !audioRef.current.paused) {
+                audioRef.current.pause();
             }
         })();
-    }, [isPlaying, audioRef, currentTrackLocalSource])
+    }, [isPlaying, currentTrackLocalSource]);
 
     const audio = <audio 
             className={`audio-track ${currentTrackTitle || ''}`}

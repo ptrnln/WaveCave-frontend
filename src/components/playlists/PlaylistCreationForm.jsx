@@ -74,7 +74,9 @@ export default function PlaylistCreationForm() {
         navigate(`/`);
     }
         
-    if(!user) navigate('/');
+    useEffect(() => {
+        if (!user) navigate('/');
+    }, [user, navigate]);
     
     return (
         <div>

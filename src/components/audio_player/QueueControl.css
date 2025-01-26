@@ -11,7 +11,7 @@ div.queue-control.inner {
     background-color: white;
     /* padding: 5px 5px; */
     border-radius: 5px;
-    border: 1px solid #e6e6e6;
+    border: 1px solid #a0a0a0;
     max-height: 40%;
     transition: bottom .4s cubic-bezier(.37,.64,.56,1.31), opacity .3s;
     z-index: 1001;
@@ -20,7 +20,7 @@ div.queue-control.inner {
 
 div.queue-control.inner.hidden {
     opacity: 0;
-    bottom: -50px;
+    bottom: -250px;
     pointer-events: none;
 }
 
@@ -77,6 +77,12 @@ div.queue-control-header.empty {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.queue-item[data-dragging="true"] {
+    box-shadow: 0 0 10px #f50;
+    position: relative;
+    z-index: 1;
 }
 
 div.queue-control div.queue-item::marker {

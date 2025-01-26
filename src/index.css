@@ -101,38 +101,21 @@ i[class^="wc-"], i[class*=" wc-"] {
   content: "\e901";
 }
 .wc-music-list:before {
+  content: "\e902";
+}
+.wc-cycle-1-duotone .path1:before {
   content: "\e903";
+  opacity: 0.5;
+}
+.wc-cycle-1-duotone .path2:before {
+  content: "\e904";
+  margin-left: -1em;
 }
 .wc-music-list-duotone .path1:before {
-  content: "\e902";
-  color: rgb(0, 0, 0);
+  content: "\e905";
   opacity: 0.5;
 }
 .wc-music-list-duotone .path2:before {
-  content: "\e904";
-  margin-left: -1em;
-  color: rgb(0, 0, 0);
-}
-.wc-music-list-duotone .path3:before {
-  content: "\e905";
-  margin-left: -1em;
-  color: rgb(0, 0, 0);
-}
-.wc-music-list-duotone .path4:before {
   content: "\e906";
   margin-left: -1em;
-  color: rgb(0, 0, 0);
-}
-.wc-music-list-duotone .path5:before {
-  content: "\e907";
-  margin-left: -1em;
-  color: rgb(0, 0, 0);
-}
-.wc-cycle-1-duotone .path1:before {
-  content: "\e908";
-}
-.wc-cycle-1-duotone .path2:before {
-  content: "\e909";
-  margin-left: -1em;
-  opacity: 0.5;
 }

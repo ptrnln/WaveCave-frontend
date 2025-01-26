@@ -23,7 +23,7 @@
 .track-index.item {
     display: flex;
     background: none;
-    border: 1px solid lightgrey;
+    border: 1px solid #d3d3d3;
     border-radius: 15px;
     padding: 10px;
     margin-bottom: 10px;
@@ -36,11 +36,14 @@
     min-height: 50px;
     width: 0%;
     height: 0%;
-    background-color: lightgrey;
-    border: 0;
+    background-color: #f5f5f5;
+    border: 1px solid #d3d3d3;
     margin-left: 10px;
     margin-top: 10px;
     border-radius: 10px;
+    &:active {
+        color: #d3d3d3;
+    }
 }
 
 ul.track-index * {
