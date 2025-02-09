@@ -48,7 +48,7 @@ export default function AudioPlayer() {
                     handleNext
                 }}/>
                 <TrackDisplay />
-                <QueueControl />
+                <QueueControl {...audioRef}/>
             </div>
         </div>
     )

@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux"
 import React, { useState, useCallback, useEffect, useReducer} from "react";
-import { closestCenter, DndContext, DragOverlay, KeyboardSensor, PointerSensor, TouchSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { closestCenter, DndContext, DragOverlay, KeyboardSensor, PointerSensor, TouchSensor, useSensor, useSensors, useDndContext } from "@dnd-kit/core";
 import { restrictToParentElement } from "@dnd-kit/modifiers";
 import SortableQueueItem from "./SortableQueueItem";
 import { SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable'
@@ -125,5 +125,4 @@ export default function QueueControl () {
             </div>
         </div>
     )
-    
 }
