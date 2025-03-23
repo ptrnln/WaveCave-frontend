@@ -58,6 +58,7 @@ export default function QueueControl () {
     useEffect(() => {
         window.addEventListener('resize', forceUpdate)
         // window.addEventListener('drag', handleDragInterruption)
+        
         return () => {
             window.removeEventListener('resize', forceUpdate)
             // window.removeEventListener('drag', handleDragInterruption)
