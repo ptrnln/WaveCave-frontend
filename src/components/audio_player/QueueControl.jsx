@@ -14,6 +14,7 @@ export default function QueueControl () {
     const navigate = useNavigate();
     const [display, setDisplay] = useState(false);
     const [activeId, setActiveID] = useState(null);
+    const [dndContextKey, setDndContextKey] = useState(0);
     const [, forceUpdate] = useReducer(x => x + 1, 0);
     const currentUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
@@ -36,12 +37,31 @@ export default function QueueControl () {
             coordinateGetter: sortableKeyboardCoordinates,
         }),
     )
+    const dndContext = useDndContext();
+
+    useEffect(() => {
+        if(+activeId === queue[currentIndex]) {
+            // Force end the drag operation through dnd-kit
+            const { active } = dndContext;
+            if (active) {
+                dndContext.dispatchEvent(new PointerEvent("pointerup", { bubbles: true }));
+                dndContext.dispatchEvent(new KeyboardEvent("keydown", { bubbles: true, key: "Escape" }));
+                dndContext.dispatchEvent(new TouchEvent("touchend", { bubbles: true }));
+                // End drag for pointer/touch events
+                active.node.current?.dispatchEvent(
+                    new Event('drop', { bubbles: true })
+                );
+            }
+        }
+    }, [activeId, queue, currentIndex, dndContext])
 
     useEffect(() => {
         window.addEventListener('resize', forceUpdate)
+        // window.addEventListener('drag', handleDragInterruption)
         
         return () => {
             window.removeEventListener('resize', forceUpdate)
+            // window.removeEventListener('drag', handleDragInterruption)
         }
     }, [])
 
@@ -64,14 +84,17 @@ export default function QueueControl () {
         if(!queue.length) return;
         navigate(`/create-playlist?list=[${queue.join(',')}]`);
     }
+
     function handleDragStart(e) {
         const {active} = e;
+        if(+active.id === queue[currentIndex]) return;
         setActiveID(active.id);
     }
 
     function handleDragEnd (e) {
         setActiveID(null);
         const {active, over} = e;
+        if(+active.id === queue[currentIndex]) return;
         if(active?.id !== over?.id) {
             dispatch(audioPlayerActions.reorderQueue([parseInt(active.id), parseInt(over.id)]))
         }
@@ -96,6 +119,7 @@ export default function QueueControl () {
                 </div>
                 <ul id="queue-list" style={{ backgroundColor: '#d8d8d8' }}>
                     <DndContext 
+                        key={dndContextKey}
                         sensors={sensors}
                         collisionDetection={closestCenter}
                         onDragStart={handleDragStart}

@@ -58,6 +58,8 @@ div.queue-control-header.empty {
     align-items: center;
     padding: 0.25rem 0.5rem;
     border-bottom: 1px solid #a0a0a0;
+    border-top: 1px solid #a0a0a0;
+    margin-top: -1px;
     gap: 0.5rem;
     min-height: 2.5rem;
     background-color: white;
@@ -111,18 +113,12 @@ button.queue-control.button {
     width: 2rem;
     height: 2rem;
     flex-shrink: 0;
-    /* display: flex;
-    align-items: center;
-    justify-content: center; */
     background-color: darkgrey;
 }
 
 .queue-item-image-button {
     width: 100%;
     height: 100%;
-    /* display: flex;
-    align-items: center;
-    justify-content: center; */
     margin: auto;
     background-color: transparent;
     border: none;
@@ -134,7 +130,6 @@ button.queue-control.button {
 }
 
 .queue-item-image-button:hover {
-    /* background-color: #d3d3d3; */
     filter: brightness(1.1);
 }
 
