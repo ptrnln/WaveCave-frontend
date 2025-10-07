@@ -41,7 +41,6 @@ export default function AudioItem({ audioRef, handleNext }) {
     });
 
     const isPlaying = useSelector(state => state.audio.isPlaying);
-    // const volume = useSelector(state => state.audio.volume);
     
     useEffect(() => {
         (async () => {

@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { closestCenter, DndContext, DragOverlay, KeyboardSensor, PointerSensor, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { restrictToParentElement, restrictToWindowEdges } from "@dnd-kit/modifiers";
 import SortablePlaylistFormItem from "./SortablePlaylistFormItem";
 import * as playlistActions from "../../store/playlist";
-
+import * as sessionActions from "../../store/session";
+import "./PlaylistCreationForm.css";
 export default function PlaylistCreationForm() {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
@@ -28,19 +30,19 @@ export default function PlaylistCreationForm() {
     )
 
     const listString = searchParams.get("list");
-    const playlistIds = listString.match(/\[([\d,]+)\]/)[1].split(",").map(num => parseInt(num));
-
+    const playlistIds = listString?.match(/\[([\d,]+)\]/)[1].split(",").map(num => parseInt(num));
 
     useEffect(() => {
         dispatch(trackActions.getTracks(playlistIds));
     }, [])
 
     useEffect(() => {
-        if(playlistIds.some(id => !stateTracks[id])) return;
+        if(!playlistIds) return;
+        if(playlistIds?.some(id => !stateTracks[id])) return;
         if(Object.keys(stateTracks).length > 0) {
             setTracks(playlistIds.map(id => stateTracks[id]));
         }
-    }, [stateTracks])
+    }, [stateTracks, setTracks])
 
     function handleDragStart(e) {
         const {active} = e;
@@ -75,14 +77,17 @@ export default function PlaylistCreationForm() {
     }
         
     useEffect(() => {
-        if (!user) navigate('/');
-    }, [user, navigate]);
+        if (!user) {
+            navigate(`/?login-redirect=/create-playlist?list=[${playlistIds.join(",")}]`);
+            dispatch(sessionActions.showModal());
+        }
+    }, [user, navigate, dispatch]);
     
     return (
         <div>
-            <form htmlFor={'create-playlist'}>
-                <label htmlFor="playlist-name">Playlist Name
-                    <input type="text" placeholder="Playlist Name" value={playlistTitle} onChange={e => setPlaylistTitle(e.target.value)}>
+            <form className="playlist-creation-form" htmlFor={'create-playlist'}>
+                <label className="playlist-creation-form-label" htmlFor="playlist-name">Playlist Name
+                    <input className="playlist-creation-form-input" type="text" placeholder="Playlist Name" value={playlistTitle} onChange={e => setPlaylistTitle(e.target.value)}>
                     </input>
                 </label>
                 <label htmlFor="playlist-description">Playlist Description
@@ -95,16 +100,22 @@ export default function PlaylistCreationForm() {
                         collisionDetection={closestCenter}
                         onDragStart={handleDragStart}
                         onDragEnd={handleDragEnd}
+                        modifiers={
+                            [
+                                restrictToParentElement,
+                                restrictToWindowEdges
+                            ]
+                        }
                     >
                         <SortableContext items={tracks} strategy={verticalListSortingStrategy}>
                             {tracks.length > 0 && tracks.map((track) => (
-                                <SortablePlaylistFormItem key={track.id} id={track.id} track={track} />
+                                <SortablePlaylistFormItem key={track.id} id={track.id} track={track} zIndex={activeId === track.id ? 1000 : 0} />
                             ))}
                         </SortableContext>
                         <DragOverlay>
-                            {tracks.find(track => track.id === activeId) ? (
+                            {/* {tracks.find(track => track.id === activeId) ? (
                                 <SortablePlaylistFormItem track={tracks.find(track => track.id === activeId)} />
-                            ) : null}
+                            ) : null} */}
                         </DragOverlay>
                     </DndContext>
                 </ul>

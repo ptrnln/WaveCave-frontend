@@ -1,7 +1,7 @@
 // import { useEffect, useState } from "react"
 import * as audioPlayerActions from '../../store/audioPlayer';
 import { useDispatch, useSelector } from "react-redux";
-// import './AudioControls.css';
+
 
 export default function AudioControls({ handleNext, handlePrev }) {
     const dispatch = useDispatch();

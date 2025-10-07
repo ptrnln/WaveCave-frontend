@@ -8,6 +8,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import * as audioPlayerActions from '../../store/audioPlayer.js'
 import * as sessionActions from '../../store/session.js'
+import QueueItem from "./QueueItem";
 
 
 export default function QueueControl () {
@@ -15,7 +16,7 @@ export default function QueueControl () {
     const [display, setDisplay] = useState(false);
     const [activeId, setActiveID] = useState(null);
     const [dndContextKey, setDndContextKey] = useState(0);
-    const [, forceUpdate] = useReducer(x => x + 1, 0);
+    const [_, forceUpdate] = useReducer(x => x + 1, 0);
     const currentUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
     const queue = useSelector(state => {
@@ -89,10 +90,14 @@ export default function QueueControl () {
         const {active} = e;
         if(+active.id === queue[currentIndex]) return;
         setActiveID(active.id);
+        document.body.style.cursor = 'grabbing';
+        document.body.style.pointerEvents = 'none';
     }
 
     function handleDragEnd (e) {
         setActiveID(null);
+        document.body.style.cursor = 'default';
+        document.body.style.pointerEvents = 'auto';
         const {active, over} = e;
         if(+active.id === queue[currentIndex]) return;
         if(active?.id !== over?.id) {
