@@ -10,14 +10,15 @@ html, body {
     height: 100%
 }
 
-#root {
-    font-size: 0.9rem;
+:root {
+    font-size: 1rem;
     height: inherit;
     width: 100%;
     & * { 
         print-color-adjust: exact;
         -webkit-print-color-adjust: exact;
     }
+    --sortable-item-layer: 50;
 }
 
 
@@ -52,7 +53,7 @@ html, body {
 div#dev-links-container {
     position: fixed;
     bottom: 46px;
-    width: clamp(100px, 10vw, 200%);
+    width: clamp(100px, 10vw, 250px);
     margin-bottom: 6px;
     margin-left: 2px;
     font-size: .8rem;

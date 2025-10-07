@@ -54,6 +54,7 @@ div.queue-control-header.empty {
 
 .queue-item {
     display: grid;
+    position: relative;
     grid-template-columns: 20px 2rem 1fr 100px;
     align-items: center;
     padding: 0.25rem 0.5rem;
@@ -63,6 +64,7 @@ div.queue-control-header.empty {
     gap: 0.5rem;
     min-height: 2.5rem;
     background-color: white;
+    z-index: var(--sortable-item-layer);
 }
 
 /* Empty grid cell when no handle */
@@ -79,12 +81,14 @@ div.queue-control-header.empty {
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: grabbing;
 }
 
 .queue-item[data-dragging="true"] {
     box-shadow: 0 0 10px #f50;
     position: relative;
-    z-index: 1;
+    z-index: calc(var(--sortable-item-layer) + 1);
+    cursor: grabbing;
 }
 
 div.queue-control div.queue-item::marker {

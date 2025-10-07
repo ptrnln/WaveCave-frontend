@@ -26,8 +26,6 @@ window.env ||= { "environment":import.meta.env.MODE };
 
 
 const userLoader = async ({ params }) => {
-
-
   const response = await fetch(routeToAPI(`/api/users/@${params.username.replaceAll("@", "")}`));
   
   if(response.ok) {
@@ -64,10 +62,6 @@ const router = createBrowserRouter([
       {
         path: '/feed',
         element: <TrackIndex />
-      },
-      {
-        path: "/login",
-        element: <LoginForm />
       },
       {
         path: "/signup",

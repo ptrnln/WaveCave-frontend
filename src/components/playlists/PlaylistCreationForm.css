@@ -1,0 +1,166 @@
+/* SONNET 3.7 IMPLEMENTATION */
+
+.playlist-creation-form {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.playlist-creation-form label {
+  display: block;
+  margin-bottom: 15px;
+  font-weight: bold;
+  color: #333;
+}
+
+.playlist-creation-form input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.playlist-creation-form button {
+  background-color: #ff5500;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+.playlist-creation-form button:hover {
+  background-color: #e64d00;
+}
+
+.playlist-creation-form ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 15px 0;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.sortable-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: white;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 2px;
+  z-index: var(--sortable-item-layer);
+}
+
+.sortable-item:last-child {
+  border-bottom: none;
+}
+
+.handle {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+/* DA-3 IMPLEMENTATION */
+
+
+/* .playlist-creation-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.playlist-creation-form h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+.playlist-creation-form .form-group {
+    margin-bottom: 15px;
+}
+
+.playlist-creation-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.playlist-creation-form input,
+.playlist-creation-form textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+    font-weight: normal;
+}
+
+.playlist-creation-form input:focus,
+.playlist-creation-form textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.playlist-creation-form .sortable-list {
+    min-height: 200px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.playlist-creation-form .sortable-item {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    cursor: move;
+    transition: background-color 0.2s;
+}
+
+.playlist-creation-form .sortable-item:hover {
+    background-color: #e9ecef;
+}
+
+.playlist-creation-form .sortable-item.dragging {
+    opacity: 0.5;
+}
+
+.playlist-creation-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.playlist-creation-form button:hover {
+    background-color: #0056b3;
+}
+
+.playlist-creation-form button:active {
+    background-color: #004085;
+} */

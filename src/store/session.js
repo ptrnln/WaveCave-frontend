@@ -1,5 +1,7 @@
 import csrfFetch, { storeCSRFToken } from "./csrf";
 import routeToAPI from "./api";
+import { sessionDefaults } from "./defaults";
+
 
 const SET_USER = 'session/SET_USER'
 const REMOVE_USER = 'session/REMOVE_USER'
@@ -8,15 +10,7 @@ const HIDE_MODAL = 'session/HIDE_MODAL'
 const SET_ERRORS = 'session/SET_ERRORS'
 const CLEAR_ERRORS = 'session/CLEAR_ERRORS'
 const ADD_ERROR = 'session/ADD_ERROR'
-const INITIAL_STATE = {
-    user: null,
-    showModal: false,
-    errors: {
-        credential: [],
-        password: [],
-        overall: []
-    }
-};
+
 
 export const setUser = user => {
     return {
@@ -65,7 +59,6 @@ export const clearErrors = () => {
 }
 
 export const restoreSession = () => async dispatch => {
-    
     try {
         const response = await fetch(routeToAPI("/api/session"), { credentials: "include" });
         if(response.ok) {
@@ -134,7 +127,7 @@ export const storeUserData = user => {
     sessionStorage.setItem('user', JSON.stringify(user))
 }
 
-const sessionReducer = (state = { ...INITIAL_STATE }, action) => {
+const sessionReducer = (state = { ...sessionDefaults }, action) => {
     const newState = { ...Object.freeze(state)}
     
     switch(action.type) {
@@ -159,7 +152,7 @@ const sessionReducer = (state = { ...INITIAL_STATE }, action) => {
             newState.errors = {
                 credential: [],
                 password: [],
-                overall: []
+                general: []
             };
             return newState;
         default:
