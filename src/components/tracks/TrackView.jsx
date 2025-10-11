@@ -2,10 +2,8 @@ import { NavLink, Outlet } from "react-router-dom"
 import './TrackView.css'
 import { useDispatch, useSelector } from "react-redux";
 import * as audioActions from '../../store/audioPlayer';
-import * as trackActions from '../../store/track';
 import { useEffect, useState } from "react";
 import useParams from "../../hooks/useParams";
-// import { useEffect } from "react";
 
 export default function TrackView() {
     const dispatch = useDispatch();
@@ -65,30 +63,9 @@ export default function TrackView() {
         return `${Math.floor(timeAgoInSeconds / 31536000)} years ago`
     }
 
-    // useEffect(() => {
-    //     if(!track) {
-    //             const getTrackInfo = async () => {
-    //             const response = await fetch(`/api/users/${track.username}/tracks/${track.title}`);
-                
-    //             if(response.ok) {
-    //                 const data = await response.json();
-
-    //                 dispatch(trackActions.receiveTrack(data.track))
-    //             }
-    //         }
-    //         getTrackInfo();
-    //     }
-    // }, [])
-
     useEffect(() => {
-        (async () => {
-            if (!track && !isLoaded) {
-                const trackData = await trackActions.getTrackByUserNameAndTitle(username.replaceAll("@", ""), title);
-                dispatch(trackActions.receiveTrack(trackData));
-                setIsLoaded(true);
-            }
-        })();
-    }, [track, dispatch, username, title, isLoaded]);
+        if (track && !isLoaded) setIsLoaded(true);
+    }, [track, isLoaded]);
 
     return (
             isLoaded ?

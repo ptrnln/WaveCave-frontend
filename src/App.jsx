@@ -1,14 +1,7 @@
-import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from './Layout';
-import LoginForm from './components/session/LoginForm';
 import SignUpForm from './components/session/SignUpForm';
-import Navigation from './components/navigation/Navigation';
-import * as sessionActions from './store/session';
-import * as trackActions from './store/track';
 import UserView from './components/users/UserView';
-import AudioPlayer from './components/audio_player/AudioPlayer';
 import TrackView from './components/tracks/TrackView';
 import TrackUploadForm from './components/tracks/TrackUploadForm';
 import TrackUpdateForm from './components/tracks/TrackUpdateForm';
@@ -17,12 +10,10 @@ import TrackIndex from './components/tracks/TrackIndex';
 import ErrorPage from './ErrorPage';
 import './app.css'
 import routeToAPI from './store/api';
-import { spawn, Thread, Worker } from "threads";
 import PlaylistCreationForm from './components/playlists/PlaylistCreationForm';
 
 
 window.env ||= { "environment":import.meta.env.MODE };
-
 
 
 const userLoader = async ({ params }) => {
@@ -38,8 +29,7 @@ const userLoader = async ({ params }) => {
 
 const trackLoader = async ({ params }) => {
 
-  const response = await fetch(routeToAPI(`/api/users/@${params.username.replaceAll("@", "")}/tracks/${params.title}`)).catch((reasons) => {throw reasons})
-  
+  const response = await fetch(routeToAPI(`/api/users/@${params.username.replaceAll("@", "")}/tracks/${params.title}`))
   
   if(response.ok) {
     const data = await response.json();

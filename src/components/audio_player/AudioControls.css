@@ -1,6 +1,7 @@
 
 .audio-player * {
     user-select: none;
+
 }
 
 .play-pause.button i::before {

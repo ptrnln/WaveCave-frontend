@@ -1,13 +1,36 @@
-div.audio-player.container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+.audio-player.container {
     height: 48px;
     width: 100%;
     position: fixed;
     background-color: rgb(237, 237, 237);
     border-top: 1px solid rgb(194, 204, 214);
     bottom: 0;
+    gap: 5px;
+    /* z-index: var(--audio-player-base-layer); */
+    & * {
+        position: relative;
+        /* z-index: var(--audio-player-base-layer); */
+    }
+}
+
+#slide-tab {
+    position: fixed;
+    bottom: 0;
+    z-index: 1001;
+    left: calc(50% - .5rem);
+    display: none
+}
+
+div.mobile.wrapper {
+    width: 100%;
+    @media (max-width: 850px)  {
+        & div#slide-tab, div#slide-tab * {
+            display: initial;
+        }
+    }
+    & #slide-tab, #slide-tab * {
+        display: none;
+    }
 }
 
 div.audio-player button {
@@ -17,12 +40,14 @@ div.audio-player button {
 }
 
 div.audio-player.inner {
+    margin: auto;
+    position: relative;
     display: flex;
     flex-direction: row;
-    flex-grow: 2;
     height: 100%;
     width: 100%;
     max-width: 1280px;
+    gap: 10px;
     & i {
         font-size: 1rem;
     }
@@ -36,7 +61,7 @@ div.audio-player.inner {
         flex-direction: row;
         justify-content: center;
         align-items: baseline;
-        gap: 5px;
+        gap: 10px;
     }
 
 }
@@ -58,7 +83,7 @@ div.audio-player.inner {
 .queue-controls {
     margin-top: auto;
     margin-bottom: auto;
-    gap: 5px;
+    gap: 10px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

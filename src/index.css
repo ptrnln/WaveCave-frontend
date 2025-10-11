@@ -1,6 +1,14 @@
 @import url(reset.css);
 @import url(app.css);
 
+@import url(components/audio_player/AudioPlayer.css);
+@import url(components/audio_player/AudioControls.css);
+@import url(components/audio_player/QueueControl.css);
+@import url(components/audio_player/TrackDisplay.css);
+@import url(components/audio_player/ProgressBar.css);
+@import url(components/navigation/Navigation.css);
+@import url(components/navigation/ProfileButton.css);
+
 @font-face {
   font-family: 'Montserrat';
   src: url('/fonts/Montserrat-Regular.woff2') format('woff2'),
@@ -19,7 +27,7 @@
 }
 
 :root {
-  overflow: hidden;
+  overflow: hidden
 }
 
 html, body, div, span, applet, object, iframe,
@@ -52,70 +60,3 @@ button {
 }
 
 
-@font-face {
-  font-family: 'WaveCave-icons';
-  src:  url('/fonts/WaveCave-icons.eot?kcs7mc');
-  src:  url('/fonts/WaveCave-icons.eot?kcs7mc#iefix') format('embedded-opentype'),
-    url('/fonts/WaveCave-icons.ttf?kcs7mc') format('truetype'),
-    url('/fonts/WaveCave-icons.woff?kcs7mc') format('woff'),
-    url('/fonts/WaveCave-icons.svg?kcs7mc#WaveCave-icons') format('svg');
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
-}
-
-
-i[class^="wc-"], i[class*=" wc-"] {
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'WaveCave-icons' !important;
-  speak: never;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  & * {
-    font-family: 'WaveCave-icons' !important;
-    speak: never;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-
-    /* Better Font Rendering =========== */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-}
-
-.wc-cycle:before {
-  content: "\e900";
-}
-.wc-cycle-1:before {
-  content: "\e901";
-}
-.wc-music-list:before {
-  content: "\e902";
-}
-.wc-cycle-1-duotone .path1:before {
-  content: "\e903";
-  opacity: 0.5;
-}
-.wc-cycle-1-duotone .path2:before {
-  content: "\e904";
-  margin-left: -1em;
-}
-.wc-music-list-duotone .path1:before {
-  content: "\e905";
-  opacity: 0.5;
-}
-.wc-music-list-duotone .path2:before {
-  content: "\e906";
-  margin-left: -1em;
-}

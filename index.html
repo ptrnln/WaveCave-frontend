@@ -6,9 +6,16 @@
     <link rel="preload" href="/images/pexels-martin-lopez-2240771.jpg" as="image" type="image/jpeg" crossorigin/>
     <link rel="preload" href="/fonts/Montserrat-Regular.woff" as="font" type="font/woff" crossorigin>
     <link rel="preload" href="/fonts/Montserrat-Regular.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/fonts/WaveCave-Repeat-Icons-2.svg" as="image" type="image/svg+xml" crossorigin>
-    <link rel="preload" href="/fonts/WaveCave-Repeat-Icons-2.ttf" as="font" type="font/ttf" crossorigin>
-    <link rel="preload" href="/fonts/WaveCave-Repeat-Icons-2.woff" as="font" type="font/woff" crossorigin>
+    <link rel="preload" href="/fonts/Montserrat-Regular.woff" as="font" type="font/woff" crossorigin>
+    <link rel="preload" href="/fonts/Montserrat-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/WaveCave-icons.svg" as="image" type="image/svg+xml" crossorigin>
+    <link rel="preload" href="/fonts/WaveCave-icons.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="/fonts/WaveCave-icons.woff" as="font" type="font/woff" crossorigin>
+    <script type="module">
+      if (!("anchorName" in document.documentElement.style)) {
+        import("https://unpkg.com/@oddbird/css-anchor-positioning");
+      }
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WaveCave</title>
     <script src="https://kit.fontawesome.com/6f87d9c6a8.js" crossorigin="anonymous"></script>
@@ -22,18 +29,12 @@
     gtag('config', 'G-RXBJ17V221');
   </script>
   <body>
-    <div id="modalBackdrop" class="inactive"></div>
     <noscript>
       <div id="js-disabled-message">
         <h1>JavaScript is disabled</h1>
         <p>Please enable JavaScript to use this application.</p>
       </div>
     </noscript>
-    <link rel="preload" href="/fonts/Montserrat-Regular.woff" as="font" type="font/woff" crossorigin>
-    <link rel="preload" href="/fonts/Montserrat-Regular.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/fonts/WaveCave-icons.svg" as="image" type="image/svg+xml" crossorigin>
-    <link rel="preload" href="/fonts/WaveCave-icons.ttf" as="font" type="font/ttf" crossorigin>
-    <link rel="preload" href="/fonts/WaveCave-icons.woff" as="font" type="font/woff" crossorigin>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

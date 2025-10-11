@@ -1,54 +1,20 @@
-@import url(components/audio_player/AudioPlayer.css);
-@import url(components/audio_player/AudioControls.css);
-@import url(components/audio_player/QueueControl.css);
-@import url(components/audio_player/TrackDisplay.css);
-@import url(components/audio_player/ProgressBar.css);
-@import url(components/navigation/Navigation.css);
-@import url(components/navigation/ProfileButton.css);
-
-html, body {
-    height: 100%
+html, body, div.app {
+    height: 100%;
+    overflow: auto;
 }
 
 :root {
+    --mobile-width-threshold: 850px;
+    --sortable-item-layer: 50;
+    --audio-player-base-layer: 10;
     font-size: 1rem;
-    height: inherit;
     width: 100%;
+    /* color-scheme: dark; */
     & * { 
         print-color-adjust: exact;
         -webkit-print-color-adjust: exact;
     }
-    --sortable-item-layer: 50;
 }
-
-
-
-.stop-scrolling {
-    overflow: hidden;
-}
-
-#greyout {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    display: none;
-    background-color: rgba(255, 255, 255, 70%);
-    z-index: 99;
-    opacity: 0;
-    transition: opacity .3s linear;
-    pointer-events: none;
-}
-
-#greyout.inactive {
-    display: inherit;
-    opacity: 0;
-}
-
-#greyout.active {
-    display: inherit;
-    opacity: 1;
-}
-
 
 div#dev-links-container {
     position: fixed;
@@ -59,6 +25,7 @@ div#dev-links-container {
     font-size: .8rem;
     color: rgba(0, 0, 0, 40%);
     vertical-align: baseline;
+    left: 0;
 }
 
 div#dev-links-container * {
@@ -75,22 +42,14 @@ div#dev-links-container * {
     color: black;
 }
 
-div.app {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    height: inherit;
-    width: 100%;
-    align-items: center;
-}
-
-
 div.content {
     width: clamp(320px, 100%, 1190px);
-    height: calc(100% - 96px);
-    overflow-y: scroll;
-    overflow-x: hidden;
-    font-size: .8rem;
+    min-height: calc(100% - 96px); /* ✅ use min-height, not height */
+    margin: auto;
+    margin-top: 3em;
+    margin-bottom: 3em;
+    overflow-y: auto;
+    font-size: 1rem;
 }
 
 div.content h1 {
@@ -115,10 +74,6 @@ label[for=errors] {
 div.content button:hover {
     filter: brightness(110%);
 } 
-
-/* button:hover i::before {
-    filter: brightness(110%);
-} */
 
 h1 {
     font-size: 2rem;
@@ -186,7 +141,7 @@ button {
     -webkit-transform-origin: 50% 50%;
     -moz-transform-origin: 50% 50%;
     -ms-transform-origin: 50% 50%;
-    &>* {
+    & > * {
         color: inherit;
     }
 }
@@ -230,6 +185,85 @@ i {
 }
 
 
+@font-face {
+  font-family: 'WaveCave-icons';
+  src:  url('/fonts/WaveCave-icons.eot?kcs7mc');
+  src:  url('/fonts/WaveCave-icons.eot?kcs7mc#iefix') format('embedded-opentype'),
+    url('/fonts/WaveCave-icons.ttf?kcs7mc') format('truetype'),
+    url('/fonts/WaveCave-icons.woff?kcs7mc') format('woff'),
+    url('/fonts/WaveCave-icons.svg?kcs7mc#WaveCave-icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+
+i[class^="wc-"], i[class*=" wc-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'WaveCave-icons' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  & * {
+    font-family: 'WaveCave-icons' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+.wc-volume-muted:before {
+  content: "\e900";
+}
+.wc-volume-off:before {
+  content: "\e901";
+}
+.wc-volume-low:before {
+  content: "\e902";
+}
+.wc-volume-high:before {
+  content: "\e903";
+}
+.wc-cycle:before {
+  content: "\e904";
+}
+.wc-cycle-1:before {
+  content: "\e905";
+}
+.wc-music-list:before {
+  content: "\e906";
+}
+.wc-cycle-1-duotone .path1:before {
+  content: "\e907";
+  opacity: 0.5;
+}
+.wc-cycle-1-duotone .path2:before {
+  content: "\e908";
+  margin-left: -1em;
+}
+.wc-music-list-duotone .path1:before {
+  content: "\e909";
+  opacity: 0.5;
+}
+.wc-music-list-duotone .path2:before {
+  content: "\e90a";
+  margin-left: -1em;
+}
 
 
 

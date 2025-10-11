@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import './Navigation.css'
+import './MobileNavigation.css'
 import ProfileButton from "./ProfileButton";
 import { NavLink } from "react-router-dom";
 import logo from '/images/WaveCave logo HomeNavLink.svg';
@@ -40,7 +41,7 @@ const Navigation = () => {
 
 
     return (
-        <div id='navigation-bar'>
+        <header id='navigation-bar'>
             <ul>
                 <li key={'nav-link home'}>
                     <NavLink to={ isLoggedIn ? '/feed' : '/' } className='nav-link home'><img href=""  className="logo" src={logo}></img></NavLink>
@@ -71,7 +72,7 @@ const Navigation = () => {
                     <button className={'nav-link load-tracks'}onClick={handleLoadTracks}>Load some Tracks!</button>
                 </li>
             </ul>
-        </div>
+        </header>
     )
 }
 
