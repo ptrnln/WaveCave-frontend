@@ -4,17 +4,21 @@ div.queue-control.inner {
     opacity: 1;
     display: inline-flex;
     flex-direction: column;
-    height: min-content;
+    height: max-content;
     width: 400px;
     bottom: 54px;
+    @media (max-width: 638px) {
+        right: 0
+    }
     /* text-wrap: nowrap; */
     background-color: white;
     /* padding: 5px 5px; */
     border-radius: 5px;
     border: 1px solid #a0a0a0;
     max-height: 40%;
+    min-height: 300px;
     transition: bottom .4s cubic-bezier(.37,.64,.56,1.31), opacity .3s;
-    z-index: 1001;
+    /* z-index: 1001; */
     overflow: clip;
 }
 
@@ -31,7 +35,7 @@ div.queue-control.container {
     position: relative;
     overflow-y: scroll;
     min-width: 60px;
-    z-index: 1000;
+    z-index: 20;
 }
 
 div.queue-control.container ul {

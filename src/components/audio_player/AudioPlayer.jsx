@@ -24,7 +24,7 @@ export default function AudioPlayer() {
     
     const handlePrev = (e) => {
         e.preventDefault();
-        if(audioRef.current?.currentTime <= 3 || currentIndex === 0) {
+        if(audioRef.current?.currentTime >= 3 || currentIndex === 0) {
             audioRef.current.currentTime = 0;
             if(!isPlaying) dispatch(audioPlayerActions.playTrack());
         } else {
@@ -33,25 +33,28 @@ export default function AudioPlayer() {
     }
     
     return (
-        <div className="audio-player container">
-            <div className="audio-player inner">
-                <AudioControls {...{
-                    handleNext,
-                    handlePrev,
-                }}/>
-                <ProgressBar {...{
-                    audioRef,
-                    progressBarRef,
-                }}/>
-                 <AudioItem {...{
-                    audioRef,
-                    progressBarRef,
-                    handleNext
-                }}/>
-                <TrackDisplay />
-                <QueueControl {...audioRef}/>
-                <VolumeControl {...{audioRef}}/>
+        <>
+            <div id="slide-tab"><i class="fa-solid fa-chevron-up"></i></div>
+            <div className="audio-player container">
+                <div className="audio-player inner">
+                    <AudioControls {...{
+                        handleNext,
+                        handlePrev,
+                    }}/>
+                    <ProgressBar {...{
+                        audioRef,
+                        progressBarRef,
+                    }}/>
+                    <AudioItem {...{
+                        audioRef,
+                        progressBarRef,
+                        handleNext
+                    }}/>
+                    <TrackDisplay />
+                    <QueueControl {...audioRef}/>
+                    <VolumeControl {...{audioRef}}/>
+                </div>
             </div>
-        </div>
+        </>
     )
 }

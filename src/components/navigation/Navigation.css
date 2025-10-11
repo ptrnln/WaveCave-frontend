@@ -75,41 +75,45 @@ a.nav-link:hover {
 
  */
 
-div#navigation-bar {
+header#navigation-bar {
     background-color: rgb(35, 35, 35);
     width: 100%;
+    position: fixed;
+    image-rendering: -webkit-optimize-contrast;
+    height: 3em;
 }
- 
 
-div#navigation-bar li {
+header#navigation-bar li {
     top: 0px;
     marker: none;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    height: 3rem;
+    vertical-align: middle;
+    line-height: 3rem;
     border-left: .5px solid black;
     border-right: .5px solid black;
     background-color: inherit;
+    color: lightgray;
     text-wrap: nowrap;
+    text-align: start;
+    & button {
+        height: 3em;
+        color: inherit;
+        padding: 1em;
+    }
 }
 
-div#navigation-bar li * {
-    display: flex;
-}
 
-div#navigation-bar li:nth-child(n - 1) {
+header#navigation-bar li:nth-child(n - 1) {
     border-right: 0;
 }
 
-/* div#navigation-bar li li {
-    display: flex;
-} */
-
-div#navigation-bar ul {
+header#navigation-bar>ul {
     display: flex;
     justify-content: center;
     background-color: inherit;
+    height: 100%;
 }
 
 .nav-link.home {
@@ -129,21 +133,21 @@ div#navigation-bar ul {
     align-content: center;
 }
 
-div#navigation-bar li img {
+header#navigation-bar li img {
     cursor: pointer;
     height: 3rem;
 }
 
-div#navigation-bar li:has(> a.active) {
+header#navigation-bar li:has(> a.active) {
     text-decoration: none;
     background-color: black;
 }
 
-div#navigation-bar li:has(> a) {
+header#navigation-bar li:has(> a) {
     display: flex;
 }
 
-div#navigation-bar a {
+header#navigation-bar a {
     display: flex;
     text-align: center;
     text-decoration: none;
@@ -156,12 +160,8 @@ span#site-name {
     padding-right: 10px;
 }
 
-.nav-link:hover {
+header#navigation-bar .nav-link:hover, header#navigation-bar button:hover {
     color: white;
-}
-
-div#navigation-bar {
-    image-rendering: -webkit-optimize-contrast;
 }
 
 

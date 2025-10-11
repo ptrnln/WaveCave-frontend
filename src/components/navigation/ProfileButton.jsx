@@ -39,19 +39,21 @@ function ProfileButton({ user }) {
         <button onClick={toggleMenu}>
           <i className="fa-solid fa-user-circle" />
         </button>
-        {showMenu && (
-          <ul id="profile-dropdown" className="profile-dropdown" ref={dropdownRef}>
-            <li>
-              <NavLink to={`/@${user.username}`} onClick={toggleMenu}>{user.username}</NavLink>
-            </li>
-            <li>
-              <NavLink className="nav-button" to='/upload' onClick={toggleMenu}>Upload Tracks</NavLink>
-            </li>
-            <li>
-              <button onClick={logout}>Log Out</button>
-            </li>
-          </ul>
-        )}
+        <div className='dropdown-anchor'>
+          {showMenu && (
+            <ul id="profile-dropdown" className="profile-dropdown" ref={dropdownRef}>
+              <li>
+                <NavLink className="nav-link" to={`/@${user.username}`} onClick={toggleMenu}>Profile</NavLink>
+              </li>
+              <li>
+                <NavLink className="nav-link" to='/upload' onClick={toggleMenu}>Upload</NavLink>
+              </li>
+              <li>
+                <button onClick={logout}>Log Out</button>
+              </li>
+            </ul>
+          )}
+        </div>
       </div>
     );
   }

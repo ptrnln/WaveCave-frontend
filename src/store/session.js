@@ -148,6 +148,7 @@ const sessionReducer = (state = { ...sessionDefaults }, action) => {
             return newState;
         case SET_USER:
             newState.user = action.payload;
+            return newState
         case CLEAR_ERRORS:
             newState.errors = {
                 credential: [],

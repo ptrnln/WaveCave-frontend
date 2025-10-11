@@ -1,0 +1,46 @@
+div.volume-slider.container {
+    position: relative;
+    transition: all .2s cubic-bezier(.37,.64,.56,1.31);
+    top: -147px;
+    left: -19px;
+    padding: 8px;
+    background-color: rgb(237, 237, 237);
+    border: 1px solid rgb(194, 204, 214);
+    writing-mode: vertical-lr;
+    transform-origin: bottom center;
+    & input[type=range][orient=vertical] {
+        writing-mode: vertical-lr;
+        direction: rtl;
+    }
+}
+
+div.volume-slider.container.hidden {
+    transform: scale(0.5);
+    opacity: 0;
+    pointer-events: none;
+}
+
+div.volume-control.container div.volume-slider-anchor {
+    position: fixed;
+    height: 0px;
+    width: 0px;
+    margin: 0;
+}
+
+div.volume-control.container {
+    display: flex;
+    flex-direction: column;
+    min-width: 60px;
+    height: 100%;
+    & * { 
+        margin: auto;
+        align-self: center;
+        justify-content: center;
+        margin: auto;
+    }
+}
+
+div.hover {
+    position: relative;
+    margin: auto;
+}
