@@ -2,8 +2,6 @@
 
 // ---------- TO DO ----------
 // - Rename 'original' to 'native' in queue object and in all references
-// - Either replace 'currentIndex' with 'currentTrackId' or 'currentIndex'
-//   will have to be taken into account when the user is rearranging the queue
 
 // ---- STANDARD ACTION TYPES ----
 // PLAY_TRACK           f(x) => { type: PLAY_TRACK }
@@ -37,8 +35,9 @@
 // setRepeatFalse: sets isRepeating to 'false'
 
 // ---- THUNK ACTION CREATORS ----
-// ---- REDUCER ----
-// initialState: { 
+// loadTracks: loads a set of tracks 
+// ---- STATE SLICE ----
+// { 
 //  queue: { 
 //      original: [], 
 //      shuffled: [] 
@@ -56,22 +55,22 @@ import * as trackActions from './track';
 import { arrayMove } from '@dnd-kit/sortable';
 
 
-const PLAY_TRACK = 'audioPlayer/PLAY_TRACK';
-const PAUSE_TRACK = 'audioPlayer/PAUSE_TRACK';
-const PLAY_NEXT = 'audioPlayer/PLAY_NEXT';
-const PLAY_PREV = 'audioPlayer/PLAY_PREV';
-const SET_SHUFFLE_ON = 'audioPlayer/SHUFFLE_ON';
-const SET_SHUFFLE_OFF = 'audioPlayer/SHUFFLE_OFF';
-const SET_REPEAT_OFF = 'audioPlayer/REPEAT_OFF';
-const SET_REPEAT_ONCE = 'audioPlayer/REPEAT_ONCE';
-const SET_REPEAT_ALWAYS = 'audioPlayer/REPEAT_ALWAYS';
-const ENQUEUE_TRACKS = 'audioPlayer/ENQUEUE_TRACKS';
-const ENQUEUE_TRACK = 'audioPlayer/ENQUEUE_TRACK';
+export const PLAY_TRACK = 'audioPlayer/PLAY_TRACK';
+export const PAUSE_TRACK = 'audioPlayer/PAUSE_TRACK';
+export const PLAY_NEXT = 'audioPlayer/PLAY_NEXT';
+export const PLAY_PREV = 'audioPlayer/PLAY_PREV';
+export const SET_SHUFFLE_ON = 'audioPlayer/SHUFFLE_ON';
+export const SET_SHUFFLE_OFF = 'audioPlayer/SHUFFLE_OFF';
+export const SET_REPEAT_OFF = 'audioPlayer/REPEAT_OFF';
+export const SET_REPEAT_ONCE = 'audioPlayer/REPEAT_ONCE';
+export const SET_REPEAT_ALWAYS = 'audioPlayer/REPEAT_ALWAYS';
+export const ENQUEUE_TRACKS = 'audioPlayer/ENQUEUE_TRACKS';
+export const ENQUEUE_TRACK = 'audioPlayer/ENQUEUE_TRACK';
 // const SET_VOLUME = 'audioPlayer/SET_VOLUME';
 // const CLEAR_QUEUE = 'audioPlayer/CLEAR_QUEUE';
-const DEQUEUE_TRACK = 'audioPlayer/DEQUEUE_TRACK';
+export const DEQUEUE_TRACK = 'audioPlayer/DEQUEUE_TRACK';
 // const DEQUEUE_TRACKS = 'audioPlayer/DEQUEUE_TRACKS';
-const REORDER_QUEUE = 'audioPlayer/REORDER_QUEUE';
+export const REORDER_QUEUE = 'audioPlayer/REORDER_QUEUE';
 
 const initialState = { 
     queue: {
@@ -316,9 +315,18 @@ export const audioPlayerReducer = (state = initialState, action) => {
             return { ...state, 
                 isRepeating: 'always'
             }
+        case trackActions.REMOVE_TRACK:
         case DEQUEUE_TRACK:
-            delete newState.queue.original[action.trackId]
-            delete newState.queue.shuffled[action.trackId]
+            if((state.isShuffled ? state.queue.shuffled : state.queue.original)[state.currentIndex] === action.trackId) {
+                if(state.currentIndex === (state.queue.original.length + 1)) {
+                    if (state.currentIndex === 0) state.currentIndex = null;
+                    else state.currentIndex = 0
+                } else state.currentIndex++;
+            }
+            let idx = newState.queue.original.indexOf(+action.trackId);
+            newState.queue.original.splice(idx, 1)
+            idx = newState.queue.shuffled.indexOf(+action.trackId);
+            newState.queue.shuffled.splice(idx, 1)
             return newState;
         case REORDER_QUEUE:
             const draggedTrackIdx = state.isShuffled ? 

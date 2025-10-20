@@ -3,7 +3,7 @@ import './Navigation.css'
 import './MobileNavigation.css'
 import ProfileButton from "./ProfileButton";
 import { NavLink } from "react-router-dom";
-import logo from '/images/WaveCave logo HomeNavLink.svg';
+import logo from '/images/WaveCave_static_logo.svg';
 import * as audioPlayerActions from '../../store/audioPlayer';
 import * as trackActions from '../../store/track';
 import * as sessionActions from '../../store/session';
@@ -47,7 +47,7 @@ const Navigation = () => {
                     <NavLink to={ isLoggedIn ? '/feed' : '/' } className='nav-link home'><img href=""  className="logo" src={logo}></img></NavLink>
                 </li>
                 <li key={'site-name'}>
-                    <span id="site-name" style={{'fontSize': 'xx-large', 'color': 'white'}}>WaveCave</span>
+                    <span id="site-name" style={{'fontSize': 'xx-large', 'color': 'white'}}>wavecave</span>
                 </li>
                 <li key='nav-link feed'>
                     <NavLink to='/feed' className='nav-link feed'>Feed</NavLink>

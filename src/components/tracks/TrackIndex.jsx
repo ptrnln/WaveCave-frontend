@@ -19,6 +19,10 @@ export default function TrackIndex() {
         }
     }, [dispatch, loaded])
 
+    useEffect(() => {
+        document.title = "Surfing a new wave - WaveCave"
+    }, [])
+
     return (
         <div className="track-index container">
             <h1>Tracks</h1>

@@ -3,6 +3,7 @@ import Splash from "./components/splash/Splash";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import './HomePage.css'
+import HomeCarousel from "./components/splash/HomeCarousel";
 
 export default function HomePage() {
     const isLoggedIn = useSelector(state => !!state.session.user);
@@ -17,8 +18,12 @@ export default function HomePage() {
     }, [])
 
     return (
-        <div className="home">
-            <Splash /> 
-        </div>
+        <>
+            <div className="home">
+                <div style={{ height: "3px", display:"flex", backgroundColor:"#f50"}}></div>
+                <HomeCarousel /> 
+                {/* <object data="/images/WaveCave-loading.svg" type="image/svg+xml" height={"200px"}/> */}
+            </div>
+        </>
     )
 }

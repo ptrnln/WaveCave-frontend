@@ -40,15 +40,24 @@ export default function AudioItem({ audioRef, handleNext }) {
         return state.tracks[queue.original[currentIndex]]?.localSource
     });
 
+    const currentTrackSource = useSelector(state => {
+        const { queue, isShuffled, currentIndex } = state.audio
+
+        if(isShuffled) {
+            return state.tracks[queue.shuffled[currentIndex]]?.sourceUrl
+        }
+        return state.tracks[queue.original[currentIndex]]?.sourceUrl
+    })
+
     const isPlaying = useSelector(state => state.audio.isPlaying);
     
     useEffect(() => {
         (async () => {
             // Only update source if it actually changed
-            if (currentTrackLocalSource && audioRef.current.src !== currentTrackLocalSource) {
-                audioRef.current.src = currentTrackLocalSource;
-                await audioRef.current.load();
-            }
+            // if (currentTrackLocalSource && audioRef.current.src !== currentTrackLocalSource) {
+            //     audioRef.current.src = currentTrackLocalSource;
+            //     await audioRef.current.load();
+            // }
 
             // Handle play/pause separately
             if (isPlaying && currentTrackLocalSource && audioRef.current.paused) {
@@ -61,7 +70,7 @@ export default function AudioItem({ audioRef, handleNext }) {
                 audioRef.current.pause();
             }
         })();
-    }, [isPlaying, currentTrackLocalSource]);
+    }, [currentTrackId, isPlaying, currentTrackLocalSource]);
 
     const audio = <audio 
             className={`audio-track ${currentTrackTitle || ''}`}
@@ -69,6 +78,8 @@ export default function AudioItem({ audioRef, handleNext }) {
             preload="auto"
             onEnded={handleNext}>
                 {currentTrackLocalSource &&
+                <source src={currentTrackLocalSource} type={`audio/${currentTrackFileType}`}/>}
+                {currentTrackSource &&
                 <source src={currentTrackLocalSource} type={`audio/${currentTrackFileType}`}/>}
         </audio>
 

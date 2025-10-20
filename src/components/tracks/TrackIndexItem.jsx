@@ -21,18 +21,15 @@ export default function TrackIndexItem({ track }) {
 
         if(!confirmation) return;
 
-        await dispatch(audioPlayerActions.dequeueTrack(e.target.value));
-        await dispatch(trackActions.removeTrack(e.target.value));
-
-        const response = await csrfFetch(routeToAPI(`/api/tracks/${e.target.value}`), {
-            method: 'DELETE'
-        })
+        await dispatch(audioPlayerActions.dequeueTrack(+e.target.value));
+        await dispatch(trackActions.removeTrack(+e.target.value));
+        const response = dispatch(trackActions.deleteTrack(+e.target.value));
         
         if(response.ok) {
             let data = await response.json();
             return data;
         } else {
-            console.alert('could not delete');
+            alert('could not delete');
         }
     }
 

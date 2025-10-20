@@ -1,7 +1,7 @@
 @media screen and (max-width: 850px) {
     div#mobile-wrapper {
             & div.content {
-                background-color: red;
+                /* background-color: red; */
             }
         }
 }

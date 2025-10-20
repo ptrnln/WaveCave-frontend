@@ -1,35 +1,26 @@
-import { NavLink, Outlet } from "react-router-dom"
+import { NavLink, Outlet, useLoaderData } from "react-router-dom"
 import './TrackView.css'
 import { useDispatch, useSelector } from "react-redux";
 import * as audioActions from '../../store/audioPlayer';
 import { useEffect, useState } from "react";
 import useParams from "../../hooks/useParams";
+import Loading from "../../Loading";
 
 export default function TrackView() {
     const dispatch = useDispatch();
-    const { username, title } = useParams();
+    // const { username, title } = useParams();
+
+    const track = useLoaderData();
+    debugger
     const [isLoaded, setIsLoaded] = useState(false);
 
     const titles = [
-        `${title} by ${username} - WaveCave`,
+        `Vibing to ${track.title} by ${track.username} - WaveCave`,
     ]
 
     useEffect(() => {
         document.title = titles[Math.floor(Math.random() * titles.length)]
-    }, [title, username])
-
-
-    const track = useSelector(state => {
-        let track;
-        Object.keys(state.tracks).forEach(id => {
-            if(state.tracks[id]?.artist?.username == username.replaceAll("@", "") && state.tracks[id]?.title == title){
-                track = state.tracks[id]
-            }
-        })
-        return track;
-    })
-    
-    
+    }, [track.title, track.username])
 
     async function handleClick (e) {
         e.preventDefault(); 
@@ -46,21 +37,21 @@ export default function TrackView() {
             return "just now"
         }
         if(timeAgoInSeconds < 3600) {
-            return `${Math.floor(timeAgoInSeconds / 60)} minutes ago`
+            return `${Math.floor(timeAgoInSeconds / 60)} minute${timeAgoInSeconds > 120 ? "s" : ''} ago`
         }
         if(timeAgoInSeconds < 86400) {
-            return `${Math.floor(timeAgoInSeconds / 3600)} hours ago`
+            return `${Math.floor(timeAgoInSeconds / 3600)} hour${timeAgoInSeconds > 7200 ? "s" : ''} ago`
         }
         if(timeAgoInSeconds < 604800) {
-            return `${Math.floor(timeAgoInSeconds / 86400)} days ago`
+            return `${Math.floor(timeAgoInSeconds / 86400)} day${timeAgoInSeconds > 172800 ? "s" : ''} ago`
         }
         if(timeAgoInSeconds < 2592000) {
-            return `${Math.floor(timeAgoInSeconds / 604800)} weeks ago`
+            return `${Math.floor(timeAgoInSeconds / 604800)} week${timeAgoInSeconds > 1209600 ? "s" : ''} ago`
         }
         if(timeAgoInSeconds < 31536000) {
-            return `${Math.floor(timeAgoInSeconds / 2592000)} months ago`
+            return `${Math.floor(timeAgoInSeconds / 2592000)} month${timeAgoInSeconds > 5184000 ? "s" : ''} ago`
         }
-        return `${Math.floor(timeAgoInSeconds / 31536000)} years ago`
+        return `${Math.floor(timeAgoInSeconds / 31536000)} year${timeAgoInSeconds > 63072000 ? "s" : ''} ago`
     }
 
     useEffect(() => {
@@ -94,7 +85,7 @@ export default function TrackView() {
                                 <i className="fa-solid fa-user" /> { track.artist.username || '' }
                             </NavLink> }
                         </div>
-                        <div className="track-view date">
+                        <div className="track-view date" title={`${new Date(track.createdAt).toDateString()}`}>
                             <i className="fa-solid fa-clock" /> { track && dateTrack(track.createdAt) }
                         </div>
                         <br />
@@ -113,7 +104,7 @@ export default function TrackView() {
             </div>
         :
         <div className="track-view container">
-        <h1>Loading...</h1>
+            <Loading/>
         </div>
 
     )

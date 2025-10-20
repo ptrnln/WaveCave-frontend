@@ -95,11 +95,15 @@ ul#profile-dropdown {
   flex-direction: column;
   min-height: max-content;
   width: min-content;
+  border: none;
   background-color: inherit;
   color: inherit;
   position: relative;
-  border-collapse: collapse;
+  box-sizing: border-box;
   & > li {
+    &:nth-child(n + 2) {
+      margin-top: -1px;;
+    }
     border-bottom: 1px solid black;
     border-top: 1px solid black;
   }
@@ -110,4 +114,8 @@ div.profile-menu {
   flex-direction: column-reverse;
   width: fit-content;
   background-color: inherit;
+}
+
+button.profile__menu-btn {
+  gap: 0.5em;
 }

@@ -11,6 +11,7 @@
         position: relative;
         /* z-index: var(--audio-player-base-layer); */
     }
+    z-index: 2
 }
 
 #slide-tab {

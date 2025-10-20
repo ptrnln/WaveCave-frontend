@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useLoaderData } from "react-router-dom";
 import * as trackActions from '../../store/track'
 import * as userActions from '../../store/user'
@@ -8,6 +8,8 @@ import '../tracks/TrackIndexItem.css'
 
 export default function UserView() {
     const { user } = useLoaderData();
+
+    const currentUser = useSelector((state) => state.session.user)
 
     // const userTracks = useSelector(state => {  
     //     return state.users[user.id]?.tracks || {}
@@ -19,6 +21,10 @@ export default function UserView() {
         dispatch(userActions.receiveUser(Object.fromEntries([[user.id, user]])))
         if (user.tracks) dispatch(trackActions.loadTracks(Object.keys(user.tracks)))
     }, [user, dispatch])
+
+    useEffect(() => {
+        document.title = user.username !== currentUser?.username ? `Caving to peer pressure with @${user.username} - WaveCave` : 'Admiring our own reflection - WaveCave'
+    }, [user])
 
     return (
         <>

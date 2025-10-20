@@ -1,6 +1,7 @@
 canvas#splash-canvas {
     display: flex;
     width: clamp(300px, 100%, 1200px);
+    height: 100%;
 }
 
 div#splash-buttons {

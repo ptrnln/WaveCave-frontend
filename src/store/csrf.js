@@ -5,19 +5,26 @@ async function csrfFetch(url, options = {}) {
     options.method ||= 'GET'
     options.credentials = "include"
 
-    if(options.method.toUpperCase() !== 'GET' ) {
-        if(!(options.body?.constructor?.name === 'FormData')) options.headers['Content-Type'] ||= 'application/json'
-        if(window.env["environment"] !== "production") options.headers['X-CSRF-Token'] = sessionStorage.getItem('X-CSRF-Token')
+    const optionsResponse = await fetch(`${__API_BASE__}/csrf/restore`)
+
+    if (optionsResponse.ok) {
+        if (optionsResponse.headers.get('X-CSRF-Token')) sessionStorage.setItem('X-CSRF-Token', optionsResponse.headers.get('X-CSRF-Token'))
+    }
+
+    if (options.method.toUpperCase() !== 'GET') {
+        if (options.body?.constructor?.name !== 'FormData') options.headers['Content-Type'] ||= 'application/json'
+
+        const csrfToken = sessionStorage.getItem('X-CSRF-Token')
+        if (csrfToken) options.headers['X-CSRF-Token'] = csrfToken
     }
     
     const res = await fetch(routeToAPI(url), options);
-
+    storeCSRFToken(res)
     return res;
-
 }
 
 export async function restoreCSRF() {
-    const response = await csrfFetch(routeToAPI('/api/session'))
+    const response = await csrfFetch('/api/session')
     storeCSRFToken(response)
     return response;
 }
