@@ -74,16 +74,16 @@ export default function TrackUpdateForm() {
     }
 
     useEffect(() => {
-        document.title = `Switchin up the flow with ${title} - WaveCave`
+        document.title = `Switching up the flow with "${title}" - WaveCave`
     }, [title])
     useEffect(() => {
-        if(!currentUser) return <Navigate to='/' />
+        if(!currentUser) return <Navigate to='/login' />
     }, [currentUser])
 
 
     useEffect(() => {
         async function getTrackData() {
-            const response = await csrfFetch(routeToAPI(`/api/users/@${username.replaceAll('@', '')}/tracks/${title}`));
+            const response = await csrfFetch(`/api/users/@${username.replaceAll('@', '')}/tracks/${title}`);
             
             if(response.ok) {
                 const data = await response.json();

@@ -1,13 +1,14 @@
 import csrfFetch from "./csrf"
 import routeToAPI from "./api"
+import * as audioPlayerActions from './audioPlayer'
 
 import { spawn, Thread, Worker } from "threads"
 
-const RECEIVE_TRACK = 'tracks/RECEIVE_TRACK'
-const RECEIVE_TRACKS = 'tracks/RECEIVE_TRACKS'
-const REMOVE_TRACK = 'tracks/REMOVE_TRACK'
-const REMOVE_TRACKS = 'tracks/REMOVE_TRACKS'
-const RECEIVE_LOCAL_SOURCE = 'tracks/RECEIVE_LOCAL_SOURCE'
+export const RECEIVE_TRACK = 'tracks/RECEIVE_TRACK'
+export const RECEIVE_TRACKS = 'tracks/RECEIVE_TRACKS'
+export const REMOVE_TRACK = 'tracks/REMOVE_TRACK'
+export const REMOVE_TRACKS = 'tracks/REMOVE_TRACKS'
+export const RECEIVE_LOCAL_SOURCE = 'tracks/RECEIVE_LOCAL_SOURCE'
 
 const initialState = {}
 
@@ -43,7 +44,7 @@ export function getTracks (trackIds = []) {
     return async dispatch => {
         
         if(trackIds.length === 0) {
-            const response = await fetch(routeToAPI('/api/tracks'))
+            const response = await fetch(routeToAPI('/api/tracks/'))
             if (response.ok) {
                 const data = await response.json();
                 if(data.tracks) dispatch(receiveTracks(data.tracks));
@@ -56,9 +57,9 @@ export function getTracks (trackIds = []) {
     }
 }
 
-export async function deleteTrack (trackId) {
+export const deleteTrack = (trackId) => {
     return async () => {
-        const response = await csrfFetch(routeToAPI(`/api/tracks/${trackId}`), {
+        const response = await csrfFetch(`/api/tracks/${trackId}`, {
             method: 'DELETE'
         })
         
@@ -70,7 +71,7 @@ export async function deleteTrack (trackId) {
 }
 
 export async function getTrackByUserNameAndTitle (username, title) {
-    const response = await csrfFetch(routeToAPI(`/api/users/@${username.replaceAll('@', '')}/tracks/${title}`));
+    const response = await csrfFetch(`/api/users/@${username.replaceAll('@', '')}/tracks/${title}`);
 
     if(response.ok) {
         const data = await response.json();
@@ -168,14 +169,18 @@ export async function createTrack (trackData, audioFile, imageFile) {
     if (audioFile) formData.append('track[source]', audioFile);
     if (imageFile) formData.append('track[photo]', imageFile);
 
-    const response = await csrfFetch(routeToAPI(`/api/tracks`), {
+    const response = await csrfFetch("/api/tracks/", {
         method: 'POST',
         body: formData
     })
+
+    let data;
+
+    if (response.ok) {
+        data = await response.json();
+    }
     
-    let data = await response.json();
-    
-    return data
+    return data ?? response
 }
 
 export async function updateTrack (trackData, audioFile, imageFile) {
@@ -204,7 +209,7 @@ export async function updateTrack (trackData, audioFile, imageFile) {
     if(audioFile) formData.append('track[source]', audioFile);
     if(imageFile) formData.append('track[photo]', imageFile)
 
-    const response = await csrfFetch(routeToAPI(`/api/tracks/${id}`), {
+    const response = await csrfFetch(`/api/tracks/${id}`, {
         method: 'PATCH',
         body: formData
     })

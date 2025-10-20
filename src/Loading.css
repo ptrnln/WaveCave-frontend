@@ -1,0 +1,11 @@
+
+
+#loading_anim {
+    position: absolute;
+    /* transform: translate(50%, 50%); */
+    top: calc(50% - 7.5em);
+    left: calc(50% - 7.5em);
+    max-height: 15em;
+    max-width: 15em;
+    /* object-position: 15%; */
+}

@@ -13,7 +13,7 @@ import routeToAPI from './store/api';
 import PlaylistCreationForm from './components/playlists/PlaylistCreationForm';
 
 
-window.env ||= { "environment":import.meta.env.MODE };
+window.env ||= {"environment":import.meta.env.MODE};
 
 
 const userLoader = async ({ params }) => {
@@ -30,11 +30,11 @@ const userLoader = async ({ params }) => {
 const trackLoader = async ({ params }) => {
 
   const response = await fetch(routeToAPI(`/api/users/@${params.username.replaceAll("@", "")}/tracks/${params.title}`))
-  
+
   if(response.ok) {
     const data = await response.json();
     
-    return data.track
+    return Object.values(data.track)[0]
   } else {
     throw response
   }

@@ -34,7 +34,7 @@ export default function AudioPlayer() {
     
     return (
         <>
-            <div id="slide-tab"><i class="fa-solid fa-chevron-up"></i></div>
+            <div id="slide-tab"><i className="fa-solid fa-chevron-up"></i></div>
             <div className="audio-player container">
                 <div className="audio-player inner">
                     <AudioControls {...{

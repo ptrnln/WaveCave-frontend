@@ -29,15 +29,15 @@ function ProfileButton({ user }) {
     }, [showMenu]);
   
     const logout = (e) => {
-      
       e.preventDefault();
       dispatch(sessionActions.logout());
     };
   
     return (
       <div className='profile-menu'>
-        <button onClick={toggleMenu}>
+        <button className='profile__menu-btn' onClick={toggleMenu}>
           <i className="fa-solid fa-user-circle" />
+          { showMenu ? <i class="fa-solid fa-chevron-up" /> : <i class="fa-solid fa-chevron-down" /> }
         </button>
         <div className='dropdown-anchor'>
           {showMenu && (

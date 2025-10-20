@@ -104,6 +104,9 @@ header#navigation-bar li {
     }
 }
 
+span#site-name {
+    background-color: black;
+}
 
 header#navigation-bar li:nth-child(n - 1) {
     border-right: 0;

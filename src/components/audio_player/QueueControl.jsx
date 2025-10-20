@@ -66,7 +66,7 @@ export default function QueueControl () {
         }
     }, [])
 
-    const tracks = queue.map(idx => ({ ...stateTracks[idx], id: stateTracks[idx].id.toString()}))
+    const tracks = queue.map(idx => ({ ...stateTracks[idx], id: stateTracks[idx]?.id?.toString()}))
 
     const toggleDisplay = useCallback((e) => {
         e.preventDefault();
@@ -146,7 +146,6 @@ export default function QueueControl () {
                         </SortableContext>
                         { activeId &&
                             <DragOverlay style={{ opacity: 0.5 }} modifiers={[restrictToParentElement]}>
-                                    {/* <QueueItem  track={tracks.find(t => t.id === activeId)} id="overlay"/> */}
                             </DragOverlay>
                         }
                     </DndContext>

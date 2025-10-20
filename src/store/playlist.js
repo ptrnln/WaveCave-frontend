@@ -68,7 +68,7 @@ export const createPlaylist = playlist => async (dispatch) => {
 
     if (trackIds.length === 0) return
 
-    const response = await csrfFetch(routeToAPI('/api/playlists'), {
+    const response = await csrfFetch('/api/playlists', {
         method: 'POST',
         body: JSON.stringify({ playlist: Object.fromEntries(Object.entries(playlist).filter(([key]) => key !== 'trackIds')) })
     })
@@ -77,20 +77,20 @@ export const createPlaylist = playlist => async (dispatch) => {
         const data = await response.json();
 
         trackIds.forEach(async trackId => {
-            await csrfFetch(routeToAPI(`/api/playlist_tracks/`), {
+            await csrfFetch(`/api/playlist_tracks/`, {
                 method: 'POST',
                 body: JSON.stringify({ playlistTrack: { trackId, playlistId: Object.entries(data)[0][1].id } })
             })
         })
 
-        return await csrfFetch(routeToAPI(`/api/playlists/${Object.entries(data)[0][1].id}`));
+        return await csrfFetch(`/api/playlists/${Object.entries(data)[0][1].id}`);
     } 
 }
 
 export const loadPlaylist = playlistId => async (dispatch, getState) => {
     const playlist = getState().playlists[playlistId];
     if(playlist === undefined) {
-        const response = await fetch(routeToAPI(`/api/playlists/${playlistId}`));
+        const response = await fetch(`/api/playlists/${playlistId}`);
 
         if(response.ok) {
             let data = await response.json();
@@ -105,7 +105,7 @@ export const loadPlaylist = playlistId => async (dispatch, getState) => {
 }
 
 export const savePlaylist = (playlist) => async (dispatch) => {
-    const response = await csrfFetch(routeToAPI(`/api/playlists/${playlist.id}`), {
+    const response = await csrfFetch(`/api/playlists/${playlist.id}`, {
         method: 'PUT',
         body: JSON.stringify(playlist)
     })

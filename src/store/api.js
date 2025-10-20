@@ -1,7 +1,8 @@
-export default function routeToAPI(url) {
-    const matchData = url.match(/^(?:\/api)(.*)/)
-    return process.env.NODE_ENV === "production" ?
-        "https://api.ph4se.dev/wavecave" + matchData?.[1] ?? ""
-        :
-        url
+export default function routeToAPI(path) {
+  if (path.startsWith('/api'))  {
+    path = path.slice(4)
+    const base =  __API_BASE__ || '/api'
+    return `${base}${path}`
+  }
+  return path;
 }

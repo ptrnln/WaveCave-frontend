@@ -6,6 +6,8 @@ import Navigation from "./components/navigation/Navigation";
 import LoginForm from "./components/session/LoginForm";
 import AudioPlayer from "./components/audio_player/AudioPlayer";
 import { Outlet } from "react-router-dom";
+import Loading from "./Loading";
+import { Suspense } from "react";
 
 export default function Layout({children}) {
     const dispatch = useDispatch();
@@ -28,7 +30,9 @@ export default function Layout({children}) {
           <Navigation />
           <div className='content'>
             <main className="hero">
-              { isLoaded && (children || <Outlet />) }
+              <Suspense fallback={<Loading/>}>
+                {children || <Outlet />}
+              </Suspense>
             </main>
           </div>
           <LoginForm />

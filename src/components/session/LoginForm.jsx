@@ -66,7 +66,7 @@ const PasswordField = ({value, onChange, disabled, error, dataErrors}) => (
 )
 
 
-function LoginForm() {
+export default function LoginForm() {
   
   const dispatch = useDispatch();
   const [credential, setCredential] = useState('');
@@ -78,11 +78,11 @@ function LoginForm() {
   const credentialErrors = useSelector(state => state.session.errors?.credential ?? []);
   const generalErrors = useSelector(state => state.session.errors?.overall ?? []);
   const currentUser = useSelector(state => state.session.user);
+  const showModal = useSelector(state => state.session.showModal);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   // const [modalState, setModalState] = useState('credential');
   
-  const showModal = useSelector(state => state.session.showModal);
 
   const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
@@ -160,7 +160,7 @@ function LoginForm() {
 
   return (
     <>
-      <div className={"login modal" + (showModal ? "" : " hidden")}>
+      <div id="myPopover" className={"login modal" + (showModal ? "" : " hidden")} style={{ popover: ''}}>
         <button className="close button" 
           onClick={() => dispatch(sessionActions.hideModal())}
         ><i className="fa-solid fa-xmark" style={{ fontSize: '1rem' }}/>
@@ -202,11 +202,12 @@ function LoginForm() {
             fullWidth
             type="submit"
             disabled={!!currentUser || !!loginAttempt}
-            sx={{ mb: 1 }}
+            sx={{ mb: 1, textTransform: "none" }}
           >
             Log In
           </Button>
           <Button 
+            sx={{textTransform: "none"}}
             variant="outlined"
             fullWidth
             onClick={handleDemoLogin}
@@ -223,5 +224,3 @@ function LoginForm() {
     </>
   );
 }
-
-export default LoginForm;
