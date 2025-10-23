@@ -53,14 +53,7 @@ export default function AudioItem({ audioRef, handleNext }) {
     
     useEffect(() => {
         (async () => {
-            // Only update source if it actually changed
-            // if (currentTrackLocalSource && audioRef.current.src !== currentTrackLocalSource) {
-            //     audioRef.current.src = currentTrackLocalSource;
-            //     await audioRef.current.load();
-            // }
-
-            // Handle play/pause separately
-            if (isPlaying && currentTrackLocalSource && audioRef.current.paused) {
+            if (isPlaying && (currentTrackLocalSource || currentTrackSource) && audioRef.current.paused) {
                 try {
                     await audioRef.current.play();
                 } catch(e) {
@@ -70,17 +63,21 @@ export default function AudioItem({ audioRef, handleNext }) {
                 audioRef.current.pause();
             }
         })();
-    }, [currentTrackId, isPlaying, currentTrackLocalSource]);
+    }, [isPlaying, currentTrackLocalSource]);
 
+    useEffect(() => {
+        if(currentTrackId) audioRef.current.load()
+    }, [currentTrackId, audioRef])
+    
     const audio = <audio 
-            className={`audio-track ${currentTrackTitle || ''}`}
-            ref={audioRef}
-            preload="auto"
-            onEnded={handleNext}>
+    className={`audio-track ${currentTrackTitle || ''}`}
+    ref={audioRef}
+    preload="auto"
+    onEnded={handleNext}>
                 {currentTrackLocalSource &&
                 <source src={currentTrackLocalSource} type={`audio/${currentTrackFileType}`}/>}
                 {currentTrackSource &&
-                <source src={currentTrackLocalSource} type={`audio/${currentTrackFileType}`}/>}
+                <source src={currentTrackSource} type={`audio/${currentTrackFileType}`}/>}
         </audio>
 
     return audio;

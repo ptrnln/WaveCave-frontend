@@ -1,5 +1,5 @@
 // import './AudioPlayer.css'
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import TrackDisplay from "./TrackDisplay";
 import AudioControls from './AudioControls';
 import AudioItem from './AudioItem';
@@ -31,6 +31,13 @@ export default function AudioPlayer() {
             dispatch(audioPlayerActions.playPrev())
         }
     }
+
+    useEffect(() => {
+        const el = audioRef.current;
+        if (!el) return;
+        const savedVolume = +(localStorage.getItem('wavecave__volume_pref'));
+        el.volume = savedVolume !== null ? savedVolume : 0.5;
+    }, []);
     
     return (
         <>

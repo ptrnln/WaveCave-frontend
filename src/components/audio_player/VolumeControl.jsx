@@ -3,8 +3,8 @@ import { createPortal } from 'react-dom'
 import "./VolumeControl.css"
 
 export default function VolumeControl({ audioRef }) {
-    const [volumeNumber, setVolumeNumber] = useState(audioRef?.current?.volume ?? 50)
-    const [volumeLevel, setVolumeLevel] = useState("high");
+    const [volumeNumber, setVolumeNumber] = useState(localStorage.getItem('wavecave__volume_pref') * 100 ?? audioRef.current?.volume ?? 50)
+    const [volumeLevel, setVolumeLevel] = useState(volumeNumber < 66 ? volumeNumber < 33 ? volumeNumber === 0 ? "muted" : "off" : "low" : "high");
     const [showVolumeSlider, setShowVolumeSlider] = useState(false);
     const [volumeDisabled, setVolumeDisabled] = useState(true);
 
@@ -42,6 +42,9 @@ export default function VolumeControl({ audioRef }) {
                         orient="vertical" 
                         value={volumeNumber}
                         disabled={volumeDisabled}
+                        onPointerLeave={(e) => {
+                            localStorage.setItem('wavecave__volume_pref', `${+e.target.value / 100.0}`);
+                        }}
                         onChange={(e) => {
                             audioRef.current.volume = e.target.value / 100
                             setVolumeNumber(audioRef.current.volume * 100)
