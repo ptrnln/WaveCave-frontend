@@ -128,8 +128,7 @@ export default function QueueControl () {
                         sensors={sensors}
                         collisionDetection={closestCenter}
                         onDragStart={handleDragStart}
-                        onDragEnd={handleDragEnd}
-                    >
+                        onDragEnd={handleDragEnd}>
                         <SortableContext items={tracks} strategy={verticalListSortingStrategy}>
                             { tracks.length > 0 && (
                                 tracks.map((track, idx) => (
