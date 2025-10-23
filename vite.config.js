@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => {
     // To automatically open the app in the browser whenever the server starts,
     // uncomment the following lines:
     server: {
-      host: isProd ? '127.0.0.1' : '0.0.0.0',
+      host: isProd ? null : '0.0.0.0',
       proxy: {
         '/api': {
           target: isProd

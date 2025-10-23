@@ -20,11 +20,10 @@ export default function TrackIndexItem({ track }) {
         const confirmation = window.confirm('Are you sure you want to delete this track?');
 
         if(!confirmation) return;
-
-        await dispatch(audioPlayerActions.dequeueTrack(+e.target.value));
-        await dispatch(trackActions.removeTrack(+e.target.value));
-        const response = dispatch(trackActions.deleteTrack(+e.target.value));
         
+        dispatch(trackActions.removeTrack(+e.target.value));
+        const response = await dispatch(trackActions.deleteTrack(+e.target.value));
+        debugger
         if(response.ok) {
             let data = await response.json();
             return data;

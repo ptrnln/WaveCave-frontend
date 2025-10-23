@@ -198,11 +198,11 @@ i {
 
 @font-face {
   font-family: 'WaveCave-icons';
-  src:  url('/fonts/WaveCave-icons.eot?kcs7mc');
-  src:  url('/fonts/WaveCave-icons.eot?kcs7mc#iefix') format('embedded-opentype'),
-    url('/fonts/WaveCave-icons.ttf?kcs7mc') format('truetype'),
-    url('/fonts/WaveCave-icons.woff?kcs7mc') format('woff'),
-    url('/fonts/WaveCave-icons.svg?kcs7mc#WaveCave-icons') format('svg');
+  src:  url('/fonts/WaveCave-icons.eot');
+  src:  url('/fonts/WaveCave-icons.eot') format('embedded-opentype'),
+    url('/fonts/WaveCave-icons.ttf') format('truetype'),
+    url('/fonts/WaveCave-icons.woff') format('woff'),
+    url('/fonts/WaveCave-icons.svg') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -238,40 +238,40 @@ i[class^="wc-"], i[class*=" wc-"] {
   }
 }
 
-.wc-volume-muted:before {
+i.wc-volume-muted:before {
   content: "\e900";
 }
-.wc-volume-off:before {
+i.wc-volume-off:before {
   content: "\e901";
 }
-.wc-volume-low:before {
+i.wc-volume-low:before {
   content: "\e902";
 }
-.wc-volume-high:before {
+i.wc-volume-high:before {
   content: "\e903";
 }
-.wc-cycle:before {
+i.wc-cycle:before {
   content: "\e904";
 }
-.wc-cycle-1:before {
+i.wc-cycle-1:before {
   content: "\e905";
 }
-.wc-music-list:before {
+i.wc-music-list:before {
   content: "\e906";
 }
-.wc-cycle-1-duotone .path1:before {
+i.wc-cycle-1-duotone .path1:before {
   content: "\e907";
   opacity: 0.5;
 }
-.wc-cycle-1-duotone .path2:before {
+i.wc-cycle-1-duotone .path2:before {
   content: "\e908";
   margin-left: -1em;
 }
-.wc-music-list-duotone .path1:before {
+i.wc-music-list-duotone .pat h1:before {
   content: "\e909";
   opacity: 0.5;
 }
-.wc-music-list-duotone .path2:before {
+i.wc-music-list-duotone .path2:before {
   content: "\e90a";
   margin-left: -1em;
 }

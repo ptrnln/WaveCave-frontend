@@ -1,6 +1,5 @@
 import csrfFetch from "./csrf"
 import routeToAPI from "./api"
-import * as audioPlayerActions from './audioPlayer'
 
 import { spawn, Thread, Worker } from "threads"
 
@@ -63,10 +62,7 @@ export const deleteTrack = (trackId) => {
             method: 'DELETE'
         })
         
-        if(response.ok) {
-            const data = await response.json();
-            return data
-        }
+        return response
     }
 }
 
@@ -246,7 +242,6 @@ const trackReducer = (state = initialState, action) => {
             }
             return newState
         case RECEIVE_LOCAL_SOURCE:
-            
             newState[action.trackId].localSource = action.localSource
             return newState;
         default:

@@ -11,7 +11,7 @@ export default function TrackView() {
     // const { username, title } = useParams();
 
     const track = useLoaderData();
-    debugger
+    const date = new Date(track.createdAt);
     const [isLoaded, setIsLoaded] = useState(false);
 
     const titles = [
@@ -19,7 +19,9 @@ export default function TrackView() {
     ]
 
     useEffect(() => {
-        document.title = titles[Math.floor(Math.random() * titles.length)]
+        if(track.title && track.artist.username) {
+            document.title = titles[Math.floor(Math.random() * titles.length)]
+        }
     }, [track.title, track.username])
 
     async function handleClick (e) {
@@ -85,7 +87,7 @@ export default function TrackView() {
                                 <i className="fa-solid fa-user" /> { track.artist.username || '' }
                             </NavLink> }
                         </div>
-                        <div className="track-view date" title={`${new Date(track.createdAt).toDateString()}`}>
+                        <div className="track-view date" title={`${['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][date.getDay()]}, ${['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][date.getMonth()]} ${date.getDate()}${(date.getDate() % 10 === 1 && (date.getDate() / 10) % 10 !== 1)  ? 'st' : (date.getDate() % 10 && (date.getDate() / 10) % 10 !== 1) === 2 ? 'nd' : (date.getDate() % 10 && (date.getDate() / 10) % 10 !== 1) === 3 ? 'rd' : 'th'}, ${date.getFullYear().toString()}`}>
                             <i className="fa-solid fa-clock" /> { track && dateTrack(track.createdAt) }
                         </div>
                         <br />

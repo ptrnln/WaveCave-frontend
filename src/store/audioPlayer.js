@@ -318,9 +318,10 @@ export const audioPlayerReducer = (state = initialState, action) => {
         case trackActions.REMOVE_TRACK:
         case DEQUEUE_TRACK:
             if((state.isShuffled ? state.queue.shuffled : state.queue.original)[state.currentIndex] === action.trackId) {
-                if(state.currentIndex === (state.queue.original.length + 1)) {
+                if(state.currentIndex === (state.queue.original.length - 1)) {
                     if (state.currentIndex === 0) state.currentIndex = null;
-                    else state.currentIndex = 0
+                    else if(state.isRepeating === "always" || 
+                        (state.isRepeating === "once" && !state.hasRepeated))state.currentIndex = 0 
                 } else state.currentIndex++;
             }
             let idx = newState.queue.original.indexOf(+action.trackId);

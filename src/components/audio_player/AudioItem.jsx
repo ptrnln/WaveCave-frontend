@@ -50,37 +50,45 @@ export default function AudioItem({ audioRef, handleNext }) {
     })
 
     const isPlaying = useSelector(state => state.audio.isPlaying);
+
+    const handleCanPlay = async (e) => {
+        e.preventDefault();
+        await audioRef.current.play();
+        audioRef.current.removeEventListener("canplay", handleCanPlay)
+    }
+
+    useEffect(() => {
+        if(currentTrackId) { 
+            audioRef.current.load();
+        }
+    }, [currentTrackId, audioRef])
     
     useEffect(() => {
         (async () => {
-            // Only update source if it actually changed
-            // if (currentTrackLocalSource && audioRef.current.src !== currentTrackLocalSource) {
-            //     audioRef.current.src = currentTrackLocalSource;
-            //     await audioRef.current.load();
-            // }
-
-            // Handle play/pause separately
-            if (isPlaying && currentTrackLocalSource && audioRef.current.paused) {
+            if (isPlaying && (currentTrackLocalSource || currentTrackSource) && audioRef.current.paused) {
                 try {
                     await audioRef.current.play();
                 } catch(e) {
                     // Error handling...
+                    audioRef.current.addEventListener("canplay", handleCanPlay);
                 }
             } else if (!isPlaying && !audioRef.current.paused) {
                 audioRef.current.pause();
             }
         })();
-    }, [currentTrackId, isPlaying, currentTrackLocalSource]);
+    }, [currentTrackSource, isPlaying, currentTrackLocalSource]);
 
+ 
+    
     const audio = <audio 
-            className={`audio-track ${currentTrackTitle || ''}`}
-            ref={audioRef}
-            preload="auto"
-            onEnded={handleNext}>
+    className={`audio-track ${currentTrackTitle || ''}`}
+    ref={audioRef}
+    preload="auto"
+    onEnded={handleNext}>
                 {currentTrackLocalSource &&
                 <source src={currentTrackLocalSource} type={`audio/${currentTrackFileType}`}/>}
                 {currentTrackSource &&
-                <source src={currentTrackLocalSource} type={`audio/${currentTrackFileType}`}/>}
+                <source src={currentTrackSource} type={`audio/${currentTrackFileType}`}/>}
         </audio>
 
     return audio;
