@@ -62,10 +62,7 @@ export const deleteTrack = (trackId) => {
             method: 'DELETE'
         })
         
-        if(response.ok) {
-            const data = await response.json();
-            return data
-        }
+        return response
     }
 }
 
