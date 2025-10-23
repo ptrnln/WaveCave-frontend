@@ -13,7 +13,7 @@ export default function VolumeControl({ audioRef }) {
     },[audioRef])
 
     return (
-        <div className="volume-control container" onMouseOver={(e) => setShowVolumeSlider(true)} onMouseLeave={(e) => setShowVolumeSlider(false)}>
+        <div className="volume-control container" onMouseOver={(e) => setShowVolumeSlider(true)} onMouseLeave={(e) => setShowVolumeSlider(false)} title="Volume">
             <div className="hover">
                 {(() => {switch(volumeLevel) {
 

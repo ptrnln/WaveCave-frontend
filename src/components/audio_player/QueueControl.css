@@ -10,15 +10,12 @@ div.queue-control.inner {
     @media (max-width: 638px) {
         right: 0
     }
-    /* text-wrap: nowrap; */
     background-color: white;
-    /* padding: 5px 5px; */
     border-radius: 5px;
     border: 1px solid #a0a0a0;
     max-height: 40%;
-    min-height: 300px;
+    min-height: min(300px, min-content);
     transition: bottom .4s cubic-bezier(.37,.64,.56,1.31), opacity .3s;
-    /* z-index: 1001; */
     overflow: clip;
 }
 

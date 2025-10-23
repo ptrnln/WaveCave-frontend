@@ -50,7 +50,13 @@ span.time-display.tooltip-time {
   background-color: rgb(237, 237, 237);
   padding: 0.5rem;
   border: 1px solid rgb(194, 204, 214);
-
+  &::after {
+    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M 0 0 L 10 8 L 20 0 ' fill='rgb(237, 237, 237)' stroke='rgb(194, 204, 214)'/%3E%3C/svg%3E");
+    position: absolute;
+    pointer-events: none;
+    margin-top: 22.4px;
+    margin-left: 10.5px;
+  }
 }
 
 .progress-bar input[type="range"]#progress-bar:hover + span.time-display.tooltip-time {
