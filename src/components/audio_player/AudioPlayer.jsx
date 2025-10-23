@@ -19,9 +19,9 @@ export default function AudioPlayer() {
     const handleNext = (e) => {
         e.preventDefault();
         dispatch(audioPlayerActions.playNext());
-        if(!isPlaying) dispatch(audioPlayerActions.playTrack());
-    }
-    
+        dispatch(audioPlayerActions.playTrack());
+    };
+        
     const handlePrev = (e) => {
         e.preventDefault();
         if(audioRef.current?.currentTime >= 3 || currentIndex === 0) {

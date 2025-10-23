@@ -50,6 +50,18 @@ export default function AudioItem({ audioRef, handleNext }) {
     })
 
     const isPlaying = useSelector(state => state.audio.isPlaying);
+
+    const handleCanPlay = async (e) => {
+        e.preventDefault();
+        await audioRef.current.play();
+        audioRef.current.removeEventListener("canplay", handleCanPlay)
+    }
+
+    useEffect(() => {
+        if(currentTrackId) { 
+            audioRef.current.load();
+        }
+    }, [currentTrackId, audioRef])
     
     useEffect(() => {
         (async () => {
@@ -58,16 +70,15 @@ export default function AudioItem({ audioRef, handleNext }) {
                     await audioRef.current.play();
                 } catch(e) {
                     // Error handling...
+                    audioRef.current.addEventListener("canplay", handleCanPlay);
                 }
             } else if (!isPlaying && !audioRef.current.paused) {
                 audioRef.current.pause();
             }
         })();
-    }, [isPlaying, currentTrackLocalSource]);
+    }, [currentTrackSource, isPlaying, currentTrackLocalSource]);
 
-    useEffect(() => {
-        if(currentTrackId) audioRef.current.load()
-    }, [currentTrackId, audioRef])
+ 
     
     const audio = <audio 
     className={`audio-track ${currentTrackTitle || ''}`}
