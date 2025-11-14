@@ -13,7 +13,11 @@ export default function ErrorPage() {
         
         switch(status) {
             case 404:
-               return <img src="/images/404_img.svg" alt="404" title={`Get it? It's a "missing link"`} />
+                
+               return <>
+               <h1>{ error.status } - Uncharted Waters </h1>
+               <img src="/images/404_img.svg" alt="404" title={``} />
+               </>
         }
 
     }
@@ -21,7 +25,6 @@ export default function ErrorPage() {
 
     return (
             <>
-            <h1>{ error.status } - { error.statusText }</h1>
             { renderSwitch(error.status) }
             </>
     )
