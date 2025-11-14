@@ -53,7 +53,7 @@ export default function AudioItem({ audioRef, handleNext }) {
 
     const handleCanPlay = async (e) => {
         e.preventDefault();
-        await audioRef.current.play();
+        if(isPlaying) audioRef.current.play();
         audioRef.current.removeEventListener("canplay", handleCanPlay)
     }
 
@@ -65,15 +65,15 @@ export default function AudioItem({ audioRef, handleNext }) {
     
     useEffect(() => {
         (async () => {
-            if (isPlaying && (currentTrackLocalSource || currentTrackSource) && audioRef.current.paused) {
+            if(isPlaying && (currentTrackLocalSource || currentTrackSource) && audioRef.current?.paused) {
                 try {
-                    await audioRef.current.play();
+                    audioRef.current.play();
                 } catch(e) {
-                    // Error handling...
                     audioRef.current.addEventListener("canplay", handleCanPlay);
                 }
-            } else if (!isPlaying && !audioRef.current.paused) {
-                audioRef.current.pause();
+            } else if (!isPlaying) {
+                audioRef.current?.pause();
+                audioRef.current.removeEventListener("canplay", handleCanPlay);
             }
         })();
     }, [currentTrackSource, isPlaying, currentTrackLocalSource]);
