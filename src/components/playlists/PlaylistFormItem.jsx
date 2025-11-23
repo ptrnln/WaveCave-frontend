@@ -15,4 +15,6 @@ const PlaylistFormItem = forwardRef(({track, listeners, ...props}, ref) => {
     )
 });
 
+PlaylistFormItem.displayName = 'PlaylistFormItem';
+
 export default PlaylistFormItem;

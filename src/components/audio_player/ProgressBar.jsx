@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, } from 'react'
-// import './ProgressBar.css'
+
 import { useSelector } from 'react-redux';
 
 export default function ProgressBar({ progressBarRef, audioRef }) {
@@ -7,16 +7,15 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
     const playAnimationRef = useRef();
     const tooltipAnimationRef = useRef(null);
     const tooltipRef = useRef();
-    const [isSeeking, setIsSeeking] = useState(false);
-
     const [time, setTime] = useState(0);
+    const [isSeeking, setIsSeeking] = useState(false);
     const [tooltipTime, setTooltipTime] = useState(0);
 
     const mousePositionRef = useRef([0,0]);
 
     const isDisabled = useMemo(() => {
         return audioRef.current?.readyState === 0
-    }, [audioRef.current?.readyState])
+    }, [audioRef])
 
     useEffect(() => {
         const controller = new AbortController();
@@ -38,9 +37,9 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
     }, []);
 
     const formatTime = time => {
-        const formattedMinutes = Math.floor((time / 60));
-        const formattedSeconds = Math.floor(time % 60);
-        return `${formattedMinutes.toString().padStart(2, '0')}:${formattedSeconds.toString().padStart(2, '0')}`;
+        const formattedMinutes = Math.floor((time / 60)).toString().padStart(2, '0');
+        const formattedSeconds = Math.floor(time % 60).toString().padStart(2, '0');
+        return `${formattedMinutes}:${formattedSeconds}`;
     }
 
     const handleDragEnd = (e) => {
@@ -51,7 +50,8 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
         const newValue = progressBarRef.current?.value || 0
 
         if(audioRef.current.readyState > 0) {
-            audioRef.current.currentTime = (newValue / 100.0) * audioRef.current.duration;
+            audioRef.current.currentTime = 
+                (newValue / 100.0) * audioRef.current.duration;
         }
     }
 
@@ -67,15 +67,12 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
             '--range-progress',
             `${newValue}%`
         );
-    }, [audioRef, progressBarRef]);
+    }, [progressBarRef]);
 
     const updateTime = useCallback(() => {
-
-        setTime(audioRef.current?.currentTime || 0);
-
+        setTime(audioRef.current.currentTime || 0);
         playAnimationRef.current = requestAnimationFrame(updateTime);
-
-    }, [audioRef.current?.currentTime, playAnimationRef, setTime]);
+    }, [audioRef, playAnimationRef]);
 
     const updateProgress = useCallback(() => {
 
@@ -91,30 +88,35 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
         playAnimationRef.current = requestAnimationFrame(updateProgress);
     }, [audioRef, progressBarRef]);
 
-    const updateProgressAndTime = () => {
-
-        const newProgressTime = audioRef.current ? (audioRef.current.currentTime / audioRef.current.duration) * 100.0 : 0
-        
-        progressBarRef.current.value = newProgressTime;
+    const updateProgressAndTime = useCallback(() => {
 
         setTime(audioRef.current?.currentTime || 0);
+
+        const newProgressTime = audioRef.current ? 
+            (audioRef.current.currentTime / audioRef.current.duration) * 100.0 
+            : 0
+        
+        progressBarRef.current.value = newProgressTime;
 
         progressBarRef.current.style.setProperty(
             '--range-progress',
             `${newProgressTime}%`
         );
         
-        playAnimationRef.current = requestAnimationFrame(updateProgressAndTime)
-    }
-
-    // console.log("Progress Bar re-render")
+        playAnimationRef.current = requestAnimationFrame(updateProgressAndTime);
+    }, [setTime, audioRef, progressBarRef])
 
     const updateTooltip = useCallback(() => {
         const progressBarBoundingBox = progressBarRef.current.getBoundingClientRect();
         const [mouseX] = mousePositionRef.current;
-        const offsetX = Math.max(0, Math.min(mouseX - progressBarBoundingBox.left, progressBarBoundingBox.right - progressBarBoundingBox.left));
-        // if(offsetX < 0) return
         const rangeLength = progressBarBoundingBox.right - progressBarBoundingBox.left;
+        const offsetX = Math.max(
+            0, 
+            Math.min(
+                mouseX - progressBarBoundingBox.left,  
+                rangeLength
+            )
+        );
         const tooltipT = (offsetX / rangeLength) * (audioRef.current.duration || 0)
 
         tooltipRef.current.style.setProperty(
@@ -125,7 +127,7 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
         setTooltipTime(tooltipT < 0 ? 0 : tooltipT);
 
         tooltipAnimationRef.current = requestAnimationFrame(updateTooltip);
-    }, [mousePositionRef, audioRef]);
+    }, [progressBarRef, mousePositionRef, audioRef]);
 
     const startTooltipUpdate = (e) => {
         e.stopPropagation();
@@ -146,7 +148,7 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
         if(tooltipRef.current) {
             tooltipAnimationRef.current = requestAnimationFrame(updateTooltip)
         }
-    }, [tooltipAnimationRef, tooltipAnimationRef, updateTooltip]);
+    }, [tooltipAnimationRef, updateTooltip]);
 
     
     useEffect(() => {
@@ -164,13 +166,15 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
     }, [isPlaying, updateProgressAndTime, updateTime, playAnimationRef, isSeeking]);
 
     useEffect(() => {
-        progressBarRef.current.addEventListener('mousedown', handleProgressDrag);
-        progressBarRef.current.addEventListener('touchstart', handleProgressDrag);
+        const progressBar = progressBarRef.current;
+        if(!progressBar) return;
+        progressBar.addEventListener('mousedown', handleProgressDrag);
+        progressBar.addEventListener('touchstart', handleProgressDrag);
     
         return () => {
             try {
-                progressBarRef.current.removeEventListener('mousedown', handleProgressDrag);
-                progressBarRef.current.removeEventListener('touchstart', handleProgressDrag);
+                progressBar.removeEventListener('mousedown', handleProgressDrag);
+                progressBar.removeEventListener('touchstart', handleProgressDrag);
             }
             catch(e) {
                 console.error(e);
@@ -179,12 +183,12 @@ export default function ProgressBar({ progressBarRef, audioRef }) {
     }, [progressBarRef, handleProgressDrag]);
 
     const currentTime = useMemo(() => {
-        return formatTime(audioRef.current?.currentTime || 0)
-    }, [audioRef.current?.currentTime]);
+        return formatTime(time || 0)
+    }, [time]);
 
     const duration = useMemo(() => {
-        return formatTime(audioRef.current?.duration || 0)
-    }, [audioRef.current?.duration]);
+        return formatTime(time || 0)
+    }, [time]);
 
     return (
         <div 

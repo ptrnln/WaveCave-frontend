@@ -1,10 +1,9 @@
 import QueueItem from "./QueueItem";
 import { useSortable } from "@dnd-kit/sortable";
-import {CSS} from '@dnd-kit/utilities'
+import { CSS } from '@dnd-kit/utilities'
 
 export default function SortableQueueItem(props) {
     const { 
-        active,
         attributes, 
         listeners, 
         setNodeRef,

@@ -1,0 +1,28 @@
+div.error.page {
+    height: 100%;
+    display: flex;
+    font-size: 1rem;
+    & object {
+        margin: auto 0;
+        border: 1em solid black;
+        border-radius: 50%;
+    }
+    & h1 {
+        width: 100%;
+        margin: 0.2em 0;
+        &::after {
+            position: relative;
+            content: '';
+            display: block;
+            width: 100%;
+            top: 10px;
+            border-bottom: 1px solid #d3d3d3;
+            z-index: -1;
+        }
+    }
+    p {
+        text-align: left;
+        align-self: start;
+        margin: 0.5em;
+    }
+}

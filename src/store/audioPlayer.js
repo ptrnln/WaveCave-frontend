@@ -115,7 +115,7 @@ export const playPrev = () => {
 export const enqueueTrack = (trackId, replace = false) => {
     return {
         type: ENQUEUE_TRACK,
-        trackId: parseInt(trackId),
+        trackId: trackId,
         replace
     }
 }
@@ -172,7 +172,7 @@ export const loadTracks = (trackIds, replace = false) => async (dispatch, getSta
     
     dispatch({
         type: ENQUEUE_TRACKS,
-        trackIds: trackIds.map(id => parseInt(id)),
+        trackIds: trackIds.map(id => id),
         replace
     })
 }
@@ -262,7 +262,7 @@ export const audioPlayerReducer = (state = initialState, action) => {
             if (action.replace) {
                 newQueue = [action.trackId]
             } else {
-                newQueue = state.queue.original.indexOf(action.trackId) === -1 ? 
+                newQueue = state.queue.original.includes(action.trackId) ? 
                     state.queue.original
                     : state.queue.original.concat([action.trackId])
             }
@@ -274,11 +274,11 @@ export const audioPlayerReducer = (state = initialState, action) => {
                     shuffled: shuffle(newQueue, queue[state.currentIndex])
                 }
             }
-        case ENQUEUE_TRACKS:    
+        case ENQUEUE_TRACKS: 
             queue = state.isShuffled ? state.queue.shuffled : state.queue.original
             newQueue = action.replace ?
-                action.trackIds
-                : queue.concat(action.trackIds.filter(a => queue.indexOf(parseInt(a)) === -1))
+                action.trackIds.filter((id) => !queue.includes(id))
+                : queue.concat(action.trackIds.filter((id) => !queue.includes(id)))
             shuffledQueue = shuffle([...newQueue], queue[state.currentIndex])
             return { ...state,
                 queue: {

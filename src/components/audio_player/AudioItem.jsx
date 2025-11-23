@@ -76,7 +76,7 @@ export default function AudioItem({ audioRef, handleNext }) {
                 audioRef.current.removeEventListener("canplay", handleCanPlay);
             }
         })();
-    }, [currentTrackSource, isPlaying, currentTrackLocalSource]);
+    }, [currentTrackSource, isPlaying, currentTrackLocalSource, audioRef, handleCanPlay]);
 
  
     

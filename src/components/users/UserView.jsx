@@ -5,6 +5,7 @@ import * as trackActions from '../../store/track'
 import * as userActions from '../../store/user'
 import TrackIndexItem from "../tracks/TrackIndexItem";
 import '../tracks/TrackIndexItem.css'
+import './UserView.css'
 
 export default function UserView() {
     const { user } = useLoaderData();
@@ -29,7 +30,7 @@ export default function UserView() {
     return (
         <>
             {
-                user && window.location.href.match(new RegExp('[^@/]+(?=/$|$)'))[0] === encodeURIComponent(user.username) ?
+                user && [encodeURIComponent(user.username), 'me'].includes(window.location.href.match(new RegExp('[^@/]+(?=/$|$)'))[0]) ?
                 
                 <div id="user-view page">
                     <h1>{ user.username }</h1>

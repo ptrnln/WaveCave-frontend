@@ -26,7 +26,7 @@ export default function TrackView() {
 
     async function handleClick (e) {
         e.preventDefault(); 
-        dispatch(audioActions.loadTracks([parseInt(track.id)]));
+        dispatch(audioActions.loadTracks([track.puid]));
         dispatch(audioActions.playTrack());
     }
 
@@ -70,7 +70,7 @@ export default function TrackView() {
                 <h1 className="track-view title">{ track.title || '' }</h1>
                 <br />
                 <div className="track-view body">
-                    { track.id && (
+                    { track && (
                         <button className="play-track overlay" onClick={ handleClick }>
                             <i className="fa-solid fa-play-circle" />
                             { track.photoUrl ? 

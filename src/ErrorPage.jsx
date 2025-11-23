@@ -1,7 +1,4 @@
 import { useRouteError } from "react-router-dom"
-import "./reset.css"
-import "./index.css"
-import "./app.css"
 import "./ErrorPage.css";
 
 
@@ -15,8 +12,9 @@ export default function ErrorPage() {
             case 404:
                 
                return <>
-               <h1>{ error.status } - Uncharted Waters </h1>
-               <img src="/images/404_img.svg" alt="404" title={``} />
+               <h1>{ error.status } - Not Found </h1>
+                <p>Oops! You're in uncharted waters, best return to port!</p>
+                <object data="/images/shark_fin.svg" height={"350em"}/>
                </>
         }
 
@@ -24,8 +22,8 @@ export default function ErrorPage() {
 
 
     return (
-            <>
-            { renderSwitch(error.status) }
-            </>
+            <div className="error page">
+                { renderSwitch(error.status) }
+            </div>
     )
 }

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const QueueItem = forwardRef(({track, listeners, ...props}, ref) => {
     const navigate = useNavigate();
+
     
     return (
         <li className="queue-item" id={props.id} ref={ref} {...props}>
@@ -28,4 +29,6 @@ const QueueItem = forwardRef(({track, listeners, ...props}, ref) => {
         </li>
     )
 });
-export default QueueItem 
+
+QueueItem.displayName = 'AudioPlayerQueueItem';
+export default QueueItem;

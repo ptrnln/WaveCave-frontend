@@ -45,21 +45,6 @@
     width: 100%;
 }
 
-#modal-backdrop.active {
-    position: absolute;
-    content: '';
-    height: 100lvh;
-    width: 100lvw;
-    background-color: rgba(0, 0, 0, 0);
-    z-index: 2;
-    pointer-events: all;
-    transition: all 1s;
-}
-
-#modal-backdrop {
-    background-color: rgba(0, 0, 0, 0.3);
-}
-
 .login-form button {
     max-width: none;
     width: 90%;
@@ -108,7 +93,6 @@
     height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0);
-    z-index: 99;
     pointer-events: none;
     transition: background-color 1s;
 }
@@ -118,7 +102,6 @@
     pointer-events: all;
 }
 
-/* More specific fix for the asterisk alignment */
 .login-form .MuiFormLabel-root {
   display: flex !important;
   flex-direction: row !important;

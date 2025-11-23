@@ -1,5 +1,4 @@
 import csrfFetch from "./csrf";
-import routeToAPI from "./api";
 
 const REMOVE_PLAYLIST = 'playlist/REMOVE_PLAYLIST';
 const REMOVE_PLAYLISTS = 'playlist/REMOVE_PLAYLISTS';

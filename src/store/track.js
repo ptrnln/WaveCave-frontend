@@ -1,7 +1,7 @@
 import csrfFetch from "./csrf"
 import routeToAPI from "./api"
 
-import { spawn, Thread, Worker } from "threads"
+// import { spawn, Thread, Worker } from "threads"
 
 export const RECEIVE_TRACK = 'tracks/RECEIVE_TRACK'
 export const RECEIVE_TRACKS = 'tracks/RECEIVE_TRACKS'
@@ -118,7 +118,6 @@ export const loadTracksLocally = (trackIds, lazy = true) => async (dispatch, get
 }
 
 export const loadTrack = trackId => async (dispatch, getState) => {
-    
     const track = getState().tracks[trackId];
     if(track === undefined) {
         const response = await fetch(routeToAPI(`/api/tracks/${trackId}`));
@@ -140,7 +139,7 @@ export const loadTracks = trackIds => async dispatch => {
     let tracks = {}
     for(const trackId of trackIds) {
         const track = await dispatch(loadTrack(trackId));
-        tracks[track.id] = track
+        tracks[track.puid] = track
     }
     return tracks
 }
@@ -221,8 +220,8 @@ const trackReducer = (state = initialState, action) => {
     switch(action.type) {
         case RECEIVE_TRACK:
             newState = { ...newState, ...action.track }
-            if(state[action.track.id]?.localSource){
-                newState[action.track.id].localSource = state[action.track.id].localSource
+            if(state[action.track.puid]?.localSource){
+                newState[action.track.puid].localSource = state[action.track.puid].localSource
             }
             return newState
         case RECEIVE_TRACKS:
