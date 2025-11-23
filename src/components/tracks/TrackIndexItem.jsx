@@ -1,10 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import * as trackActions from '../../store/track'
-import * as audioPlayerActions from '../../store/audioPlayer'
 import './TrackIndexItem.css'
-import csrfFetch from "../../store/csrf";
-import routeToAPI from "../../store/api";
+
 
 export default function TrackIndexItem({ track }) {
     const currentUser = useSelector(state => state.session.user)
@@ -21,9 +19,8 @@ export default function TrackIndexItem({ track }) {
 
         if(!confirmation) return;
         
-        dispatch(trackActions.removeTrack(+e.target.value));
-        const response = await dispatch(trackActions.deleteTrack(+e.target.value));
-        debugger
+        dispatch(trackActions.removeTrack(e.target.value));
+        const response = await dispatch(trackActions.deleteTrack(e.target.value));
         if(response.ok) {
             let data = await response.json();
             return data;
@@ -39,7 +36,7 @@ export default function TrackIndexItem({ track }) {
     return (
         <div className="track-index item">
             { track.photoUrl ? <img src={track.photoUrl} style={{"maxWidth": "80px"}} alt="" /> : <i className="fa-solid fa-compact-disc" style={{"fontSize": "80px"}}></i> }
-            <div id={`track-${track.id}-details`} className="track-index details">
+            <div id={`track-${track.puid}-details`} className="track-index details">
                 <h2>{track.title || ''}</h2>
                 <p>{track?.artist?.username || ''}</p>
             { track && <NavLink to={`/@${encodeURIComponent(track?.artist?.username)}/${encodeURIComponent(track.title)}`}>See track</NavLink>}
@@ -47,7 +44,7 @@ export default function TrackIndexItem({ track }) {
             
             { track?.artist?.id === currentUser?.id &&
             <div className="track-index controls">
-                <button onClick={handleDelete} value={track.id}>Delete</button>
+                <button onClick={handleDelete} value={track.puid}>Delete</button>
                 <button onClick={navToUpdate}>Update</button>
             </div>
              }

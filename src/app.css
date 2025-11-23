@@ -19,6 +19,7 @@ html, body, div.app {
 
 #root {
     height: 100%;
+    font-size: 16px;
 }
 
 div#dev-links-container {
@@ -87,6 +88,7 @@ div.content button:hover {
 } 
 
 h1 {
+    text-indent: 0.25em;
     font-size: 2rem;
 }
 

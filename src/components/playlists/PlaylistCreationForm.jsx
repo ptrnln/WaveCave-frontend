@@ -46,7 +46,7 @@ export default function PlaylistCreationForm() {
 
     function handleDragStart(e) {
         const {active} = e;
-        setActiveID(active.id);
+        setActiveID(active.puid);
     }
 
     function handleDragEnd(e) {
@@ -54,12 +54,12 @@ export default function PlaylistCreationForm() {
 
         setActiveID(null);
         
-        if(active.id !== over.id) {
-            const oldIndex = tracks.findIndex(track => track.id === active.id);
-            const newIndex = tracks.findIndex(track => track.id === over.id);
+        if(active.puid !== over.puid) {
+            const oldIndex = tracks.findIndex(track => track.puid === active.puid);
+            const newIndex = tracks.findIndex(track => track.puid === over.puid);
             const newTracks = arrayMove(tracks, oldIndex, newIndex);
             setTracks(newTracks);
-            navigate(`/create-playlist?list=[${newTracks.map(track => track.id).join(",")}]`, {
+            navigate(`/create-playlist?list=[${newTracks.map(track => track.puid).join(",")}]`, {
                 replace: true
             });
         }
@@ -68,7 +68,7 @@ export default function PlaylistCreationForm() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        const playlistTrackIds = tracks.map(track => track.id);
+        const playlistTrackIds = tracks.map(track => track.puid);
         
         const { error } = await dispatch(playlistActions.createPlaylist({ publisherId: user.id, title: playlistTitle, description: playlistDescription, trackIds: playlistTrackIds}));
 
@@ -109,7 +109,7 @@ export default function PlaylistCreationForm() {
                     >
                         <SortableContext items={tracks} strategy={verticalListSortingStrategy}>
                             {tracks.length > 0 && tracks.map((track) => (
-                                <SortablePlaylistFormItem key={track.id} id={track.id} track={track} zIndex={activeId === track.id ? 1000 : 0} />
+                                <SortablePlaylistFormItem key={track.puid} id={track.puid} track={track} zIndex={activeId === track.puid ? 1000 : 0} />
                             ))}
                         </SortableContext>
                         <DragOverlay>

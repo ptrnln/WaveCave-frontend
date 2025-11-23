@@ -25,10 +25,10 @@ export default function TrackIndex() {
 
     return (
         <div className="track-index container">
-            <h1>Tracks</h1>
+            <h1>Your Feed</h1>
             <ul
                 className="track-index">
-                {loaded && Object.values(tracks).map(track => <li key={track.id}><TrackIndexItem track={track} /></li>)}
+                {loaded && Object.values(tracks).map(track => <li key={track.puid}><TrackIndexItem track={track} /></li>)}
             </ul>
         </div>
     )

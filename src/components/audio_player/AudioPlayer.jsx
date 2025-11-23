@@ -20,6 +20,8 @@ export default function AudioPlayer() {
         e.preventDefault();
         dispatch(audioPlayerActions.playNext());
         dispatch(audioPlayerActions.playTrack());
+        audioRef.current.currentTime = 0;
+        audioRef.current?.play();
     };
         
     const handlePrev = (e) => {
@@ -35,8 +37,8 @@ export default function AudioPlayer() {
     useEffect(() => {
         const el = audioRef.current;
         if (!el) return;
-        const savedVolume = +(localStorage.getItem('wavecave__volume_pref'));
-        el.volume = savedVolume !== null ? savedVolume : 0.5;
+        const savedVolume = +(localStorage.getItem('wavecave__volume_pref') ?? 0.5);
+        el.volume = (savedVolume >= 0 && savedVolume <= 1) ? savedVolume : 0.5;
     }, []);
     
     return (

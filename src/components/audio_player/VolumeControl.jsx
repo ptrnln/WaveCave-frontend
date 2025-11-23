@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react"
-import { createPortal } from 'react-dom'
 import "./VolumeControl.css"
 
 export default function VolumeControl({ audioRef }) {
@@ -9,30 +8,30 @@ export default function VolumeControl({ audioRef }) {
     const [volumeDisabled, setVolumeDisabled] = useState(true);
 
     useEffect(() => {
-        if(!!audioRef.current) setVolumeDisabled(false)
+        if(audioRef.current) setVolumeDisabled(false)
     },[audioRef])
 
     return (
-        <div className="volume-control container" onMouseOver={(e) => setShowVolumeSlider(true)} onMouseLeave={(e) => setShowVolumeSlider(false)} title="Volume">
+        <div 
+            className="volume-control container" 
+            onMouseOver={(e) => {
+                e.preventDefault(); 
+                setShowVolumeSlider(true)
+            }} 
+            onMouseLeave={(e) => {
+                e.preventDefault();
+                setShowVolumeSlider(false)}} 
+            title="Volume">
             <div className="hover">
                 {(() => {switch(volumeLevel) {
-
                     case "high":
                         return (<i className="wc-volume-high"></i>)
-                        break;
-
                     case "low":
                         return (<i className="wc-volume-low"></i>)
-                        break;
-
                     case "off":
                         return(<i className="wc-volume-off" ></i>)
-                        break;
-
                     case "muted":
                         return(<i className="wc-volume-muted"></i>)
-                        break;
-
                     }})()}
             </div>
                 {<div className="volume-slider-anchor">

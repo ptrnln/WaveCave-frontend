@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, redirect } from 'react-router-dom';
 import Layout from './Layout';
 import SignUpForm from './components/session/SignUpForm';
 import UserView from './components/users/UserView';
@@ -64,6 +64,21 @@ const router = createBrowserRouter([
       {
         path: '/create-playlist',
         element: <PlaylistCreationForm />
+      },
+      {
+        path: '/@me',
+        element: <UserView />,
+        loader: async () => {
+          const response = await fetch(routeToAPI('/api/session'));
+          
+          if(response.ok) {
+            const data = await response.json();
+
+            return data
+          } else {
+            throw response
+          }
+        }
       },
       {
         path: '/:username',
